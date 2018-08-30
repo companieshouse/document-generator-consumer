@@ -60,6 +60,8 @@
         <sonar.login>${CODE_ANALYSIS_LOGIN}</sonar.login>
         <sonar.password>${CODE_ANALYSIS_PASSWORD}</sonar.password>
 
+        <commons-io.version>2.4</commons-io.version>
+
     </properties>
 
     <dependencies>
@@ -104,6 +106,11 @@
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
             <version>${sonar-maven-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
     </dependencies>
 
