@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "namespace": "uk.gov.companieshouse.document.generator.core.document.models",
+  "namespace": "uk.gov.companieshouse.document.generator.consumer.document.models",
   "name": "DocumentGenerationStarted",
   "fields": [
     {
