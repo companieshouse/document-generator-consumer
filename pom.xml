@@ -6,7 +6,7 @@
 
     <groupId>uk.gov.companieshouse</groupId>
     <artifactId>document-generator-consumer</artifactId>
-    <version>7da758c</version>
+    <version>unversioned</version>
     <packaging>jar</packaging>
     <name>document-generator-consumer</name>
     <description>Kafka consumer that hooks into the document-generator process asynchronously</description>
