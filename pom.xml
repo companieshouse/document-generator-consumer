@@ -60,6 +60,9 @@
         <sonar.login>${CODE_ANALYSIS_LOGIN}</sonar.login>
         <sonar.password>${CODE_ANALYSIS_PASSWORD}</sonar.password>
 
+        <!-- Jacoco -->
+        <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
+
         <commons-io.version>2.4</commons-io.version>
 
     </properties>
@@ -211,6 +214,27 @@
                                 <version>${junit-platform-surefire-provider.version}</version>
                             </dependency>
                         </dependencies>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>default-prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>default-report</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                     <!-- Avro Auto Generate classes from schema Plugin -->
