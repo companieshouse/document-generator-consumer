@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted;
 
 import java.io.IOException;
 

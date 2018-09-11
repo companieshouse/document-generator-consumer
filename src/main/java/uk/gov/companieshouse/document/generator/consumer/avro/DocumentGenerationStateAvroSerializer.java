@@ -2,9 +2,9 @@ package uk.gov.companieshouse.document.generator.consumer.avro;
 
 
 import org.springframework.stereotype.Component;
-import uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted;
-import uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed;
-import uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted;
 
 import java.io.IOException;
 

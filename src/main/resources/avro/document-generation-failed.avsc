@@ -1,6 +1,6 @@
 {
     "type":"record",
-    "namespace":"uk.gov.companieshouse.document.generator.consumer.document.models",
+    "namespace":"uk.gov.companieshouse.document.generator.consumer.document.models.avro",
     "name":"DocumentGenerationFailed",
     "fields":[
         {

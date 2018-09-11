@@ -3,15 +3,15 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package uk.gov.companieshouse.document.generator.consumer.document.models;
+package uk.gov.companieshouse.document.generator.consumer.document.models.avro;
 
 import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -2410741813493683786L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DocumentGenerationFailed\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models\",\"fields\":[{\"name\":\"requester_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"description_identifier\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description_values\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}}]}");
+  private static final long serialVersionUID = -990986292162019985L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DocumentGenerationFailed\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models.avro\",\"fields\":[{\"name\":\"requester_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"description_identifier\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description_values\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String requester_id;
   @Deprecated public java.lang.String description;
@@ -152,8 +152,8 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
    * Creates a new DocumentGenerationFailed RecordBuilder.
    * @return A new DocumentGenerationFailed RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder newBuilder() {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder();
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder newBuilder() {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder();
   }
 
   /**
@@ -161,8 +161,8 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
    * @param other The existing builder to copy.
    * @return A new DocumentGenerationFailed RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder(other);
   }
 
   /**
@@ -170,8 +170,8 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
    * @param other The existing instance to copy.
    * @return A new DocumentGenerationFailed RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder(other);
   }
 
   /**
@@ -195,7 +195,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.requester_id)) {
         this.requester_id = data().deepCopy(fields()[0].schema(), other.requester_id);
@@ -223,7 +223,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
      * Creates a Builder by copying an existing DocumentGenerationFailed instance
      * @param other The existing instance to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.requester_id)) {
         this.requester_id = data().deepCopy(fields()[0].schema(), other.requester_id);
@@ -260,7 +260,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * @param value The value of 'requester_id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder setRequesterId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder setRequesterId(java.lang.String value) {
       validate(fields()[0], value);
       this.requester_id = value;
       fieldSetFlags()[0] = true;
@@ -280,7 +280,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * Clears the value of the 'requester_id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder clearRequesterId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder clearRequesterId() {
       requester_id = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -299,7 +299,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * @param value The value of 'description'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder setDescription(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder setDescription(java.lang.String value) {
       validate(fields()[1], value);
       this.description = value;
       fieldSetFlags()[1] = true;
@@ -319,7 +319,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * Clears the value of the 'description' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder clearDescription() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder clearDescription() {
       description = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -338,7 +338,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * @param value The value of 'description_identifier'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder setDescriptionIdentifier(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder setDescriptionIdentifier(java.lang.String value) {
       validate(fields()[2], value);
       this.description_identifier = value;
       fieldSetFlags()[2] = true;
@@ -358,7 +358,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * Clears the value of the 'description_identifier' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder clearDescriptionIdentifier() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder clearDescriptionIdentifier() {
       description_identifier = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -377,7 +377,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder setId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder setId(java.lang.String value) {
       validate(fields()[3], value);
       this.id = value;
       fieldSetFlags()[3] = true;
@@ -397,7 +397,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder clearId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder clearId() {
       id = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -416,7 +416,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * @param value The value of 'description_values'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder setDescriptionValues(java.util.Map<java.lang.String,java.lang.String> value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder setDescriptionValues(java.util.Map<java.lang.String,java.lang.String> value) {
       validate(fields()[4], value);
       this.description_values = value;
       fieldSetFlags()[4] = true;
@@ -436,7 +436,7 @@ public class DocumentGenerationFailed extends org.apache.avro.specific.SpecificR
       * Clears the value of the 'description_values' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationFailed.Builder clearDescriptionValues() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed.Builder clearDescriptionValues() {
       description_values = null;
       fieldSetFlags()[4] = false;
       return this;
