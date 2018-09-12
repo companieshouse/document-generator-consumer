@@ -14,16 +14,6 @@ public class DocumentGenerationStateAvroSerializer {
     /**
      * Serialize the message for the completion of the document generation.
      *
-     * @return
-     * @throws IOException
-     */
-    public byte[] serialize() throws IOException {
-        return serialize();
-    }
-
-    /**
-     * Serialize the message for the completion of the document generation.
-     *
      * @param document
      * @return
      * @throws IOException
