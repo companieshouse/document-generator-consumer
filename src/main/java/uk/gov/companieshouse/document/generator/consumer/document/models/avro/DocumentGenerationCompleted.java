@@ -3,22 +3,22 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package uk.gov.companieshouse.document.generator.consumer.document.models;
+package uk.gov.companieshouse.document.generator.consumer.document.models.avro;
 
 import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class DocumentGenerationCompleted extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 557301933706268633L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DocumentGenerationCompleted\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models\",\"fields\":[{\"name\":\"requester_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description_identifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_created_at\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description_values\",\"type\":{\"type\":\"record\",\"name\":\"DescriptionValues\",\"fields\":[{\"name\":\"date\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"location\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_size\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  private static final long serialVersionUID = 8316913391050124123L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DocumentGenerationCompleted\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models.avro\",\"fields\":[{\"name\":\"requester_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description_identifier\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_created_at\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description_values\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"avro.java.string\":\"String\"}},{\"name\":\"location\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_size\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String requester_id;
   @Deprecated public java.lang.String id;
   @Deprecated public java.lang.String description;
   @Deprecated public java.lang.String description_identifier;
   @Deprecated public java.lang.String document_created_at;
-  @Deprecated public uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues description_values;
+  @Deprecated public java.util.Map<java.lang.String,java.lang.String> description_values;
   @Deprecated public java.lang.String location;
   @Deprecated public java.lang.String document_size;
 
@@ -40,7 +40,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
    * @param location The new value for location
    * @param document_size The new value for document_size
    */
-  public DocumentGenerationCompleted(java.lang.String requester_id, java.lang.String id, java.lang.String description, java.lang.String description_identifier, java.lang.String document_created_at, uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues description_values, java.lang.String location, java.lang.String document_size) {
+  public DocumentGenerationCompleted(java.lang.String requester_id, java.lang.String id, java.lang.String description, java.lang.String description_identifier, java.lang.String document_created_at, java.util.Map<java.lang.String,java.lang.String> description_values, java.lang.String location, java.lang.String document_size) {
     this.requester_id = requester_id;
     this.id = id;
     this.description = description;
@@ -76,7 +76,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
     case 2: description = (java.lang.String)value$; break;
     case 3: description_identifier = (java.lang.String)value$; break;
     case 4: document_created_at = (java.lang.String)value$; break;
-    case 5: description_values = (uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues)value$; break;
+    case 5: description_values = (java.util.Map<java.lang.String,java.lang.String>)value$; break;
     case 6: location = (java.lang.String)value$; break;
     case 7: document_size = (java.lang.String)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
@@ -167,7 +167,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
    * Gets the value of the 'description_values' field.
    * @return The value of the 'description_values' field.
    */
-  public uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues getDescriptionValues() {
+  public java.util.Map<java.lang.String,java.lang.String> getDescriptionValues() {
     return description_values;
   }
 
@@ -175,7 +175,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
    * Sets the value of the 'description_values' field.
    * @param value the value to set.
    */
-  public void setDescriptionValues(uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues value) {
+  public void setDescriptionValues(java.util.Map<java.lang.String,java.lang.String> value) {
     this.description_values = value;
   }
 
@@ -215,8 +215,8 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
    * Creates a new DocumentGenerationCompleted RecordBuilder.
    * @return A new DocumentGenerationCompleted RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder newBuilder() {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder();
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder newBuilder() {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder();
   }
 
   /**
@@ -224,8 +224,8 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
    * @param other The existing builder to copy.
    * @return A new DocumentGenerationCompleted RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder(other);
   }
 
   /**
@@ -233,8 +233,8 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
    * @param other The existing instance to copy.
    * @return A new DocumentGenerationCompleted RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder(other);
   }
 
   /**
@@ -248,8 +248,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
     private java.lang.String description;
     private java.lang.String description_identifier;
     private java.lang.String document_created_at;
-    private uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues description_values;
-    private uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues.Builder description_valuesBuilder;
+    private java.util.Map<java.lang.String,java.lang.String> description_values;
     private java.lang.String location;
     private java.lang.String document_size;
 
@@ -262,7 +261,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.requester_id)) {
         this.requester_id = data().deepCopy(fields()[0].schema(), other.requester_id);
@@ -288,9 +287,6 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
         this.description_values = data().deepCopy(fields()[5].schema(), other.description_values);
         fieldSetFlags()[5] = true;
       }
-      if (other.hasDescriptionValuesBuilder()) {
-        this.description_valuesBuilder = uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues.newBuilder(other.getDescriptionValuesBuilder());
-      }
       if (isValidValue(fields()[6], other.location)) {
         this.location = data().deepCopy(fields()[6].schema(), other.location);
         fieldSetFlags()[6] = true;
@@ -305,7 +301,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
      * Creates a Builder by copying an existing DocumentGenerationCompleted instance
      * @param other The existing instance to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.requester_id)) {
         this.requester_id = data().deepCopy(fields()[0].schema(), other.requester_id);
@@ -331,7 +327,6 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
         this.description_values = data().deepCopy(fields()[5].schema(), other.description_values);
         fieldSetFlags()[5] = true;
       }
-      this.description_valuesBuilder = null;
       if (isValidValue(fields()[6], other.location)) {
         this.location = data().deepCopy(fields()[6].schema(), other.location);
         fieldSetFlags()[6] = true;
@@ -355,7 +350,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'requester_id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setRequesterId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setRequesterId(java.lang.String value) {
       validate(fields()[0], value);
       this.requester_id = value;
       fieldSetFlags()[0] = true;
@@ -375,7 +370,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'requester_id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearRequesterId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearRequesterId() {
       requester_id = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -394,7 +389,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setId(java.lang.String value) {
       validate(fields()[1], value);
       this.id = value;
       fieldSetFlags()[1] = true;
@@ -414,7 +409,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearId() {
       id = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -433,7 +428,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'description'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setDescription(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setDescription(java.lang.String value) {
       validate(fields()[2], value);
       this.description = value;
       fieldSetFlags()[2] = true;
@@ -453,7 +448,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'description' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearDescription() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearDescription() {
       description = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -472,7 +467,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'description_identifier'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setDescriptionIdentifier(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setDescriptionIdentifier(java.lang.String value) {
       validate(fields()[3], value);
       this.description_identifier = value;
       fieldSetFlags()[3] = true;
@@ -492,7 +487,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'description_identifier' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearDescriptionIdentifier() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearDescriptionIdentifier() {
       description_identifier = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -511,7 +506,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'document_created_at'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setDocumentCreatedAt(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setDocumentCreatedAt(java.lang.String value) {
       validate(fields()[4], value);
       this.document_created_at = value;
       fieldSetFlags()[4] = true;
@@ -531,7 +526,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'document_created_at' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearDocumentCreatedAt() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearDocumentCreatedAt() {
       document_created_at = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -541,7 +536,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Gets the value of the 'description_values' field.
       * @return The value.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues getDescriptionValues() {
+    public java.util.Map<java.lang.String,java.lang.String> getDescriptionValues() {
       return description_values;
     }
 
@@ -550,9 +545,8 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'description_values'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setDescriptionValues(uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setDescriptionValues(java.util.Map<java.lang.String,java.lang.String> value) {
       validate(fields()[5], value);
-      this.description_valuesBuilder = null;
       this.description_values = value;
       fieldSetFlags()[5] = true;
       return this;
@@ -566,47 +560,13 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       return fieldSetFlags()[5];
     }
 
-    /**
-     * Gets the Builder instance for the 'description_values' field and creates one if it doesn't exist yet.
-     * @return This builder.
-     */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues.Builder getDescriptionValuesBuilder() {
-      if (description_valuesBuilder == null) {
-        if (hasDescriptionValues()) {
-          setDescriptionValuesBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues.newBuilder(description_values));
-        } else {
-          setDescriptionValuesBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues.newBuilder());
-        }
-      }
-      return description_valuesBuilder;
-    }
-
-    /**
-     * Sets the Builder instance for the 'description_values' field
-     * @param value The builder instance that must be set.
-     * @return This builder.
-     */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setDescriptionValuesBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues.Builder value) {
-      clearDescriptionValues();
-      description_valuesBuilder = value;
-      return this;
-    }
-
-    /**
-     * Checks whether the 'description_values' field has an active Builder instance
-     * @return True if the 'description_values' field has an active Builder instance
-     */
-    public boolean hasDescriptionValuesBuilder() {
-      return description_valuesBuilder != null;
-    }
 
     /**
       * Clears the value of the 'description_values' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearDescriptionValues() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearDescriptionValues() {
       description_values = null;
-      description_valuesBuilder = null;
       fieldSetFlags()[5] = false;
       return this;
     }
@@ -624,7 +584,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'location'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setLocation(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setLocation(java.lang.String value) {
       validate(fields()[6], value);
       this.location = value;
       fieldSetFlags()[6] = true;
@@ -644,7 +604,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'location' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearLocation() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearLocation() {
       location = null;
       fieldSetFlags()[6] = false;
       return this;
@@ -663,7 +623,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * @param value The value of 'document_size'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder setDocumentSize(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder setDocumentSize(java.lang.String value) {
       validate(fields()[7], value);
       this.document_size = value;
       fieldSetFlags()[7] = true;
@@ -683,7 +643,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
       * Clears the value of the 'document_size' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationCompleted.Builder clearDocumentSize() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted.Builder clearDocumentSize() {
       document_size = null;
       fieldSetFlags()[7] = false;
       return this;
@@ -698,11 +658,7 @@ public class DocumentGenerationCompleted extends org.apache.avro.specific.Specif
         record.description = fieldSetFlags()[2] ? this.description : (java.lang.String) defaultValue(fields()[2]);
         record.description_identifier = fieldSetFlags()[3] ? this.description_identifier : (java.lang.String) defaultValue(fields()[3]);
         record.document_created_at = fieldSetFlags()[4] ? this.document_created_at : (java.lang.String) defaultValue(fields()[4]);
-        if (description_valuesBuilder != null) {
-          record.description_values = this.description_valuesBuilder.build();
-        } else {
-          record.description_values = fieldSetFlags()[5] ? this.description_values : (uk.gov.companieshouse.document.generator.consumer.document.models.DescriptionValues) defaultValue(fields()[5]);
-        }
+        record.description_values = fieldSetFlags()[5] ? this.description_values : (java.util.Map<java.lang.String,java.lang.String>) defaultValue(fields()[5]);
         record.location = fieldSetFlags()[6] ? this.location : (java.lang.String) defaultValue(fields()[6]);
         record.document_size = fieldSetFlags()[7] ? this.document_size : (java.lang.String) defaultValue(fields()[7]);
         return record;

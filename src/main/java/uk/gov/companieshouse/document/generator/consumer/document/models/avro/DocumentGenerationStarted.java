@@ -3,15 +3,15 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package uk.gov.companieshouse.document.generator.consumer.document.models;
+package uk.gov.companieshouse.document.generator.consumer.document.models.avro;
 
 import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class DocumentGenerationStarted extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -776962671802966651L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DocumentGenerationStarted\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models\",\"fields\":[{\"name\":\"requester_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  private static final long serialVersionUID = -1625157521565047160L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DocumentGenerationStarted\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models.avro\",\"fields\":[{\"name\":\"requester_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String requester_id;
   @Deprecated public java.lang.String id;
@@ -89,8 +89,8 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
    * Creates a new DocumentGenerationStarted RecordBuilder.
    * @return A new DocumentGenerationStarted RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder newBuilder() {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder();
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder newBuilder() {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder();
   }
 
   /**
@@ -98,8 +98,8 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
    * @param other The existing builder to copy.
    * @return A new DocumentGenerationStarted RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder(other);
   }
 
   /**
@@ -107,8 +107,8 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
    * @param other The existing instance to copy.
    * @return A new DocumentGenerationStarted RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder(other);
   }
 
   /**
@@ -129,7 +129,7 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.requester_id)) {
         this.requester_id = data().deepCopy(fields()[0].schema(), other.requester_id);
@@ -145,7 +145,7 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
      * Creates a Builder by copying an existing DocumentGenerationStarted instance
      * @param other The existing instance to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.requester_id)) {
         this.requester_id = data().deepCopy(fields()[0].schema(), other.requester_id);
@@ -170,7 +170,7 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
       * @param value The value of 'requester_id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder setRequesterId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder setRequesterId(java.lang.String value) {
       validate(fields()[0], value);
       this.requester_id = value;
       fieldSetFlags()[0] = true;
@@ -190,7 +190,7 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
       * Clears the value of the 'requester_id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder clearRequesterId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder clearRequesterId() {
       requester_id = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -209,7 +209,7 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder setId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder setId(java.lang.String value) {
       validate(fields()[1], value);
       this.id = value;
       fieldSetFlags()[1] = true;
@@ -229,7 +229,7 @@ public class DocumentGenerationStarted extends org.apache.avro.specific.Specific
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.DocumentGenerationStarted.Builder clearId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted.Builder clearId() {
       id = null;
       fieldSetFlags()[1] = false;
       return this;

@@ -3,15 +3,15 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package uk.gov.companieshouse.document.generator.consumer.document.models;
+package uk.gov.companieshouse.document.generator.consumer.document.models.avro;
 
 import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public class RenderSubmittedDataDocument extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -133779602915165335L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"RenderSubmittedDataDocument\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"content_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"user_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -3391013108539488436L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DeserialisedKafkaMessage\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models.avro\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"content_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"user_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String id;
   @Deprecated public java.lang.String resource;
@@ -25,7 +25,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public RenderSubmittedDataDocument() {}
+  public DeserialisedKafkaMessage() {}
 
   /**
    * All-args constructor.
@@ -36,7 +36,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
    * @param document_type The new value for document_type
    * @param user_id The new value for user_id
    */
-  public RenderSubmittedDataDocument(java.lang.String id, java.lang.String resource, java.lang.String resource_id, java.lang.String content_type, java.lang.String document_type, java.lang.String user_id) {
+  public DeserialisedKafkaMessage(java.lang.String id, java.lang.String resource, java.lang.String resource_id, java.lang.String content_type, java.lang.String document_type, java.lang.String user_id) {
     this.id = id;
     this.resource = resource;
     this.resource_id = resource_id;
@@ -170,36 +170,36 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
   }
 
   /**
-   * Creates a new RenderSubmittedDataDocument RecordBuilder.
-   * @return A new RenderSubmittedDataDocument RecordBuilder
+   * Creates a new DeserialisedKafkaMessage RecordBuilder.
+   * @return A new DeserialisedKafkaMessage RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder newBuilder() {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder();
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder newBuilder() {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder();
   }
 
   /**
-   * Creates a new RenderSubmittedDataDocument RecordBuilder by copying an existing Builder.
+   * Creates a new DeserialisedKafkaMessage RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new RenderSubmittedDataDocument RecordBuilder
+   * @return A new DeserialisedKafkaMessage RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder(other);
   }
 
   /**
-   * Creates a new RenderSubmittedDataDocument RecordBuilder by copying an existing RenderSubmittedDataDocument instance.
+   * Creates a new DeserialisedKafkaMessage RecordBuilder by copying an existing DeserialisedKafkaMessage instance.
    * @param other The existing instance to copy.
-   * @return A new RenderSubmittedDataDocument RecordBuilder
+   * @return A new DeserialisedKafkaMessage RecordBuilder
    */
-  public static uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument other) {
-    return new uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder(other);
+  public static uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder newBuilder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage other) {
+    return new uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder(other);
   }
 
   /**
-   * RecordBuilder for RenderSubmittedDataDocument instances.
+   * RecordBuilder for DeserialisedKafkaMessage instances.
    */
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<RenderSubmittedDataDocument>
-    implements org.apache.avro.data.RecordBuilder<RenderSubmittedDataDocument> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<DeserialisedKafkaMessage>
+    implements org.apache.avro.data.RecordBuilder<DeserialisedKafkaMessage> {
 
     private java.lang.String id;
     private java.lang.String resource;
@@ -217,7 +217,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -246,10 +246,10 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
     }
 
     /**
-     * Creates a Builder by copying an existing RenderSubmittedDataDocument instance
+     * Creates a Builder by copying an existing DeserialisedKafkaMessage instance
      * @param other The existing instance to copy.
      */
-    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument other) {
+    private Builder(uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage other) {
             super(SCHEMA$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -290,7 +290,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder setId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setId(java.lang.String value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -310,7 +310,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder clearId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearId() {
       id = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -329,7 +329,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * @param value The value of 'resource'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder setResource(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setResource(java.lang.String value) {
       validate(fields()[1], value);
       this.resource = value;
       fieldSetFlags()[1] = true;
@@ -349,7 +349,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * Clears the value of the 'resource' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder clearResource() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearResource() {
       resource = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -368,7 +368,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * @param value The value of 'resource_id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder setResourceId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setResourceId(java.lang.String value) {
       validate(fields()[2], value);
       this.resource_id = value;
       fieldSetFlags()[2] = true;
@@ -388,7 +388,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * Clears the value of the 'resource_id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder clearResourceId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearResourceId() {
       resource_id = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -407,7 +407,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * @param value The value of 'content_type'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder setContentType(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setContentType(java.lang.String value) {
       validate(fields()[3], value);
       this.content_type = value;
       fieldSetFlags()[3] = true;
@@ -427,7 +427,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * Clears the value of the 'content_type' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder clearContentType() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearContentType() {
       content_type = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -446,7 +446,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * @param value The value of 'document_type'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder setDocumentType(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setDocumentType(java.lang.String value) {
       validate(fields()[4], value);
       this.document_type = value;
       fieldSetFlags()[4] = true;
@@ -466,7 +466,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * Clears the value of the 'document_type' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder clearDocumentType() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearDocumentType() {
       document_type = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -485,7 +485,7 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * @param value The value of 'user_id'.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder setUserId(java.lang.String value) {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setUserId(java.lang.String value) {
       validate(fields()[5], value);
       this.user_id = value;
       fieldSetFlags()[5] = true;
@@ -505,16 +505,16 @@ public class RenderSubmittedDataDocument extends org.apache.avro.specific.Specif
       * Clears the value of the 'user_id' field.
       * @return This builder.
       */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.RenderSubmittedDataDocument.Builder clearUserId() {
+    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearUserId() {
       user_id = null;
       fieldSetFlags()[5] = false;
       return this;
     }
 
     @Override
-    public RenderSubmittedDataDocument build() {
+    public DeserialisedKafkaMessage build() {
       try {
-        RenderSubmittedDataDocument record = new RenderSubmittedDataDocument();
+        DeserialisedKafkaMessage record = new DeserialisedKafkaMessage();
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.String) defaultValue(fields()[0]);
         record.resource = fieldSetFlags()[1] ? this.resource : (java.lang.String) defaultValue(fields()[1]);
         record.resource_id = fieldSetFlags()[2] ? this.resource_id : (java.lang.String) defaultValue(fields()[2]);
