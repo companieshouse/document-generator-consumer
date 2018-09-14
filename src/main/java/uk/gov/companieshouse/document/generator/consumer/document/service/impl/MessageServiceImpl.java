@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service.impl;
 
+import org.springframework.stereotype.Service;
 import uk.gov.companieshouse.document.generator.consumer.avro.DocumentGenerationStateAvroSerializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
@@ -15,6 +16,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+@Service
 public class MessageServiceImpl implements MessageService {
 
     @Override
