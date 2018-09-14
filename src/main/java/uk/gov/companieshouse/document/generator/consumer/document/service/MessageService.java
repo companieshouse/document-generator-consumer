@@ -1,8 +1,8 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service;
 
-import uk.gov.companieshouse.document.generator.consumer.avro.DocumentGenerationStateAvroSerializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
+import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
 
 import java.io.IOException;
@@ -15,35 +15,29 @@ public interface MessageService {
      * Create message for producer when document generation has started
      *
      * @param renderSubmittedDataDocument
-     * @param documentGenerationStateAvroSerializer
      * @param producer
-     * @param topic
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
+     * @return
      */
-    void createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                         DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer,
-                                         CHKafkaProducer producer,
-                                         String topic) throws IOException, ExecutionException, InterruptedException;
+    Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument,
+                                            CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException;
 
     /**
      * Create message for producer when document generation has failed
      *
      * @param renderSubmittedDataDocument
      * @param response
-     * @param documentGenerationStateAvroSerializer
      * @param producer
-     * @param topic
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
+     * @return
      */
-    void createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
+    Message createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
                                         GenerateDocumentResponse response,
-                                        DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer,
-                                        CHKafkaProducer producer,
-                                        String topic) throws IOException, ExecutionException, InterruptedException;
+                                        CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException;
 
     /**
      * Create message for producer when document generation has completed
@@ -51,17 +45,14 @@ public interface MessageService {
      * @param renderSubmittedDataDocument
      * @param response
      * @param isoDateFormat
-     * @param documentGenerationStateAvroSerializer
      * @param producer
-     * @param topic
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
+     * @return
      */
-    void createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
+    Message createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
                                            GenerateDocumentResponse response,
                                            DateFormat isoDateFormat,
-                                           DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer,
-                                           CHKafkaProducer producer,
-                                           String topic) throws IOException, ExecutionException, InterruptedException;
+                                           CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException;
 }

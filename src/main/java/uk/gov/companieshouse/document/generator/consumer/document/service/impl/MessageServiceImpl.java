@@ -19,26 +19,28 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class MessageServiceImpl implements MessageService {
 
+    private static final String STARTED_PRODUCER_TOPIC = "document-generation-started";
+    private static final String FAILED_PRODUCER_TOPIC = "document-generation-failed";
+    private static final String COMPLETED_PRODUCER_TOPIC = "document-generation-completed";
+
+    private DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer = new DocumentGenerationStateAvroSerializer();
+
     @Override
-    public void createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                                DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer,
-                                                CHKafkaProducer producer,
-                                                String topic) throws IOException, ExecutionException, InterruptedException {
+    public Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument,
+                                                CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException {
 
         DocumentGenerationStarted started = new DocumentGenerationStarted();
         started.setId(renderSubmittedDataDocument.getId());
         started.setRequesterId(renderSubmittedDataDocument.getUserId());
 
         byte[] startedData = documentGenerationStateAvroSerializer.serialize(started);
-        producer.send(createMessage(startedData, topic));
+        return createMessage(startedData, STARTED_PRODUCER_TOPIC);
     }
 
     @Override
-    public void createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
+    public Message createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
                                                GenerateDocumentResponse response,
-                                               DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer,
-                                               CHKafkaProducer producer,
-                                               String topic) throws IOException, ExecutionException, InterruptedException {
+                                               CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException {
 
         DocumentGenerationFailed failed = new DocumentGenerationFailed();
         failed.setId(renderSubmittedDataDocument != null ? renderSubmittedDataDocument.getId() : "");
@@ -51,16 +53,14 @@ public class MessageServiceImpl implements MessageService {
         }
 
         byte[] failedData = documentGenerationStateAvroSerializer.serialize(failed);
-        producer.send(createMessage(failedData, topic));
+        return createMessage(failedData, FAILED_PRODUCER_TOPIC);
     }
 
     @Override
-    public void createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
+    public Message createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
                                                   GenerateDocumentResponse response,
                                                   DateFormat isoDateFormat,
-                                                  DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer,
-                                                  CHKafkaProducer producer,
-                                                  String topic) throws IOException, ExecutionException, InterruptedException {
+                                                  CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException {
 
         DocumentGenerationCompleted completed = new DocumentGenerationCompleted();
 
@@ -74,9 +74,16 @@ public class MessageServiceImpl implements MessageService {
         completed.setDescriptionValues(response.getDescriptionValues());
 
         byte[] completedData = documentGenerationStateAvroSerializer.serialize(completed);
-        producer.send(createMessage(completedData, topic));
+        return createMessage(completedData, COMPLETED_PRODUCER_TOPIC);
     }
 
+    /**
+     * Create message to be put onto consumer
+     *
+     * @param data
+     * @param topic
+     * @return
+     */
     private Message createMessage(byte[] data, String topic) {
         Message message = new Message();
         message.setValue(data);
