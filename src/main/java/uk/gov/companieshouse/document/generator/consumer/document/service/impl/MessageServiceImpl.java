@@ -9,12 +9,10 @@ import uk.gov.companieshouse.document.generator.consumer.document.models.avro.Do
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.kafka.message.Message;
-import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class MessageServiceImpl implements MessageService {

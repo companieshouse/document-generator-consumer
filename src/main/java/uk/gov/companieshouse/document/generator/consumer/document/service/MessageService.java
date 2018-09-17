@@ -3,7 +3,6 @@ package uk.gov.companieshouse.document.generator.consumer.document.service;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.kafka.message.Message;
-import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
 
 import java.io.IOException;
 import java.text.DateFormat;
