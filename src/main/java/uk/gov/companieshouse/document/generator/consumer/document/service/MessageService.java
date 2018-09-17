@@ -5,7 +5,6 @@ import uk.gov.companieshouse.document.generator.consumer.document.models.avro.De
 import uk.gov.companieshouse.kafka.message.Message;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.concurrent.ExecutionException;
 
 public interface MessageService {
@@ -13,39 +12,37 @@ public interface MessageService {
     /**
      * Create message for producer when document generation has started
      *
-     * @param renderSubmittedDataDocument
+     * @param deserialisedKafkaMessage
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
      * @return
      */
-    Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument) throws IOException;
+    Message createDocumentGenerationStarted(DeserialisedKafkaMessage deserialisedKafkaMessage) throws IOException;
 
     /**
      * Create message for producer when document generation has failed
      *
-     * @param renderSubmittedDataDocument
+     * @param deserialisedKafkaMessage
      * @param response
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
      * @return
      */
-    Message createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
+    Message createDocumentGenerationFailed(DeserialisedKafkaMessage deserialisedKafkaMessage,
                                         GenerateDocumentResponse response) throws IOException;
 
     /**
      * Create message for producer when document generation has completed
      *
-     * @param renderSubmittedDataDocument
+     * @param deserialisedKafkaMessage
      * @param response
-     * @param isoDateFormat
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
      * @return
      */
-    Message createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                           GenerateDocumentResponse response,
-                                           DateFormat isoDateFormat) throws IOException;
+    Message createDocumentGenerationCompleted(DeserialisedKafkaMessage deserialisedKafkaMessage,
+                                           GenerateDocumentResponse response) throws IOException;
 }

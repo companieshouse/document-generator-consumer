@@ -12,6 +12,7 @@ import uk.gov.companieshouse.kafka.message.Message;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -21,26 +22,29 @@ public class MessageServiceImpl implements MessageService {
     private static final String FAILED_PRODUCER_TOPIC = "document-generation-failed";
     private static final String COMPLETED_PRODUCER_TOPIC = "document-generation-completed";
 
+    private DateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     private DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer = new DocumentGenerationStateAvroSerializer();
 
     @Override
-    public Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument) throws IOException {
+    public Message createDocumentGenerationStarted(DeserialisedKafkaMessage deserialisedKafkaMessage) throws IOException {
 
         DocumentGenerationStarted started = new DocumentGenerationStarted();
-        started.setId(renderSubmittedDataDocument.getId());
-        started.setRequesterId(renderSubmittedDataDocument.getUserId());
+
+        started.setId(deserialisedKafkaMessage.getId());
+        started.setRequesterId(deserialisedKafkaMessage.getUserId());
 
         byte[] startedData = documentGenerationStateAvroSerializer.serialize(started);
         return createMessage(startedData, STARTED_PRODUCER_TOPIC);
     }
 
     @Override
-    public Message createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
+    public Message createDocumentGenerationFailed(DeserialisedKafkaMessage deserialisedKafkaMessage,
                                                GenerateDocumentResponse response) throws IOException {
 
         DocumentGenerationFailed failed = new DocumentGenerationFailed();
-        failed.setId(renderSubmittedDataDocument != null ? renderSubmittedDataDocument.getId() : "");
-        failed.setRequesterId(renderSubmittedDataDocument != null ? renderSubmittedDataDocument.getUserId() : "");
+        failed.setId(deserialisedKafkaMessage != null ? deserialisedKafkaMessage.getId() : "");
+        failed.setRequesterId(deserialisedKafkaMessage != null ? deserialisedKafkaMessage.getUserId() : "");
         failed.setDescription(response != null ? response.getDescription() : "");
         failed.setDescriptionIdentifier(response != null ? response.getDescriptionIdentifier() : "");
 
@@ -53,14 +57,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                                  GenerateDocumentResponse response,
-                                                  DateFormat isoDateFormat) throws IOException {
+    public Message createDocumentGenerationCompleted(DeserialisedKafkaMessage deserialisedKafkaMessage,
+                                                  GenerateDocumentResponse response) throws IOException {
 
         DocumentGenerationCompleted completed = new DocumentGenerationCompleted();
 
-        completed.setId(renderSubmittedDataDocument.getId());
-        completed.setRequesterId(renderSubmittedDataDocument.getUserId());
+        completed.setId(deserialisedKafkaMessage.getId());
+        completed.setRequesterId(deserialisedKafkaMessage.getUserId());
         completed.setDescription(response.getDescription());
         completed.setDescriptionIdentifier(response.getDescriptionIdentifier());
         completed.setLocation(response.getLinks());
