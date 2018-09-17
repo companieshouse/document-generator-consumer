@@ -14,8 +14,6 @@ public interface MessageService {
      *
      * @param deserialisedKafkaMessage
      * @throws IOException
-     * @throws ExecutionException
-     * @throws InterruptedException
      * @return
      */
     Message createDocumentGenerationStarted(DeserialisedKafkaMessage deserialisedKafkaMessage) throws IOException;
@@ -26,8 +24,6 @@ public interface MessageService {
      * @param deserialisedKafkaMessage
      * @param response
      * @throws IOException
-     * @throws ExecutionException
-     * @throws InterruptedException
      * @return
      */
     Message createDocumentGenerationFailed(DeserialisedKafkaMessage deserialisedKafkaMessage,
@@ -39,8 +35,6 @@ public interface MessageService {
      * @param deserialisedKafkaMessage
      * @param response
      * @throws IOException
-     * @throws ExecutionException
-     * @throws InterruptedException
      * @return
      */
     Message createDocumentGenerationCompleted(DeserialisedKafkaMessage deserialisedKafkaMessage,
