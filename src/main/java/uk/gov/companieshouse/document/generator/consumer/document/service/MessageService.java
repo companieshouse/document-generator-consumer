@@ -15,29 +15,25 @@ public interface MessageService {
      * Create message for producer when document generation has started
      *
      * @param renderSubmittedDataDocument
-     * @param producer
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
      * @return
      */
-    Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                            CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException;
+    Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument) throws IOException;
 
     /**
      * Create message for producer when document generation has failed
      *
      * @param renderSubmittedDataDocument
      * @param response
-     * @param producer
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
      * @return
      */
     Message createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                        GenerateDocumentResponse response,
-                                        CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException;
+                                        GenerateDocumentResponse response) throws IOException;
 
     /**
      * Create message for producer when document generation has completed
@@ -45,7 +41,6 @@ public interface MessageService {
      * @param renderSubmittedDataDocument
      * @param response
      * @param isoDateFormat
-     * @param producer
      * @throws IOException
      * @throws ExecutionException
      * @throws InterruptedException
@@ -53,6 +48,5 @@ public interface MessageService {
      */
     Message createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
                                            GenerateDocumentResponse response,
-                                           DateFormat isoDateFormat,
-                                           CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException;
+                                           DateFormat isoDateFormat) throws IOException;
 }

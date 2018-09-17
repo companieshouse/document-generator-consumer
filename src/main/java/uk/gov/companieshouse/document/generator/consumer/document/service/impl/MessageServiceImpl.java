@@ -26,8 +26,7 @@ public class MessageServiceImpl implements MessageService {
     private DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer = new DocumentGenerationStateAvroSerializer();
 
     @Override
-    public Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                                CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException {
+    public Message createDocumentGenerationStarted(DeserialisedKafkaMessage renderSubmittedDataDocument) throws IOException {
 
         DocumentGenerationStarted started = new DocumentGenerationStarted();
         started.setId(renderSubmittedDataDocument.getId());
@@ -39,8 +38,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message createDocumentGenerationFailed(DeserialisedKafkaMessage renderSubmittedDataDocument,
-                                               GenerateDocumentResponse response,
-                                               CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException {
+                                               GenerateDocumentResponse response) throws IOException {
 
         DocumentGenerationFailed failed = new DocumentGenerationFailed();
         failed.setId(renderSubmittedDataDocument != null ? renderSubmittedDataDocument.getId() : "");
@@ -59,8 +57,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message createDocumentGenerationCompleted(DeserialisedKafkaMessage renderSubmittedDataDocument,
                                                   GenerateDocumentResponse response,
-                                                  DateFormat isoDateFormat,
-                                                  CHKafkaProducer producer) throws IOException, ExecutionException, InterruptedException {
+                                                  DateFormat isoDateFormat) throws IOException {
 
         DocumentGenerationCompleted completed = new DocumentGenerationCompleted();
 
