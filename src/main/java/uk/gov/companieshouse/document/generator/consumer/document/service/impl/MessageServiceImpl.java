@@ -82,7 +82,7 @@ public class MessageServiceImpl implements MessageService {
         completed.setRequesterId(deserialisedKafkaMessage.getUserId());
         completed.setDescription(response.getDescription());
         completed.setDescriptionIdentifier(response.getDescriptionIdentifier());
-        completed.setLocation(response.getLinks());
+        completed.setLocation(response.getLinks().getLocation());
         completed.setDocumentSize(response.getSize());
         completed.setDocumentCreatedAt(isoDateFormat.format(new Date(System.currentTimeMillis())));
         completed.setDescriptionValues(response.getDescriptionValues());
