@@ -2,7 +2,6 @@ package uk.gov.companieshouse.document.generator.consumer.document.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.Links;
 
 import java.util.Map;
 

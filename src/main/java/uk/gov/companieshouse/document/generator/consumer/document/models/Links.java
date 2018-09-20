@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.document.generator.consumer.document.models.avro;
+package uk.gov.companieshouse.document.generator.consumer.document.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
