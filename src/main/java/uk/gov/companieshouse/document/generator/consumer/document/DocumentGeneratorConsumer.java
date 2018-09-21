@@ -26,18 +26,30 @@ public class DocumentGeneratorConsumer {
 
     private CHKafkaConsumerGroup consumerGroup;
 
+    private KafkaConsumerProducerHandler kafkaConsumerProducerHandler;
+
+    private EnvironmentReader environmentReader;
+
     private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
 
     @Autowired
     public DocumentGeneratorConsumer(KafkaConsumerProducerHandler kafkaConsumerProducerHandler,
-                                     EnvironmentReader environmentReader) {
+                                     EnvironmentReader environmentReader,
+                                     MessageService messageService,
+                                     AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer) {
+
+        this.kafkaConsumerProducerHandler = kafkaConsumerProducerHandler;
+        this.environmentReader = environmentReader;
+        this.messageService = messageService;
+        this.avroDeserializer = avroDeserializer;
 
         consumerGroup = kafkaConsumerProducerHandler.getConsumerGroup(Arrays.asList(
                 environmentReader.getMandatoryString(CONSUMER_TOPIC_VAR)),
                 environmentReader.getMandatoryString(GROUP_NAME_VAR));
     }
 
-    private void pollAndGenerateDocument() throws MessageCreationException {
+    public void pollAndGenerateDocument() throws MessageCreationException {
+
         for(Message message : consumerGroup.consume()) {
             DeserialisedKafkaMessage deserialisedKafkaMessage = null;
 
