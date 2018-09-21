@@ -28,6 +28,7 @@ public class DocumentGeneratorConsumer {
 
     private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
 
+    @Autowired
     public DocumentGeneratorConsumer(KafkaConsumerProducerHandler kafkaConsumerProducerHandler,
                                      EnvironmentReader environmentReader) {
 
