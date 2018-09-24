@@ -55,7 +55,7 @@ public class DocumentGeneratorConsumerTests {
     Message message;
 
     @BeforeEach
-    void init () throws Exception {
+    void init () {
         when(mockEnvironmentReader.getMandatoryString(any(String.class))).thenReturn("string");
         when(mockKafkaConsumerProducerHandler.getConsumerGroup(anyList(), any(String.class))).thenReturn(mockConsumerGroup);
         when(mockConsumerGroup.consume()).thenReturn(createTestMessageList());
@@ -65,8 +65,8 @@ public class DocumentGeneratorConsumerTests {
     }
 
     @Test
-    @DisplayName("Test polling of Kafka messages to request document generation")
-    void pollAndGenerateDocumentTest() throws Exception {
+    @DisplayName("Test message for create document generation started ")
+    void documentGenerationStartedMessageCreatedTest() throws Exception {
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenReturn(mockDeserialisedKafkaMessage);
         documentGeneratorConsumer.pollAndGenerateDocument();
 

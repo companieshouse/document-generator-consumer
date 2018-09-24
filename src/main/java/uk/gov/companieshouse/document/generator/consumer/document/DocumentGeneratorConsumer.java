@@ -57,10 +57,9 @@ public class DocumentGeneratorConsumer {
                 deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
                 messageService.createDocumentGenerationStarted(deserialisedKafkaMessage);
             } catch (Exception e) {
+                LOG.error(e);
                 messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null);
                 consumerGroup.commit();
-                LOG.error(e);
-                throw new MessageCreationException(e.getMessage(), e.getCause());
             }
         }
     }
