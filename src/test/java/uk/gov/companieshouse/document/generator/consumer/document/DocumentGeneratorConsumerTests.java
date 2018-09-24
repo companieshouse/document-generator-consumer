@@ -53,8 +53,9 @@ public class DocumentGeneratorConsumerTests {
     @Mock
     private AvroDeserializer<DeserialisedKafkaMessage> mockAvroDeserializer;
 
-    List<Message> messages;
-    Message message;
+    private List<Message> messages;
+
+    private Message message;
 
     @BeforeEach
     void init () {
