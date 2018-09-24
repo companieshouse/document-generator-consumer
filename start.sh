@@ -9,7 +9,7 @@ if [[ -z "${MESOS_SLAVE_PID}" ]]; then
     source ~/.chs_env/global_env
     source ~/.chs_env/document-generator-consumer/env
 
-    PORT="${DOCUMENT_GENERATION_SERVICE_PORT}"
+    PORT="${DOCUMENT_GENERATION_CONSUMER_SERVICE_PORT}"
 else
     PORT="$1"
     CONFIG_URL="$2"
