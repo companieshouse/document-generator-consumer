@@ -49,13 +49,15 @@ public class DocumentGeneratorConsumer {
     }
 
     public void pollAndGenerateDocument() throws MessageCreationException {
-
-        for(Message message : consumerGroup.consume()) {
+        for (Message message : consumerGroup.consume()) {
             DeserialisedKafkaMessage deserialisedKafkaMessage = null;
 
             try {
                 deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
+
                 messageService.createDocumentGenerationStarted(deserialisedKafkaMessage);
+
+                consumerGroup.commit();
             } catch (Exception e) {
                 LOG.error(e);
                 messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null);

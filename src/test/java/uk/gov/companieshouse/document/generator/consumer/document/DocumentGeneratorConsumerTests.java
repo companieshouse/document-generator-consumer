@@ -17,6 +17,7 @@ import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
 import uk.gov.companieshouse.kafka.message.Message;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -66,11 +68,20 @@ public class DocumentGeneratorConsumerTests {
 
     @Test
     @DisplayName("Test message for create document generation started ")
-    void documentGenerationStartedMessageCreatedTest() throws Exception {
+    void pollAndGenerateStartedMessageCreatedTest() throws Exception {
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenReturn(mockDeserialisedKafkaMessage);
         documentGeneratorConsumer.pollAndGenerateDocument();
 
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockDeserialisedKafkaMessage));
+    }
+
+    @Test
+    @DisplayName("Test message for create document generation failed")
+    void pollAndGenerateFailedMessageVerifiedTest() throws Exception {
+        when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenThrow(new IOException());
+        documentGeneratorConsumer.pollAndGenerateDocument();
+
+        verify(mockMessageService).createDocumentGenerationFailed(null, null);
     }
 
     private List< Message > createTestMessageList() {
