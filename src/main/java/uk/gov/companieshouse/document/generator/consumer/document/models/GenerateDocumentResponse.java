@@ -7,6 +7,12 @@ import java.util.Map;
 
 public class GenerateDocumentResponse {
 
+    @JsonProperty("links")
+    private Links links;
+
+    @JsonProperty("size")
+    private String size;
+
     @JsonProperty("description")
     private String description;
 
@@ -16,11 +22,21 @@ public class GenerateDocumentResponse {
     @JsonProperty("description_values")
     private Map<String, String> descriptionValues;
 
-    @JsonProperty("links")
-    private Links links;
+    public Links getLinks() {
+        return links;
+    }
 
-    @JsonProperty("size")
-    private String size;
+    public void setLinks(Links links) {
+        this.links = links;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     public String getDescription() {
         return description;
@@ -44,22 +60,6 @@ public class GenerateDocumentResponse {
 
     public void setDescriptionValues(Map<String, String> descriptionValues) {
         this.descriptionValues = descriptionValues;
-    }
-
-    public Links getLinks() {
-        return links;
-    }
-
-    public void setLinks(Links links) {
-        this.links = links;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     @Override
