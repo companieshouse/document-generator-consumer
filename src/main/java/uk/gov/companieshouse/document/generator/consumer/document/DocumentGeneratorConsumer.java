@@ -66,7 +66,6 @@ public class DocumentGeneratorConsumer implements Runnable {
         for (Message message : consumerGroup.consume()) {
             DeserialisedKafkaMessage deserialisedKafkaMessage = null;
 
-
             try {
                 deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
 
@@ -85,14 +84,11 @@ public class DocumentGeneratorConsumer implements Runnable {
 
     public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException {
         GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
-        GenerateDocumentResponse response = new GenerateDocumentResponse();
-
-        // Call the DocumentGeneratorApi and pass the request
+        GenerateDocumentResponse response = null;
 
         try {
             RestTemplate restTemplate = new RestTemplate();
-
-            response = restTemplate.getForObject(DOCUMENT_GENERATE_URI, GenerateDocumentResponse.class);
+            response = restTemplate.postForObject(DOCUMENT_GENERATE_URI, request, GenerateDocumentResponse.class);
 
             messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response);
         } catch (Exception e) {
