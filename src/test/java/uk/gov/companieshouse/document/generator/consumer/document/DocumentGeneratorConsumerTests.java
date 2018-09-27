@@ -61,18 +61,14 @@ public class DocumentGeneratorConsumerTests {
     @Mock
     private RestTemplate mockRestTemplate;
 
-    @Mock
-    private GenerateDocumentResponse mockGenerateDocumentResponse;
-
     private List<Message> messages;
 
     private Message message;
 
     @BeforeEach
-    void init () {
+    void init() {
         when(mockEnvironmentReader.getMandatoryString(any(String.class))).thenReturn("string");
         when(mockKafkaConsumerProducerHandler.getConsumerGroup(anyList(), any(String.class))).thenReturn(mockConsumerGroup);
-        when(mockConsumerGroup.consume()).thenReturn(createTestMessageList());
 
         documentGeneratorConsumer = new DocumentGeneratorConsumer(mockKafkaConsumerProducerHandler,
                 mockEnvironmentReader, mockMessageService, mockAvroDeserializer, mockRestTemplate);
@@ -81,6 +77,7 @@ public class DocumentGeneratorConsumerTests {
     @Test
     @DisplayName("Test message for create document generation started ")
     void pollAndGenerateStartedMessageCreatedTest() throws Exception {
+        when(mockConsumerGroup.consume()).thenReturn(createTestMessageList());
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenReturn(mockDeserialisedKafkaMessage);
         documentGeneratorConsumer.pollAndGenerateDocument();
 
@@ -90,6 +87,7 @@ public class DocumentGeneratorConsumerTests {
     @Test
     @DisplayName("Test message for create document generation failed")
     void pollAndGenerateFailedMessageVerifiedTest() throws Exception {
+        when(mockConsumerGroup.consume()).thenReturn(createTestMessageList());
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenThrow(new IOException());
         documentGeneratorConsumer.pollAndGenerateDocument();
 
@@ -100,17 +98,12 @@ public class DocumentGeneratorConsumerTests {
     @DisplayName("Test message for create document generation completed")
     void requestGenerateDocumentCompletedMessageCreated() throws Exception {
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
-        deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setResourceId("testResourceId");
-        deserialisedKafkaMessage.setContentType("testContentType");
-        deserialisedKafkaMessage.setDocumentType("testDocumentType");
+        DeserialisedKafkaMessage deserialisedKafkaMessage = createDeserialisedKafkaMessage();
 
-        when(mockRestTemplate.postForObject("test/uri", GenerateDocumentRequest.class, GenerateDocumentResponse.class)).thenReturn(createResponse());
-
+        when(mockRestTemplate.postForObject(anyString(), any(GenerateDocumentRequest.class), eq(GenerateDocumentResponse.class))).thenReturn(createResponse());
         documentGeneratorConsumer.requestGenerateDocument(deserialisedKafkaMessage);
 
-//        verify(mockMessageService).createDocumentGenerationCompleted(deserialisedKafkaMessage, mockGenerateDocumentResponse);
+        assertEquals(any(Message.class), mockMessageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, any(GenerateDocumentResponse.class)));
     }
 
     private GenerateDocumentResponse createResponse() {
@@ -128,8 +121,8 @@ public class DocumentGeneratorConsumerTests {
         return response;
     }
 
-    private List< Message > createTestMessageList() {
-        messages = new ArrayList< >();
+    private List<Message> createTestMessageList() {
+        messages = new ArrayList<>();
         message = new Message();
         message.setKey("test key");
         message.setOffset(100L);
@@ -140,5 +133,15 @@ public class DocumentGeneratorConsumerTests {
         messages.add(message);
 
         return messages;
+    }
+
+    private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
+        DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
+        deserialisedKafkaMessage.setResource("testResource");
+        deserialisedKafkaMessage.setResourceId("testResourceId");
+        deserialisedKafkaMessage.setContentType("testContentType");
+        deserialisedKafkaMessage.setDocumentType("testDocumentType");
+
+        return deserialisedKafkaMessage;
     }
 }
