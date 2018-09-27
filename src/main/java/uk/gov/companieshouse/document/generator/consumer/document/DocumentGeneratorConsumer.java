@@ -27,6 +27,9 @@ public class DocumentGeneratorConsumer implements Runnable {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     private CHKafkaConsumerGroup consumerGroup;
 
     private KafkaConsumerProducerHandler kafkaConsumerProducerHandler;
@@ -41,12 +44,14 @@ public class DocumentGeneratorConsumer implements Runnable {
     public DocumentGeneratorConsumer(KafkaConsumerProducerHandler kafkaConsumerProducerHandler,
                                      EnvironmentReader environmentReader,
                                      MessageService messageService,
-                                     AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer) {
+                                     AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer,
+                                     RestTemplate restTemplate) {
 
         this.kafkaConsumerProducerHandler = kafkaConsumerProducerHandler;
         this.environmentReader = environmentReader;
         this.messageService = messageService;
         this.avroDeserializer = avroDeserializer;
+        this.restTemplate = restTemplate;
 
         consumerGroup = kafkaConsumerProducerHandler.getConsumerGroup(Arrays.asList(
                 environmentReader.getMandatoryString(CONSUMER_TOPIC_VAR)),
@@ -87,7 +92,6 @@ public class DocumentGeneratorConsumer implements Runnable {
         GenerateDocumentResponse response = null;
 
         try {
-            RestTemplate restTemplate = new RestTemplate();
             response = restTemplate.postForObject(DOCUMENT_GENERATE_URI, request, GenerateDocumentResponse.class);
 
             messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response);
