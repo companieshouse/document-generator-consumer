@@ -115,7 +115,7 @@ public class DocumentGeneratorConsumer implements Runnable {
      * Populate GenerateDocumentRequest with DeserialisedKafkaMessage content
      *
      * @param deserialisedKafkaMessage
-     * @return
+     * @return message
      */
     private GenerateDocumentRequest populateDocumentRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
         GenerateDocumentRequest request = new GenerateDocumentRequest();

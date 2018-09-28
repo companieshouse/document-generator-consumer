@@ -109,7 +109,7 @@ public class DocumentGeneratorConsumerTests {
     /**
      * Populate a GenerateDocumentResponse object with content
      *
-     * @return
+     * @return response
      */
     private GenerateDocumentResponse createResponse() {
         GenerateDocumentResponse response = new GenerateDocumentResponse();
@@ -129,7 +129,7 @@ public class DocumentGeneratorConsumerTests {
     /**
      * Populate a List of Message's with a Message object
      *
-     * @return
+     * @return messages
      */
     private List<Message> createTestMessageList() {
         messages = new ArrayList<>();
@@ -148,7 +148,7 @@ public class DocumentGeneratorConsumerTests {
     /**
      * Populate a DeserialisedKafkaMessage object with content
      *
-     * @return
+     * @return deserialisedKafkaMessage
      */
     private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
         DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
