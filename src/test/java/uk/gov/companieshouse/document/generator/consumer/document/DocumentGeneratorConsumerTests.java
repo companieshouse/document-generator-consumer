@@ -20,6 +20,7 @@ import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerProd
 import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
 import uk.gov.companieshouse.kafka.message.Message;
+import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +30,10 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -59,6 +63,9 @@ public class DocumentGeneratorConsumerTests {
     private AvroDeserializer<DeserialisedKafkaMessage> mockAvroDeserializer;
 
     @Mock
+    private CHKafkaProducer mockCHKafkaProducer;
+
+    @Mock
     private RestTemplate mockRestTemplate;
 
     private List<Message> messages;
@@ -71,7 +78,7 @@ public class DocumentGeneratorConsumerTests {
         when(mockKafkaConsumerProducerHandler.getConsumerGroup(anyList(), any(String.class))).thenReturn(mockConsumerGroup);
 
         documentGeneratorConsumer = new DocumentGeneratorConsumer(mockKafkaConsumerProducerHandler,
-                mockEnvironmentReader, mockMessageService, mockAvroDeserializer, mockRestTemplate);
+                mockEnvironmentReader, mockMessageService, mockAvroDeserializer, mockRestTemplate, mockCHKafkaProducer);
     }
 
     @Test

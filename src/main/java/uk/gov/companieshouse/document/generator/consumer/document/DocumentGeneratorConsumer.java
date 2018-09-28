@@ -49,13 +49,15 @@ public class DocumentGeneratorConsumer implements Runnable {
                                      EnvironmentReader environmentReader,
                                      MessageService messageService,
                                      AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer,
-                                     RestTemplate restTemplate) {
+                                     RestTemplate restTemplate,
+                                     CHKafkaProducer producer) {
 
         this.kafkaConsumerProducerHandler = kafkaConsumerProducerHandler;
         this.environmentReader = environmentReader;
         this.messageService = messageService;
         this.avroDeserializer = avroDeserializer;
         this.restTemplate = restTemplate;
+        this.producer = producer;
 
         consumerGroup = kafkaConsumerProducerHandler.getConsumerGroup(Arrays.asList(
                 environmentReader.getMandatoryString(CONSUMER_TOPIC_VAR)),
@@ -101,16 +103,16 @@ public class DocumentGeneratorConsumer implements Runnable {
      * @throws MessageCreationException
      */
     public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException, ExecutionException, InterruptedException {
-        GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
-        GenerateDocumentResponse response = null;
-
         try {
+            GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
+            GenerateDocumentResponse response;
+
             response = restTemplate.postForObject(DOCUMENT_GENERATE_URI, request, GenerateDocumentResponse.class);
 
             producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response));
         } catch (Exception e) {
             LOG.error(e);
-            producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, response));
+            producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
             consumerGroup.commit();
         }
     }
