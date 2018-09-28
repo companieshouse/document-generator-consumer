@@ -67,6 +67,9 @@ public class DocumentGeneratorConsumer implements Runnable {
         }
     }
 
+    /**
+     * Poll kafka messages to request document generation from document-generator-api
+     */
     public void pollAndGenerateDocument() throws MessageCreationException {
         for (Message message : consumerGroup.consume()) {
             DeserialisedKafkaMessage deserialisedKafkaMessage = null;
@@ -87,6 +90,12 @@ public class DocumentGeneratorConsumer implements Runnable {
         }
     }
 
+    /**
+     * Request generation of document from document-generator-api
+     *
+     * @param deserialisedKafkaMessage
+     * @throws MessageCreationException
+     */
     public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException {
         GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
         GenerateDocumentResponse response = null;
@@ -102,6 +111,12 @@ public class DocumentGeneratorConsumer implements Runnable {
         }
     }
 
+    /**
+     * Populate GenerateDocumentRequest with DeserialisedKafkaMessage content
+     *
+     * @param deserialisedKafkaMessage
+     * @return
+     */
     private GenerateDocumentRequest populateDocumentRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
         GenerateDocumentRequest request = new GenerateDocumentRequest();
         request.setResourceUri(deserialisedKafkaMessage.getResource());

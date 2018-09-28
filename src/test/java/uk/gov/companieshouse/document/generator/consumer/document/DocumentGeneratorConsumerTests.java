@@ -106,6 +106,11 @@ public class DocumentGeneratorConsumerTests {
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, any(GenerateDocumentResponse.class)));
     }
 
+    /**
+     * Populate a GenerateDocumentResponse object with content
+     *
+     * @return
+     */
     private GenerateDocumentResponse createResponse() {
         GenerateDocumentResponse response = new GenerateDocumentResponse();
         Links links = new Links();
@@ -121,6 +126,11 @@ public class DocumentGeneratorConsumerTests {
         return response;
     }
 
+    /**
+     * Populate a List of Message's with a Message object
+     *
+     * @return
+     */
     private List<Message> createTestMessageList() {
         messages = new ArrayList<>();
         message = new Message();
@@ -135,6 +145,11 @@ public class DocumentGeneratorConsumerTests {
         return messages;
     }
 
+    /**
+     * Populate a DeserialisedKafkaMessage object with content
+     *
+     * @return
+     */
     private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
         DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
         deserialisedKafkaMessage.setResource("testResource");
