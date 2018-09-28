@@ -75,6 +75,10 @@ public class DocumentGeneratorConsumer implements Runnable {
 
     /**
      * Poll kafka messages to request document generation from document-generator-api
+     *
+     * @throws MessageCreationException
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     public void pollAndGenerateDocument() throws MessageCreationException, ExecutionException, InterruptedException {
         for (Message message : consumerGroup.consume()) {
@@ -101,6 +105,8 @@ public class DocumentGeneratorConsumer implements Runnable {
      *
      * @param deserialisedKafkaMessage
      * @throws MessageCreationException
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException, ExecutionException, InterruptedException {
         try {
