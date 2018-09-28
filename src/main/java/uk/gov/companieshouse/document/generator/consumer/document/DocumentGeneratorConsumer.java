@@ -12,10 +12,12 @@ import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerProd
 import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
 import uk.gov.companieshouse.kafka.message.Message;
+import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 public class DocumentGeneratorConsumer implements Runnable {
 
@@ -31,6 +33,8 @@ public class DocumentGeneratorConsumer implements Runnable {
     private RestTemplate restTemplate;
 
     private CHKafkaConsumerGroup consumerGroup;
+
+    private CHKafkaProducer producer;
 
     private KafkaConsumerProducerHandler kafkaConsumerProducerHandler;
 
@@ -70,21 +74,21 @@ public class DocumentGeneratorConsumer implements Runnable {
     /**
      * Poll kafka messages to request document generation from document-generator-api
      */
-    public void pollAndGenerateDocument() throws MessageCreationException {
+    public void pollAndGenerateDocument() throws MessageCreationException, ExecutionException, InterruptedException {
         for (Message message : consumerGroup.consume()) {
             DeserialisedKafkaMessage deserialisedKafkaMessage = null;
 
             try {
                 deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
 
-                messageService.createDocumentGenerationStarted(deserialisedKafkaMessage);
+                producer.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
 
                 requestGenerateDocument(deserialisedKafkaMessage);
 
                 consumerGroup.commit();
             } catch (Exception e) {
                 LOG.error(e);
-                messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null);
+                producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
                 consumerGroup.commit();
             }
         }
@@ -96,17 +100,17 @@ public class DocumentGeneratorConsumer implements Runnable {
      * @param deserialisedKafkaMessage
      * @throws MessageCreationException
      */
-    public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException {
+    public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException, ExecutionException, InterruptedException {
         GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
         GenerateDocumentResponse response = null;
 
         try {
             response = restTemplate.postForObject(DOCUMENT_GENERATE_URI, request, GenerateDocumentResponse.class);
 
-            messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response);
+            producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response));
         } catch (Exception e) {
             LOG.error(e);
-            messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, response);
+            producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, response));
             consumerGroup.commit();
         }
     }
