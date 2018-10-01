@@ -2,6 +2,7 @@ package uk.gov.companieshouse.document.generator.consumer.document;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentRequest;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
@@ -27,9 +28,10 @@ public class DocumentGeneratorConsumer implements Runnable {
     private static final String GROUP_NAME_VAR = "GROUP_NAME";
 
     @Autowired
+    private DocumentGeneratorConsumerProperties configuration;
+
     private MessageService messageService;
 
-    @Autowired
     private RestTemplate restTemplate;
 
     private CHKafkaConsumerGroup consumerGroup;
@@ -41,8 +43,6 @@ public class DocumentGeneratorConsumer implements Runnable {
     private EnvironmentReader environmentReader;
 
     private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
-
-    private static final String DOCUMENT_GENERATE_URI = "http://localhost:8080/private/documents/generate";
 
     @Autowired
     public DocumentGeneratorConsumer(KafkaConsumerProducerHandler kafkaConsumerProducerHandler,
@@ -110,10 +110,11 @@ public class DocumentGeneratorConsumer implements Runnable {
      */
     public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException, ExecutionException, InterruptedException {
         try {
+            String url = configuration.getRootUri() + configuration.getBaseUrl();
             GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
             GenerateDocumentResponse response;
 
-            response = restTemplate.postForObject(DOCUMENT_GENERATE_URI, request, GenerateDocumentResponse.class);
+            response = restTemplate.postForObject(url, request, GenerateDocumentResponse.class);
 
             producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response));
         } catch (Exception e) {
