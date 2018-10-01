@@ -27,9 +27,6 @@ public class DocumentGeneratorConsumer implements Runnable {
     private static final String CONSUMER_TOPIC_VAR = "CONSUMER_TOPIC";
     private static final String GROUP_NAME_VAR = "GROUP_NAME";
 
-    @Autowired
-    private DocumentGeneratorConsumerProperties configuration;
-
     private MessageService messageService;
 
     private RestTemplate restTemplate;
@@ -43,6 +40,9 @@ public class DocumentGeneratorConsumer implements Runnable {
     private EnvironmentReader environmentReader;
 
     private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
+
+    @Autowired
+    private DocumentGeneratorConsumerProperties configuration;
 
     @Autowired
     public DocumentGeneratorConsumer(KafkaConsumerProducerHandler kafkaConsumerProducerHandler,
