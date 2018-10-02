@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentRequest;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
@@ -68,6 +69,9 @@ public class DocumentGeneratorConsumerTests {
     @Mock
     private RestTemplate mockRestTemplate;
 
+    @Mock
+    private DocumentGeneratorConsumerProperties mockProperties;
+
     private List<Message> messages;
 
     private Message message;
@@ -78,7 +82,8 @@ public class DocumentGeneratorConsumerTests {
         when(mockKafkaConsumerProducerHandler.getConsumerGroup(anyList(), any(String.class))).thenReturn(mockConsumerGroup);
 
         documentGeneratorConsumer = new DocumentGeneratorConsumer(mockKafkaConsumerProducerHandler,
-                mockEnvironmentReader, mockMessageService, mockAvroDeserializer, mockRestTemplate, mockCHKafkaProducer);
+                mockEnvironmentReader, mockMessageService, mockAvroDeserializer, mockRestTemplate,
+                mockCHKafkaProducer, mockProperties);
     }
 
     @Test
