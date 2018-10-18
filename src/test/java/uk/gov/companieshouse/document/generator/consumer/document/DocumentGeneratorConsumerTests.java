@@ -80,10 +80,11 @@ public class DocumentGeneratorConsumerTests {
     void init() {
         when(mockEnvironmentReader.getMandatoryString(any(String.class))).thenReturn("string");
         when(mockKafkaConsumerProducerHandler.getConsumerGroup(anyList(), any(String.class))).thenReturn(mockConsumerGroup);
+        when(mockKafkaConsumerProducerHandler.getProducer()).thenReturn(mockCHKafkaProducer);
 
         documentGeneratorConsumer = new DocumentGeneratorConsumer(mockKafkaConsumerProducerHandler,
                 mockEnvironmentReader, mockMessageService, mockAvroDeserializer, mockRestTemplate,
-                mockCHKafkaProducer, mockProperties);
+                mockProperties);
     }
 
     @Test
