@@ -16,6 +16,8 @@ import uk.gov.companieshouse.logging.LoggerFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -25,6 +27,12 @@ public class MessageServiceImpl implements MessageService {
     private static final String STARTED_PRODUCER_TOPIC = "document-generation-started";
     private static final String FAILED_PRODUCER_TOPIC = "document-generation-failed";
     private static final String COMPLETED_PRODUCER_TOPIC = "document-generation-completed";
+
+    private static final String STARTED_DOCUMENT = "started_document";
+    private static final String FAILED_DOCUMENT = "failed_document";
+    private static final String COMPLETED_DOCUMENT = "completed_document";
+    private static final String DESCRIPTION_IDENTIFIER = "description_identifier";
+    private static final String DESCRIPTION = "description";
 
     private DateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -39,11 +47,13 @@ public class MessageServiceImpl implements MessageService {
         started.setRequesterId(deserialisedKafkaMessage.getUserId());
 
         try {
-            LOG.info("Serialize document generation started and create message ");
+            LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Serialize document generation started and create message",
+                    setDebugMap(new String[]{STARTED_DOCUMENT}, new Object[]{started}));
             byte[] startedData = documentGenerationStateAvroSerializer.serialize(started);
             return createMessage(startedData, STARTED_PRODUCER_TOPIC);
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.errorContext(deserialisedKafkaMessage.getUserId(), "Error occurred whilst serialising document generation started",
+                    e, setDebugMap(new String[]{STARTED_DOCUMENT}, new Object[]{started}));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
     }
@@ -63,11 +73,13 @@ public class MessageServiceImpl implements MessageService {
         }
 
         try {
-            LOG.info("Serialize document generation failed and create message ");
+            LOG.infoContext(failed.getRequesterId(),"Serialize document generation failed and create message",
+                    setDebugMap(new String[]{FAILED_DOCUMENT}, new Object[]{failed}));
             byte[] failedData = documentGenerationStateAvroSerializer.serialize(failed);
             return createMessage(failedData, FAILED_PRODUCER_TOPIC);
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.errorContext(failed.getRequesterId(),"Error occurred whilst serialising document generation failed",
+                    e, setDebugMap(new String[]{FAILED_DOCUMENT}, new Object[]{failed}));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
     }
@@ -88,11 +100,15 @@ public class MessageServiceImpl implements MessageService {
         completed.setDescriptionValues(response.getDescriptionValues());
 
         try {
-            LOG.info("Serialize document generation completed and create message ");
+            LOG.infoContext(completed.getRequesterId(),"Serialize document generation completed and create message",
+                    setDebugMap(new String[]{DESCRIPTION_IDENTIFIER, DESCRIPTION, COMPLETED_DOCUMENT},
+                            new Object[]{completed.getDescriptionIdentifier(), completed.getDescription(), completed}));
             byte[] completedData = documentGenerationStateAvroSerializer.serialize(completed);
             return createMessage(completedData, COMPLETED_PRODUCER_TOPIC);
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.errorContext(completed.getRequesterId(), "Error occurred whilst serialising document generation completed",
+                    e, setDebugMap(new String[]{DESCRIPTION_IDENTIFIER, DESCRIPTION, COMPLETED_DOCUMENT},
+                            new Object[]{completed.getDescriptionIdentifier(), completed.getDescription(), completed}));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
     }
@@ -110,5 +126,16 @@ public class MessageServiceImpl implements MessageService {
         message.setTopic(topic);
         message.setTimestamp(new Date().getTime());
         return message;
+    }
+
+    private Map<String, Object> setDebugMap(String[] keys, Object values[]) {
+
+        Map<String, Object> debugMap = new HashMap<>();
+
+        for(int i = 0; i < Math.min(keys.length, values.length); i++) {
+            debugMap.put(keys[i], values[i]);
+        }
+
+        return debugMap;
     }
 }
