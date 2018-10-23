@@ -47,12 +47,12 @@ public class MessageServiceImpl implements MessageService {
         started.setRequesterId(deserialisedKafkaMessage.getUserId());
 
         try {
-            LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Serialize document generation started and create message",
+            LOG.infoContext(started.getRequesterId(),"Serialize document generation started and create message",
                     setDebugMap(new String[]{STARTED_DOCUMENT}, new Object[]{started}));
             byte[] startedData = documentGenerationStateAvroSerializer.serialize(started);
             return createMessage(startedData, STARTED_PRODUCER_TOPIC);
         } catch (Exception e) {
-            LOG.errorContext(deserialisedKafkaMessage.getUserId(), "Error occurred whilst serialising document generation started",
+            LOG.errorContext(started.getRequesterId(), "Error occurred whilst serialising document generation started",
                     e, setDebugMap(new String[]{STARTED_DOCUMENT}, new Object[]{started}));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
