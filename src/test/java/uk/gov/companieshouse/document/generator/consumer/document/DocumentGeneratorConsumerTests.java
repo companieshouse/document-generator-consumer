@@ -91,7 +91,8 @@ public class DocumentGeneratorConsumerTests {
     @DisplayName("Test message for create document generation started ")
     void pollAndGenerateStartedMessageCreatedTest() throws Exception {
         when(mockConsumerGroup.consume()).thenReturn(createTestMessageList());
-        when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenReturn(mockDeserialisedKafkaMessage);
+        DeserialisedKafkaMessage deserialisedKafkaMessage = createDeserialisedKafkaMessage();
+        when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class))).thenReturn(deserialisedKafkaMessage);
         documentGeneratorConsumer.pollAndGenerateDocument();
 
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockDeserialisedKafkaMessage));
