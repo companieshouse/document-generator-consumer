@@ -33,8 +33,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
 
-        registry.addInterceptor(loggingInterceptor)
-                .excludePathPatterns("/healthcheck");
+        registry.addInterceptor(loggingInterceptor);
     }
 }
 

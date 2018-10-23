@@ -48,12 +48,12 @@ public class MessageServiceImpl implements MessageService {
 
         try {
             LOG.infoContext(started.getRequesterId(),"Serialize document generation started and create message",
-                    setDebugMap(new String[]{STARTED_DOCUMENT}, new Object[]{started}));
+                    setStartedDebugMap(started));
             byte[] startedData = documentGenerationStateAvroSerializer.serialize(started);
             return createMessage(startedData, STARTED_PRODUCER_TOPIC);
         } catch (Exception e) {
             LOG.errorContext(started.getRequesterId(), "Error occurred whilst serialising document generation started",
-                    e, setDebugMap(new String[]{STARTED_DOCUMENT}, new Object[]{started}));
+                    e, setStartedDebugMap(started));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
     }
@@ -74,12 +74,12 @@ public class MessageServiceImpl implements MessageService {
 
         try {
             LOG.infoContext(failed.getRequesterId(),"Serialize document generation failed and create message",
-                    setDebugMap(new String[]{FAILED_DOCUMENT}, new Object[]{failed}));
+                   setFailedDebugMap(failed));
             byte[] failedData = documentGenerationStateAvroSerializer.serialize(failed);
             return createMessage(failedData, FAILED_PRODUCER_TOPIC);
         } catch (Exception e) {
             LOG.errorContext(failed.getRequesterId(),"Error occurred whilst serialising document generation failed",
-                    e, setDebugMap(new String[]{FAILED_DOCUMENT}, new Object[]{failed}));
+                    e, setFailedDebugMap(failed));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
     }
@@ -101,14 +101,12 @@ public class MessageServiceImpl implements MessageService {
 
         try {
             LOG.infoContext(completed.getRequesterId(),"Serialize document generation completed and create message",
-                    setDebugMap(new String[]{DESCRIPTION_IDENTIFIER, DESCRIPTION, COMPLETED_DOCUMENT},
-                            new Object[]{completed.getDescriptionIdentifier(), completed.getDescription(), completed}));
+                    setCompletedDebugMap(completed));
             byte[] completedData = documentGenerationStateAvroSerializer.serialize(completed);
             return createMessage(completedData, COMPLETED_PRODUCER_TOPIC);
         } catch (Exception e) {
             LOG.errorContext(completed.getRequesterId(), "Error occurred whilst serialising document generation completed",
-                    e, setDebugMap(new String[]{DESCRIPTION_IDENTIFIER, DESCRIPTION, COMPLETED_DOCUMENT},
-                            new Object[]{completed.getDescriptionIdentifier(), completed.getDescription(), completed}));
+                    e, setCompletedDebugMap(completed));
             throw new MessageCreationException(e.getMessage(), e.getCause());
         }
     }
@@ -128,14 +126,29 @@ public class MessageServiceImpl implements MessageService {
         return message;
     }
 
-    private Map<String, Object> setDebugMap(String[] keys, Object values[]) {
+    private Map<String, Object> setCompletedDebugMap(DocumentGenerationCompleted completed) {
 
-        Map<String, Object> debugMap = new HashMap<>();
+        Map<String, Object> completedParams = new HashMap<>();
+        completedParams.put(DESCRIPTION_IDENTIFIER, completed.getDescriptionIdentifier());
+        completedParams.put(DESCRIPTION, completed.getDescription());
+        completedParams.put(COMPLETED_DOCUMENT, completed);
 
-        for(int i = 0; i < Math.min(keys.length, values.length); i++) {
-            debugMap.put(keys[i], values[i]);
-        }
+        return completedParams;
+    }
 
-        return debugMap;
+    private Map<String, Object> setFailedDebugMap(DocumentGenerationFailed failed) {
+
+        Map<String, Object> failedParams = new HashMap<>();
+        failedParams.put(FAILED_DOCUMENT, failed);
+
+        return failedParams;
+    }
+
+    private Map<String, Object> setStartedDebugMap(DocumentGenerationStarted started) {
+
+        Map<String, Object> startedParams = new HashMap<>();
+        startedParams.put(STARTED_DOCUMENT, started);
+
+        return startedParams;
     }
 }

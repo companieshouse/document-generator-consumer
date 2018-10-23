@@ -95,8 +95,7 @@ public class DocumentGeneratorConsumer implements Runnable {
                 deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
 
                 LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Message received and deserialised from kafka",
-                        setDebugMap(new String[]{RESOURCE_ID, RESOURCE_URI},
-                                new String[]{deserialisedKafkaMessage.getResourceId(), deserialisedKafkaMessage.getResource()}));
+                        setDebugMap(deserialisedKafkaMessage));
 
                 producer.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
 
@@ -105,7 +104,7 @@ public class DocumentGeneratorConsumer implements Runnable {
                 consumerGroup.commit();
             } catch (Exception e) {
                 LOG.error("An error occurred when trying to generate a document from a kafka message",
-                        setDebugMap(new String[]{KAFKA_MSG}, new String[]{message.getValue().toString()}));
+                        setDebugMapKafkaFail(message.getValue().toString()));
                 producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
                 consumerGroup.commit();
             }
@@ -129,16 +128,14 @@ public class DocumentGeneratorConsumer implements Runnable {
             GenerateDocumentResponse response;
 
             LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Sending request to generate document to document" +
-                            " generator api", setDebugMap(new String[]{RESOURCE_ID, RESOURCE_URI},
-                            new String[]{deserialisedKafkaMessage.getResourceId(), deserialisedKafkaMessage.getResource()}));
+                            " generator api", setDebugMap(deserialisedKafkaMessage));
 
             response = restTemplate.postForObject(url, request, GenerateDocumentResponse.class);
 
             producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response));
         } catch (Exception e) {
             LOG.errorContext(deserialisedKafkaMessage.getUserId(),"An error occurred when requesting the generation" +
-                    " of a document from the document generator api", e, setDebugMap(new String[]{RESOURCE_ID, RESOURCE_URI},
-                    new String[]{deserialisedKafkaMessage.getResourceId(), deserialisedKafkaMessage.getResource()}));
+                    " of a document from the document generator api", e, setDebugMap(deserialisedKafkaMessage));
             producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
             consumerGroup.commit();
         }
@@ -159,14 +156,20 @@ public class DocumentGeneratorConsumer implements Runnable {
         return request;
     }
 
-    private Map<String, Object> setDebugMap(String[] keys, String values[]) {
+    private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage) {
 
         Map<String, Object> debugMap = new HashMap<>();
-
-        for(int i = 0; i < Math.min(keys.length, values.length); i++) {
-            debugMap.put(keys[i], values[i]);
-        }
+        debugMap.put(RESOURCE_URI, deserialisedKafkaMessage.getResource());
+        debugMap.put(RESOURCE_ID, deserialisedKafkaMessage.getResourceId());
 
         return debugMap;
+    }
+
+    private Map<String, Object> setDebugMapKafkaFail(String kafkaMessage) {
+
+        Map<String, Object> kafkaFailDebugMap = new HashMap<>();
+        kafkaFailDebugMap.put(KAFKA_MSG, kafkaMessage);
+
+        return kafkaFailDebugMap;
     }
 }
