@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.document.generator.consumer.document;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
@@ -17,6 +18,7 @@ import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,8 +104,8 @@ public class DocumentGeneratorConsumer implements Runnable {
                 requestGenerateDocument(deserialisedKafkaMessage);
 
                 consumerGroup.commit();
-            } catch (Exception e) {
-                LOG.error("An error occurred when trying to generate a document from a kafka message",
+            } catch (IOException ioe) {
+                LOG.error("An error occurred when trying to generate a document from a kafka message", ioe,
                         setDebugMapKafkaFail(message.getValue().toString()));
                 producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
                 consumerGroup.commit();
@@ -133,9 +135,9 @@ public class DocumentGeneratorConsumer implements Runnable {
             response = restTemplate.postForObject(url, request, GenerateDocumentResponse.class);
 
             producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response));
-        } catch (Exception e) {
+        } catch (RestClientException rce) {
             LOG.errorContext(deserialisedKafkaMessage.getUserId(),"An error occurred when requesting the generation" +
-                    " of a document from the document generator api", e, setDebugMap(deserialisedKafkaMessage));
+                    " of a document from the document generator api", rce, setDebugMap(deserialisedKafkaMessage));
             producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
             consumerGroup.commit();
         }
