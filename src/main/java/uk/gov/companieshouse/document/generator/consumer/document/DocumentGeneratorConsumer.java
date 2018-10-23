@@ -49,7 +49,6 @@ public class DocumentGeneratorConsumer implements Runnable {
                                      MessageService messageService,
                                      AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer,
                                      RestTemplate restTemplate,
-                                     CHKafkaProducer producer,
                                      DocumentGeneratorConsumerProperties configuration) {
 
         this.kafkaConsumerProducerHandler = kafkaConsumerProducerHandler;
@@ -57,12 +56,13 @@ public class DocumentGeneratorConsumer implements Runnable {
         this.messageService = messageService;
         this.avroDeserializer = avroDeserializer;
         this.restTemplate = restTemplate;
-        this.producer = producer;
         this.configuration = configuration;
 
         consumerGroup = kafkaConsumerProducerHandler.getConsumerGroup(Arrays.asList(
                 environmentReader.getMandatoryString(CONSUMER_TOPIC_VAR)),
                 environmentReader.getMandatoryString(GROUP_NAME_VAR));
+
+        producer = kafkaConsumerProducerHandler.getProducer();
     }
 
     @Override
