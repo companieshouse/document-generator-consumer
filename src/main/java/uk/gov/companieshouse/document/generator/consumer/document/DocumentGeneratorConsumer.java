@@ -148,7 +148,6 @@ public class DocumentGeneratorConsumer implements Runnable {
      */
     public void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage)
             throws MessageCreationException, ExecutionException, InterruptedException {
-
             String url = configuration.getRootUri() + configuration.getBaseUrl();
 
             GenerateDocumentRequest request = populateDocumentRequest(deserialisedKafkaMessage);
@@ -156,12 +155,17 @@ public class DocumentGeneratorConsumer implements Runnable {
             LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Sending request to generate document to document" +
                             " generator api", setDebugMap(deserialisedKafkaMessage));
 
+        try {
+
             ResponseEntity<GenerateDocumentResponse> response = restTemplate.postForEntity(url, request, GenerateDocumentResponse.class);
 
             producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
-
+        } catch (Exception e) {
+            LOG.errorContext(deserialisedKafkaMessage.getUserId(),"An error occurred when requesting the generation" +
+                    " of a document from the document generator api", e, setDebugMap(deserialisedKafkaMessage));
+            producer.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
             consumerGroup.commit();
-
+        }
     }
 
     /**
