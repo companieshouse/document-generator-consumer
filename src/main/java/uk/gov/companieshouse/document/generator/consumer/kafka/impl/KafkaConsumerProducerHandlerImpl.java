@@ -24,8 +24,12 @@ public class KafkaConsumerProducerHandlerImpl implements KafkaConsumerProducerHa
      */
     @Override
     public CHKafkaConsumerGroup getConsumerGroup(List<String> consumerTopics, String groupName) {
-        return new CHKafkaConsumerGroup(kafkaConfigHelper
+        CHKafkaConsumerGroup consumerGroup =  new CHKafkaConsumerGroup(kafkaConfigHelper
                 .configureKafkaConsumer(consumerTopics, groupName));
+
+        consumerGroup.connect();
+
+        return consumerGroup;
     }
 
     /**
