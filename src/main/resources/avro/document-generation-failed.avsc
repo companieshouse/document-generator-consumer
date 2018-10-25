@@ -29,7 +29,7 @@
             "name":"description_values",
             "type":{
                 "type":"map",
-                "values":"string"
+                "values":["null", "string"]
             }
         }
     ]
