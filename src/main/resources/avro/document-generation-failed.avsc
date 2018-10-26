@@ -27,10 +27,10 @@
         },
         {
             "name":"description_values",
-            "type":{
+            "type":["null", {
                 "type":"map",
                 "values":["null", "string"]
-            }
+            }]
         }
     ]
 }
