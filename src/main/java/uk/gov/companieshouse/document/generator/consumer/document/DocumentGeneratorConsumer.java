@@ -2,6 +2,8 @@ package uk.gov.companieshouse.document.generator.consumer.document;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
@@ -41,8 +43,6 @@ public class DocumentGeneratorConsumer implements Runnable {
 
     private MessageService messageService;
 
-    private RestTemplate restTemplate;
-
     private CHKafkaConsumerGroup consumerGroup;
 
     private CHKafkaProducer producer;
@@ -60,14 +60,12 @@ public class DocumentGeneratorConsumer implements Runnable {
                                      EnvironmentReader environmentReader,
                                      MessageService messageService,
                                      AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer,
-                                     RestTemplate restTemplate,
                                      DocumentGeneratorConsumerProperties configuration) {
 
         this.kafkaConsumerProducerHandler = kafkaConsumerProducerHandler;
         this.environmentReader = environmentReader;
         this.messageService = messageService;
         this.avroDeserializer = avroDeserializer;
-        this.restTemplate = restTemplate;
         this.configuration = configuration;
 
         consumerGroup = kafkaConsumerProducerHandler.getConsumerGroup(Arrays.asList(
@@ -156,7 +154,7 @@ public class DocumentGeneratorConsumer implements Runnable {
                             " generator api", setDebugMap(deserialisedKafkaMessage));
 
         try {
-
+            RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<GenerateDocumentResponse> response = restTemplate.postForEntity(url, request, GenerateDocumentResponse.class);
 
             producer.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
