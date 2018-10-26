@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import uk.gov.companieshouse.document.generator.consumer.document.DocumentGeneratorConsumer;
 
 /**
@@ -13,6 +14,7 @@ import uk.gov.companieshouse.document.generator.consumer.document.DocumentGenera
  * running, to start the message processor
  */
 @Configuration
+@EnableScheduling
 public class ExecutorConfiguration {
 
     @Autowired

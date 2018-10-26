@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
@@ -96,6 +97,7 @@ public class DocumentGeneratorConsumer implements Runnable {
      * @throws ExecutionException
      * @throws InterruptedException
      */
+    @Scheduled(fixedDelay = 5000)
     public void pollAndGenerateDocument() throws MessageCreationException, ExecutionException, InterruptedException {
         LOG.info("AWAITING CONSUMATION");
 
