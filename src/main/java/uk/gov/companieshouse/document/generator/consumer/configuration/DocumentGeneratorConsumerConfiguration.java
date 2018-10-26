@@ -18,8 +18,6 @@ public class DocumentGeneratorConsumerConfiguration {
     @Autowired
     private MessageService messageService;
 
-    private RestTemplate restTemplate;
-
     @Autowired
     private KafkaConsumerProducerHandler kafkaConsumerProducerHandler;
 
@@ -37,7 +35,7 @@ public class DocumentGeneratorConsumerConfiguration {
     public DocumentGeneratorConsumer documentGeneratorConsumer() {
 
         return new DocumentGeneratorConsumer(kafkaConsumerProducerHandler, environmentReader, messageService,
-                avroDeserializer, restTemplate, configuration);
+                avroDeserializer, configuration);
     }
 
 }
