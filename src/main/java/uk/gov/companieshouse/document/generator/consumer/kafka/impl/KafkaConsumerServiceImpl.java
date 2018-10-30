@@ -1,7 +1,9 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
+import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
 import uk.gov.companieshouse.kafka.consumer.ConsumerConfig;
 import uk.gov.companieshouse.kafka.consumer.ConsumerConfigHelper;
@@ -15,17 +17,25 @@ import java.util.List;
 @Service
 public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
+    private EnvironmentReader reader;
+
     private CHKafkaConsumerGroup consumer;
+
+    private static final String CONSUMER_TOPIC = "CONSUMER_TOPIC";
+
+    private static final String GROUP_NAME = "GROUP_NAME";
 
     private static final Logger LOG = LoggerFactory.getLogger("document-generator-consumer");
 
-    public KafkaConsumerServiceImpl() {
+    public KafkaConsumerServiceImpl(EnvironmentReader reader) {
+
+        this.reader = reader;
 
         LOG.debug("Creating kafka consumer service " + this.toString());
 
         ConsumerConfig consumerConfig = new ConsumerConfig();
-        consumerConfig.setTopics(Arrays.asList("render-submitted-data-document"));
-        consumerConfig.setGroupName("document-generator");
+        consumerConfig.setTopics(Arrays.asList(reader.getMandatoryString(CONSUMER_TOPIC)));
+        consumerConfig.setGroupName(reader.getMandatoryString(GROUP_NAME));
         consumerConfig.setResetOffset(false);
 
         ConsumerConfigHelper.assignBrokerAddresses(consumerConfig);
