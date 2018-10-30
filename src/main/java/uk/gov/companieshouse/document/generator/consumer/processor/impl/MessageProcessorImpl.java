@@ -84,24 +84,21 @@ public class MessageProcessorImpl implements MessageProcessor {
                 } catch (MessageCreationException mce) {
                     LOG.errorContext("Error occurred while serialising a started message for kafka producer",
                             mce, setDebugMap(deserialisedKafkaMessage));
-                    kafkaConsumerService.commit();
                 }
 
                 requestGenerateDocument(deserialisedKafkaMessage);
 
-                kafkaConsumerService.commit();
             } catch (IOException ioe) {
                 LOG.errorContext("An error occurred when trying to generate a document from a kafka message", ioe,
                         setDebugMapKafkaFail(message));
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                    kafkaConsumerService.commit();
                 } catch (MessageCreationException mce) {
                     LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
                             mce, setDebugMapKafkaFail(message));
-                    kafkaConsumerService.commit();
                 }
             }
+            kafkaConsumerService.commit();
         }
     }
 
@@ -125,7 +122,6 @@ public class MessageProcessorImpl implements MessageProcessor {
             } catch (MessageCreationException mce) {
                 LOG.errorContext("Error occurred while serialising a completed message for kafka producer",
                         mce, setDebugMap(deserialisedKafkaMessage));
-                kafkaConsumerService.commit();
             }
 
         } catch (GenerateDocumentException gde) {
@@ -133,11 +129,9 @@ public class MessageProcessorImpl implements MessageProcessor {
                     " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage));
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                kafkaConsumerService.commit();
             } catch (MessageCreationException mce) {
                 LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
                         mce, setDebugMap(deserialisedKafkaMessage));
-                kafkaConsumerService.commit();
             }
         }
     }
