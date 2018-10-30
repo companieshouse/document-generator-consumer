@@ -51,10 +51,9 @@ public class MessageProcessorImpl implements MessageProcessor {
      * {inheritDocs}
      */
     @Override
-    public void processKafkaMessage()
-            throws InterruptedException, ExecutionException {
+    public void processKafkaMessage() throws InterruptedException {
 
-        LOG.info("AWAITING CONSUMATION");
+        LOG.info("Awaiting message...");
 
         List<Message> kafkaMessages = kafkaConsumerService.consume();
 
@@ -81,7 +80,7 @@ public class MessageProcessorImpl implements MessageProcessor {
 
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
-                } catch (MessageCreationException mce) {
+                } catch (MessageCreationException | ExecutionException mce) {
                     LOG.errorContext("Error occurred while serialising a started message for kafka producer",
                             mce, setDebugMap(deserialisedKafkaMessage));
                     kafkaConsumerService.commit();
@@ -95,7 +94,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                         setDebugMapKafkaFail(message));
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                } catch (MessageCreationException mce) {
+                } catch (MessageCreationException |ExecutionException mce) {
                     LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
                             mce, setDebugMapKafkaFail(message));
                 }
@@ -115,14 +114,14 @@ public class MessageProcessorImpl implements MessageProcessor {
      * @throws InterruptedException
      */
     private void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage)
-            throws ExecutionException, InterruptedException {
+            throws InterruptedException {
 
         try {
             ResponseEntity<GenerateDocumentResponse> response = generateDocument.requestGenerateDocument(deserialisedKafkaMessage);
 
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
-            } catch (MessageCreationException mce) {
+            } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while serialising a completed message for kafka producer",
                         mce, setDebugMap(deserialisedKafkaMessage));
             }
@@ -132,7 +131,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                     " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage));
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-            } catch (MessageCreationException mce) {
+            } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
                         mce, setDebugMap(deserialisedKafkaMessage));
             }
