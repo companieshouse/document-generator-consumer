@@ -1,7 +1,6 @@
 package uk.gov.companieshouse.document.generator.consumer.processor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
@@ -20,7 +19,6 @@ public class MessageProcessorRunner implements Runnable {
     private boolean processing = false;
 
     @Override
-    @KafkaListener()
     public void run() {
 
         LOG.debug("run() called on " + this.getClass());
