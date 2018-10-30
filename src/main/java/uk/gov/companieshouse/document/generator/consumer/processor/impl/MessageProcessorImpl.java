@@ -55,7 +55,7 @@ public class MessageProcessorImpl implements MessageProcessor {
      */
     @Override
     public void processKafkaMessage()
-            throws InterruptedException, MessageCreationException, ExecutionException {
+            throws InterruptedException, ExecutionException {
 
         LOG.info("AWAITING CONSUMATION");
 
@@ -81,15 +81,21 @@ public class MessageProcessorImpl implements MessageProcessor {
             } catch (IOException ioe) {
                 LOG.error("An error occurred when trying to generate a document from a kafka message", ioe,
                         setDebugMapKafkaFail(kafkaMessages.toString()));
-                kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                kafkaConsumerService.commit();
+                try {
+                    kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
+                } catch (MessageCreationException mce) {
+                    kafkaConsumerService.commit();
+                }
             }
 
             LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Message received and deserialised from kafka",
                     setDebugMap(deserialisedKafkaMessage));
 
-            kafkaProducerService.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
-
+            try {
+                kafkaProducerService.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
+            } catch (MessageCreationException mce) {
+                LOG.error(mce);
+            }
             requestGenerateDocument(deserialisedKafkaMessage);
 
             kafkaConsumerService.commit();
@@ -106,15 +112,25 @@ public class MessageProcessorImpl implements MessageProcessor {
      * @throws InterruptedException
      */
     private void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage)
-            throws MessageCreationException, ExecutionException, InterruptedException {
+            throws ExecutionException, InterruptedException {
 
         try {
             ResponseEntity<GenerateDocumentResponse> response = generateDocument.requestGenerateDocument(deserialisedKafkaMessage);
-            kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
+
+            try {
+                kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
+            } catch (MessageCreationException mce) {
+                LOG.error(mce);
+            }
+
         } catch (GenerateDocumentException gde) {
             LOG.errorContext(deserialisedKafkaMessage.getUserId(),"An error occurred when requesting the generation" +
                     " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage));
-            kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
+            try {
+                kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
+            } catch (MessageCreationException mce) {
+                LOG.error(mce);
+            }
             kafkaConsumerService.commit();
         }
     }

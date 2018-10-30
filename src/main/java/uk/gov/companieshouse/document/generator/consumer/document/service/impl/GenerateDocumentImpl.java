@@ -25,6 +25,9 @@ public class GenerateDocumentImpl implements GenerateDocument {
     private static final String RESOURCE_ID = "resource_id";
 
     @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
     private DocumentGeneratorConsumerProperties configuration;
 
     @Override
@@ -38,7 +41,6 @@ public class GenerateDocumentImpl implements GenerateDocument {
                 " generator api", setDebugMap(deserialisedKafkaMessage));
 
         try {
-            RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<GenerateDocumentResponse> response = restTemplate.postForEntity(url, request,
                     GenerateDocumentResponse.class);
 
