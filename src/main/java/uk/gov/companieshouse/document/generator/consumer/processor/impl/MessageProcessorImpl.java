@@ -59,7 +59,7 @@ public class MessageProcessorImpl implements MessageProcessor {
 
         if (kafkaMessages.isEmpty()) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             } catch (InterruptedException ie) {
                 LOG.debug("Interrupt exception - exiting message processing");
                 return;
@@ -94,7 +94,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                         setDebugMapKafkaFail(message));
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                } catch (MessageCreationException |ExecutionException mce) {
+                } catch (MessageCreationException | ExecutionException mce) {
                     LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
                             mce, setDebugMapKafkaFail(message));
                 }
