@@ -39,6 +39,15 @@ public class MessageProcessorRunner implements Runnable {
     }
 
     /**
+     * Is message processor still processing
+     *
+     * @return boolean
+     */
+    public boolean isProcessing() {
+        return processing;
+    }
+
+    /**
      * Set is processing flag
      *
      * @param processing
@@ -54,5 +63,14 @@ public class MessageProcessorRunner implements Runnable {
      */
     public boolean isActive() {
         return active;
+    }
+
+    /**
+     * Set is active flag
+     *
+     * @param active
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

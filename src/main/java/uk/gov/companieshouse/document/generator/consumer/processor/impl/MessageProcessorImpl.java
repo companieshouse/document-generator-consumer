@@ -59,7 +59,7 @@ public class MessageProcessorImpl implements MessageProcessor {
 
         if (kafkaMessages.isEmpty()) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             } catch (InterruptedException ie) {
                 LOG.debug("Interrupt exception - exiting message processing");
                 return;
