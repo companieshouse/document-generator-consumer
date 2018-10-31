@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.environment.EnvironmentReader;

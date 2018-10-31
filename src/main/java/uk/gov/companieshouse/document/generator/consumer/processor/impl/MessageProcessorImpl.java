@@ -81,7 +81,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
                 } catch (MessageCreationException | ExecutionException mce) {
-                    LOG.errorContext("Error occurred while serialising a started message for kafka producer",
+                    LOG.errorContext("Error occurred while attempt to create and send a started message to producer",
                             mce, setDebugMap(deserialisedKafkaMessage));
                     kafkaConsumerService.commit();
                     continue;
@@ -95,7 +95,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
                 } catch (MessageCreationException |ExecutionException mce) {
-                    LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
+                    LOG.errorContext("Error occurred while attempt to create and send a failed message to producer",
                             mce, setDebugMapKafkaFail(message));
                 }
             }
@@ -122,7 +122,7 @@ public class MessageProcessorImpl implements MessageProcessor {
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
             } catch (MessageCreationException | ExecutionException mce) {
-                LOG.errorContext("Error occurred while serialising a completed message for kafka producer",
+                LOG.errorContext("Error occurred while attempt to create and send a completed message to producer",
                         mce, setDebugMap(deserialisedKafkaMessage));
             }
 
@@ -132,7 +132,7 @@ public class MessageProcessorImpl implements MessageProcessor {
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
             } catch (MessageCreationException | ExecutionException mce) {
-                LOG.errorContext("Error occurred while serialising a failed message for kafka producer",
+                LOG.errorContext("Error occurred while attempt to create and send a failed message message to producer",
                         mce, setDebugMap(deserialisedKafkaMessage));
             }
         }
