@@ -13,7 +13,7 @@ public class EnvironmentConfigurationTest {
     private EnvironmentConfiguration environmentConfiguration;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
         environmentConfiguration = new EnvironmentConfiguration();
     }
 
