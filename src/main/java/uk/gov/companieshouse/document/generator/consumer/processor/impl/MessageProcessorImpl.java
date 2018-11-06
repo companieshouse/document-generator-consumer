@@ -3,6 +3,7 @@ package uk.gov.companieshouse.document.generator.consumer.processor.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
@@ -26,10 +27,7 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class MessageProcessorImpl implements MessageProcessor {
 
-    private static final Logger LOG = LoggerFactory.getLogger("document-generator-consumer");
-
-    private static final String RESOURCE_URI = "resource_uri";
-    private static final String RESOURCE_ID = "resource_id";
+    private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
     private static final String KAFKA_MSG = "kafka_message";
 
     @Autowired
@@ -141,8 +139,8 @@ public class MessageProcessorImpl implements MessageProcessor {
     private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage) {
 
         Map<String, Object> debugMap = new HashMap<>();
-        debugMap.put(RESOURCE_URI, deserialisedKafkaMessage.getResource());
-        debugMap.put(RESOURCE_ID, deserialisedKafkaMessage.getResourceId());
+        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, deserialisedKafkaMessage.getResource());
+        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_ID, deserialisedKafkaMessage.getResourceId());
 
         return debugMap;
     }

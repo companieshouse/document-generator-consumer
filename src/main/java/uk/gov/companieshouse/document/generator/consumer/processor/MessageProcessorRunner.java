@@ -21,7 +21,7 @@ public class MessageProcessorRunner implements Runnable {
     @Override
     public void run() {
 
-        LOG.debug("run() called on " + this.getClass());
+        LOG.debug("Beginning processing of document generation requests");
         kafkaConsumerService.connect();
 
         try {
@@ -52,7 +52,7 @@ public class MessageProcessorRunner implements Runnable {
      *
      * @param processing
      */
-    public void setProcessing(boolean processing) {
+    private void setProcessing(boolean processing) {
         this.processing = processing;
     }
 

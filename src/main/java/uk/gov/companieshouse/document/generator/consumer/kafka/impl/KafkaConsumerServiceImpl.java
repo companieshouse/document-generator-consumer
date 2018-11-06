@@ -44,7 +44,9 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
     @Override
     public void connect() {
         LOG.debug("Connecting to kafka consumer service " + this.toString());
+
         consumer.connect();
+        LOG.debug("Success - Connected to kafka consumer service");
     }
 
     @Override

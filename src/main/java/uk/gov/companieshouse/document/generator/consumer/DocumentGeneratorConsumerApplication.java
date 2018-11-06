@@ -21,6 +21,10 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
 
     public static final String APPLICATION_NAME_SPACE = "document-generator-consumer";
 
+    public static final String RESOURCE_URI = "resource_uri";
+
+    public static final String RESOURCE_ID = "resource_id";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(APPLICATION_NAME_SPACE);
 
     @Autowired
