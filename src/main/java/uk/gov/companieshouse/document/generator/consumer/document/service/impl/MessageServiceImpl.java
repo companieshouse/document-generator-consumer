@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service.impl;
 
 import org.springframework.stereotype.Service;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.avro.DocumentGenerationStateAvroSerializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
@@ -22,7 +23,7 @@ import java.util.Map;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    private static final Logger LOG = LoggerFactory.getLogger("document-generator-consumer");
+    private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     private static final String STARTED_PRODUCER_TOPIC = "document-generation-started";
     private static final String FAILED_PRODUCER_TOPIC = "document-generation-failed";

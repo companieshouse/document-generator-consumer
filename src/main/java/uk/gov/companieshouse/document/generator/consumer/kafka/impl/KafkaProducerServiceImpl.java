@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 
 import org.springframework.stereotype.Service;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.kafka.producer.Acks;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class KafkaProducerServiceImpl implements KafkaProducerService {
 
-    private static final Logger LOG = LoggerFactory.getLogger("document-generator-consumer");
+    private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     private CHKafkaProducer producer;
 

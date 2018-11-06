@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 
 import org.springframework.stereotype.Service;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
@@ -24,7 +25,7 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
     private static final String GROUP_NAME = "GROUP_NAME";
 
-    private static final Logger LOG = LoggerFactory.getLogger("document-generator-consumer");
+    private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     public KafkaConsumerServiceImpl(EnvironmentReader reader) {
 
