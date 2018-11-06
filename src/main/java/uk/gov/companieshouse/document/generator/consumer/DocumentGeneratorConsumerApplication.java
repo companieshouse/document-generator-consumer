@@ -25,6 +25,10 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
 
     public static final String RESOURCE_ID = "resource_id";
 
+    public static final String CONSUMER_TOPIC = "CONSUMER_TOPIC";
+
+    public static final String GROUP_NAME = "GROUP_NAME";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(APPLICATION_NAME_SPACE);
 
     @Autowired
@@ -56,8 +60,8 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
      */
     public static void checkEnvironmentParams() {
 
-        checkParam("CONSUMER_TOPIC");
-        checkParam("GROUP_NAME");
+        checkParam(CONSUMER_TOPIC);
+        checkParam(GROUP_NAME);
     }
 
     public static void checkParam(String param) {

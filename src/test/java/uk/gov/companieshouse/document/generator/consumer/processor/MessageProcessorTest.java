@@ -17,8 +17,6 @@ import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
-import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
-import uk.gov.companieshouse.document.generator.consumer.exception.MessageCreationException;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.impl.MessageProcessorImpl;
@@ -30,10 +28,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -67,8 +65,7 @@ public class MessageProcessorTest {
 
     @Test
     @DisplayName("Test started and completed message generated on valid request")
-    public void testsMessageProcessedCreatesStartedAndCompletedMessage() throws IOException, GenerateDocumentException,
-            InterruptedException, MessageCreationException, ExecutionException {
+    public void testsMessageProcessedCreatesStartedAndCompletedMessage() throws Exception {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class)))
@@ -81,12 +78,13 @@ public class MessageProcessorTest {
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockDeserialisedKafkaMessage));
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationCompleted(
                 createDeserialisedKafkaMessage(), any(GenerateDocumentResponse.class)));
+
+        verify(mockGenerateDocument).requestGenerateDocument(createDeserialisedKafkaMessage());
     }
 
     @Test
     @DisplayName("Test failed message generated on error")
-    public void testsMessageProcessedCreatesFailedMessageOnError() throws IOException, InterruptedException,
-            MessageCreationException, ExecutionException {
+    public void testsMessageProcessedCreatesFailedMessageOnError() throws Exception {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class)))

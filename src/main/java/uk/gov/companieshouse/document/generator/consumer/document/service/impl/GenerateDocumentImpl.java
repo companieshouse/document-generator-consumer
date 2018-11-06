@@ -29,7 +29,7 @@ public class GenerateDocumentImpl implements GenerateDocument {
     private DocumentGeneratorConsumerProperties configuration;
 
     @Override
-    public ResponseEntity requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws GenerateDocumentException {
+    public ResponseEntity<GenerateDocumentResponse> requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws GenerateDocumentException {
 
         String url = configuration.getRootUri() + configuration.getBaseUrl();
 

@@ -21,10 +21,6 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
     private CHKafkaConsumerGroup consumer;
 
-    private static final String CONSUMER_TOPIC = "CONSUMER_TOPIC";
-
-    private static final String GROUP_NAME = "GROUP_NAME";
-
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     public KafkaConsumerServiceImpl(EnvironmentReader reader) {
@@ -34,8 +30,8 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
         LOG.debug("Creating kafka consumer service " + this.toString());
 
         ConsumerConfig consumerConfig = new ConsumerConfig();
-        consumerConfig.setTopics(Arrays.asList(reader.getMandatoryString(CONSUMER_TOPIC)));
-        consumerConfig.setGroupName(reader.getMandatoryString(GROUP_NAME));
+        consumerConfig.setTopics(Arrays.asList(reader.getMandatoryString(DocumentGeneratorConsumerApplication.CONSUMER_TOPIC)));
+        consumerConfig.setGroupName(reader.getMandatoryString(DocumentGeneratorConsumerApplication.GROUP_NAME));
         consumerConfig.setResetOffset(false);
 
         ConsumerConfigHelper.assignBrokerAddresses(consumerConfig);
