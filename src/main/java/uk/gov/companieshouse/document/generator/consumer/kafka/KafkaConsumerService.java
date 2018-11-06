@@ -10,7 +10,7 @@ public interface KafkaConsumerService {
 
     List<Message> consume();
 
-    void commit();
+    void commit(Message message);
 
     void closeConsumer();
 }

@@ -81,7 +81,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                 } catch (MessageCreationException | ExecutionException mce) {
                     LOG.errorContext("Error occurred while attempt to create and send a started message to producer",
                             mce, setDebugMap(deserialisedKafkaMessage));
-                    kafkaConsumerService.commit();
+                    kafkaConsumerService.commit(message);
                     continue;
                 }
 
@@ -98,7 +98,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                 }
             }
 
-            kafkaConsumerService.commit();
+            kafkaConsumerService.commit(message);
         }
     }
 

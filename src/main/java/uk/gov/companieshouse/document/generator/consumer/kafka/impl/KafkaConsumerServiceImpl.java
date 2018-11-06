@@ -52,8 +52,8 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
     }
 
     @Override
-    public void commit() {
-        consumer.commit();
+    public void commit(Message message) {
+        consumer.commit(message);
     }
 
     @Override
