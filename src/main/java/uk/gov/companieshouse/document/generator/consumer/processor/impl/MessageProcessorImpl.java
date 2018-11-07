@@ -51,8 +51,6 @@ public class MessageProcessorImpl implements MessageProcessor {
     @Override
     public void processKafkaMessage() throws InterruptedException {
 
-        LOG.info("Awaiting message...");
-
         List<Message> kafkaMessages = kafkaConsumerService.consume();
 
         if (kafkaMessages.isEmpty()) {
