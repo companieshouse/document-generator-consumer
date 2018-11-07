@@ -55,7 +55,7 @@
         <avro.version>1.8.1</avro.version>
 
         <!-- Kafka -->
-        <ch-kafka.version>1.3.0-rc1</ch-kafka.version>
+        <ch-kafka.version>1.3.0-rc2</ch-kafka.version>
 
         <!-- Sonar -->
         <sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
