@@ -40,4 +40,10 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
         LOG.debug("Sending kafka message value " + kafkaMessage + " to topic " + kafkaMessage.getTopic());
         producer.send(kafkaMessage);
     }
+
+    @Override
+    public void close() {
+        LOG.debug("Closing kafka producer service " + this.toString());
+        producer.close();
+    }
 }

@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import uk.gov.companieshouse.document.generator.consumer.interceptor.LoggingInterceptor;
+import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
+import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.MessageProcessorRunner;
 import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.environment.impl.EnvironmentReaderImpl;
@@ -36,10 +38,16 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
     @Autowired
     private LoggingInterceptor loggingInterceptor;
 
-    private static EnvironmentReader reader;
-
     @Autowired
     private MessageProcessorRunner messageProcessorRunner;
+
+    @Autowired
+    private KafkaConsumerService kafkaConsumerService;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
+    private static EnvironmentReader reader;
 
     public static void main(String[] args) {
 
@@ -115,7 +123,15 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
                 LOGGER.error(e, data);
             }
         }
-        LOGGER.info("Closing Document Generator Consumer message processor");
+        LOGGER.info("Finished closing Document Generator Consumer message processor");
+
+        LOGGER.info("Proceed to close consumer connection");
+        kafkaConsumerService.closeConsumer();
+
+        LOGGER.info("Proceed to close producer connection");
+        kafkaProducerService.close();
+
+        LOGGER.info("Graceful shutdown complete");
     }
 }
 
