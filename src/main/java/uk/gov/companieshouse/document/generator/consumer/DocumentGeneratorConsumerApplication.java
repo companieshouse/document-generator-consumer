@@ -13,7 +13,9 @@ import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SpringBootApplication
@@ -59,19 +61,31 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
      * Check all expected environment variables are set
      */
     public static void checkEnvironmentParams() {
+        List<String> environmentParams = new ArrayList<>();
 
-        checkParam(CONSUMER_TOPIC);
-        checkParam(GROUP_NAME);
+        environmentParams.add(CONSUMER_TOPIC);
+        environmentParams.add(GROUP_NAME);
+        checkParam(environmentParams);
     }
 
-    public static void checkParam(String param) {
+    public static void checkParam(List<String> enviromentParams) {
 
-        String paramValue = reader.getMandatoryString(param);
+        boolean environmentParamMissing = false;
 
-        if (paramValue != null && !paramValue.isEmpty()) {
-            LOGGER.info("Environment variable " + param + " has value " + paramValue);
-        } else {
-            throw new RuntimeException("Environment variable " + param + " is not set - application will exit");
+        for (String param : enviromentParams) {
+
+            String paramValue = reader.getMandatoryString(param);
+
+            if (paramValue != null && !paramValue.isEmpty()) {
+                LOGGER.info("Environment variable " + param + " has value " + paramValue);
+            } else {
+                LOGGER.error("Environment variable " + param + " is not set");
+                environmentParamMissing = true;
+            }
+        }
+
+        if (environmentParamMissing) {
+            throw new RuntimeException("There are environment variables are not set, see logs for details - application will exit");
         }
     }
 
