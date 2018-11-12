@@ -7,4 +7,6 @@ import java.util.concurrent.ExecutionException;
 public interface KafkaProducerService {
 
     void send(Message kafkaMessage) throws ExecutionException, InterruptedException;
+
+    void close();
 }

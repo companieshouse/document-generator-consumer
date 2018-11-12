@@ -14,9 +14,9 @@
     <url>http://maven.apache.org</url>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
+        <groupId>uk.gov.companieshouse</groupId>
+        <artifactId>companies-house-spring-boot-parent</artifactId>
+        <version>1.0.0-rc1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -55,7 +55,7 @@
         <avro.version>1.8.1</avro.version>
 
         <!-- Kafka -->
-        <ch-kafka.version>1.0.3-rc4</ch-kafka.version>
+        <ch-kafka.version>1.3.0-rc2</ch-kafka.version>
 
         <!-- Sonar -->
         <sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
