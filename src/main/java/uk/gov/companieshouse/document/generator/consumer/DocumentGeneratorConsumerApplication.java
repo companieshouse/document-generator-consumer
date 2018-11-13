@@ -121,6 +121,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
                 data.put("message", "InterruptionException");
 
                 LOGGER.error(e, data);
+                Thread.currentThread().interrupt();
             }
         }
         LOGGER.info("Finished closing Document Generator Consumer message processor");

@@ -58,6 +58,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                 Thread.sleep(1000);
             } catch (InterruptedException ie) {
                 LOG.debug("Interrupt exception - exiting message processing");
+                Thread.currentThread().interrupt();
                 return;
             }
         } else {

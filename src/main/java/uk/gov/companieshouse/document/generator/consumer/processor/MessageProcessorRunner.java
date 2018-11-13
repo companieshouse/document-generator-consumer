@@ -36,6 +36,7 @@ public class MessageProcessorRunner implements Runnable {
             }
         } catch(InterruptedException e) {
             LOG.error(e);
+            Thread.currentThread().interrupt();
         }
     }
 
