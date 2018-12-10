@@ -132,6 +132,8 @@ public class MessageProcessorImpl implements MessageProcessor {
 
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
+                LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Document has been generated for resource: "
+                    + deserialisedKafkaMessage.getResource(), setDebugMap(deserialisedKafkaMessage, message));
             } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while attempt to create and send a completed message to producer",
                         mce, setDebugMap(deserialisedKafkaMessage, message));
