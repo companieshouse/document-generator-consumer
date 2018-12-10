@@ -28,22 +28,36 @@ import java.util.concurrent.ExecutionException;
 public class MessageProcessorImpl implements MessageProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
-    private static final String KAFKA_MSG = "kafka_message";
 
-    @Autowired
     private MessageService messageService;
 
-    @Autowired
     private GenerateDocument generateDocument;
 
-    @Autowired
     private KafkaConsumerService kafkaConsumerService;
 
-    @Autowired
     private KafkaProducerService kafkaProducerService;
 
-    @Autowired
     private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
+
+    @Autowired
+    public MessageProcessorImpl(MessageService messageService, GenerateDocument generateDocument,
+                                KafkaConsumerService kafkaConsumerService, KafkaProducerService kafkaProducerService,
+                                AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer) {
+
+        this.messageService = messageService;
+        this.generateDocument = generateDocument;
+        this.kafkaConsumerService = kafkaConsumerService;
+        this.kafkaProducerService = kafkaProducerService;
+        this.avroDeserializer = avroDeserializer;
+    }
+
+    private static final String KAFKA_MSG = "kafka_message";
+
+    private static final String KAFKA_TOPIC = "kafka_topic";
+
+    private static final String KAFKA_OFFSET = "kafka_offset";
+
+    private static final String KAFKA_TIME = "kafka_time";
 
     /**
      * {inheritDocs}
@@ -73,18 +87,18 @@ public class MessageProcessorImpl implements MessageProcessor {
                 deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
 
                 LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Message received and deserialised from kafka",
-                        setDebugMap(deserialisedKafkaMessage));
+                        setDebugMap(deserialisedKafkaMessage, message));
 
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
                 } catch (MessageCreationException | ExecutionException mce) {
                     LOG.errorContext("Error occurred while attempt to create and send a started message to producer",
-                            mce, setDebugMap(deserialisedKafkaMessage));
+                            mce, setDebugMap(deserialisedKafkaMessage, message));
                     kafkaConsumerService.commit(message);
                     continue;
                 }
 
-                requestGenerateDocument(deserialisedKafkaMessage);
+                requestGenerateDocument(deserialisedKafkaMessage, message);
 
             } catch (IOException ioe) {
                 LOG.errorContext("An error occurred when trying to generate a document from a kafka message", ioe,
@@ -110,7 +124,7 @@ public class MessageProcessorImpl implements MessageProcessor {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage)
+    private void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage, Message message)
             throws InterruptedException {
 
         try {
@@ -120,26 +134,28 @@ public class MessageProcessorImpl implements MessageProcessor {
                 kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
             } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while attempt to create and send a completed message to producer",
-                        mce, setDebugMap(deserialisedKafkaMessage));
+                        mce, setDebugMap(deserialisedKafkaMessage, message));
             }
 
         } catch (GenerateDocumentException gde) {
             LOG.errorContext(deserialisedKafkaMessage.getUserId(),"An error occurred when requesting the generation" +
-                    " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage));
+                    " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage, message));
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
             } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while attempt to create and send a failed message message to producer",
-                        mce, setDebugMap(deserialisedKafkaMessage));
+                        mce, setDebugMap(deserialisedKafkaMessage, message));
             }
         }
     }
 
-    private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage) {
+    private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage, Message message) {
 
         Map<String, Object> debugMap = new HashMap<>();
         debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, deserialisedKafkaMessage.getResource());
-        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_ID, deserialisedKafkaMessage.getResourceId());
+        debugMap.put(KAFKA_TOPIC, message.getTopic());
+        debugMap.put(KAFKA_OFFSET, message.getOffset());
+        debugMap.put(KAFKA_TIME, message.getTimestamp());
 
         return debugMap;
     }
@@ -148,9 +164,9 @@ public class MessageProcessorImpl implements MessageProcessor {
 
         Map<String, Object> kafkaFailDebugMap = new HashMap<>();
         kafkaFailDebugMap.put(KAFKA_MSG, message.getValue());
-        kafkaFailDebugMap.put("kafka_topic", message.getTopic());
-        kafkaFailDebugMap.put("Kafka_offset", message.getOffset());
-        kafkaFailDebugMap.put("kafka_time", message.getTimestamp());
+        kafkaFailDebugMap.put(KAFKA_TOPIC, message.getTopic());
+        kafkaFailDebugMap.put(KAFKA_OFFSET, message.getOffset());
+        kafkaFailDebugMap.put(KAFKA_TIME, message.getTimestamp());
 
         return kafkaFailDebugMap;
     }
