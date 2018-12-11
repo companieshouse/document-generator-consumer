@@ -39,6 +39,14 @@ public class MessageProcessorImpl implements MessageProcessor {
 
     private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
 
+    private static final String KAFKA_MSG = "kafka_message";
+
+    private static final String KAFKA_TOPIC = "kafka_topic";
+
+    private static final String KAFKA_OFFSET = "kafka_offset";
+
+    private static final String KAFKA_TIME = "kafka_time";
+
     @Autowired
     public MessageProcessorImpl(MessageService messageService, GenerateDocument generateDocument,
                                 KafkaConsumerService kafkaConsumerService, KafkaProducerService kafkaProducerService,
@@ -50,14 +58,6 @@ public class MessageProcessorImpl implements MessageProcessor {
         this.kafkaProducerService = kafkaProducerService;
         this.avroDeserializer = avroDeserializer;
     }
-
-    private static final String KAFKA_MSG = "kafka_message";
-
-    private static final String KAFKA_TOPIC = "kafka_topic";
-
-    private static final String KAFKA_OFFSET = "kafka_offset";
-
-    private static final String KAFKA_TIME = "kafka_time";
 
     /**
      * {inheritDocs}
@@ -105,6 +105,8 @@ public class MessageProcessorImpl implements MessageProcessor {
                         setDebugMapKafkaFail(message));
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
+                    LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Document failed to generate for resource: "
+                        + deserialisedKafkaMessage.getResource(), setDebugMap(deserialisedKafkaMessage, message));
                 } catch (MessageCreationException |ExecutionException mce) {
                     LOG.errorContext("Error occurred while attempt to create and send a failed message to producer",
                             mce, setDebugMapKafkaFail(message));
@@ -144,6 +146,9 @@ public class MessageProcessorImpl implements MessageProcessor {
                     " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage, message));
             try {
                 kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
+                LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Document failed to generate during the " +
+                    "document generator api call for resource: " + deserialisedKafkaMessage.getResource(),
+                    setDebugMap(deserialisedKafkaMessage, message));
             } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while attempt to create and send a failed message message to producer",
                         mce, setDebugMap(deserialisedKafkaMessage, message));

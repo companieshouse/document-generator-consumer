@@ -63,7 +63,7 @@ public class GenerateDocumentImpl implements GenerateDocument {
         }
     }
 
-    private Object setRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
+    private HttpEntity<GenerateDocumentRequest> setRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization", reader.getMandatoryString(DocumentGeneratorConsumerApplication.API_KEY));
