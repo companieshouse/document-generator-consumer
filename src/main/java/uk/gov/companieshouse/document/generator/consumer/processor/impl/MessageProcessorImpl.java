@@ -105,8 +105,7 @@ public class MessageProcessorImpl implements MessageProcessor {
                         setDebugMapKafkaFail(message));
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                    LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Document failed to generate for resource: "
-                        + deserialisedKafkaMessage.getResource(), setDebugMap(deserialisedKafkaMessage, message));
+                    LOG.info("Document failed to generate", setDebugMapKafkaFail(message));
                 } catch (MessageCreationException |ExecutionException mce) {
                     LOG.errorContext("Error occurred while attempt to create and send a failed message to producer",
                             mce, setDebugMapKafkaFail(message));
