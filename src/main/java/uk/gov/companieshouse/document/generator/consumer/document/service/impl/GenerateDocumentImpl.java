@@ -77,7 +77,7 @@ public class GenerateDocumentImpl implements GenerateDocument {
 
     private GenerateDocumentRequest populateDocumentRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
         GenerateDocumentRequest request = new GenerateDocumentRequest();
-        request.setResourceUri(deserialisedKafkaMessage.getResourceId());
+        request.setResourceUri(deserialisedKafkaMessage.getResource());
         request.setMimeType(deserialisedKafkaMessage.getContentType());
         request.setDocumentType(deserialisedKafkaMessage.getDocumentType());
         return request;
