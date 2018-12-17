@@ -10,12 +10,11 @@ import org.apache.avro.specific.SpecificData;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -3391013108539488436L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DeserialisedKafkaMessage\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models.avro\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"content_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"user_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  private static final long serialVersionUID = 6908097715748547098L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DeserialisedKafkaMessage\",\"namespace\":\"uk.gov.companieshouse.document.generator.consumer.document.models.avro\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"resource\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"content_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"document_type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"user_id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String id;
   @Deprecated public java.lang.String resource;
-  @Deprecated public java.lang.String resource_id;
   @Deprecated public java.lang.String content_type;
   @Deprecated public java.lang.String document_type;
   @Deprecated public java.lang.String user_id;
@@ -31,15 +30,13 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
    * All-args constructor.
    * @param id The new value for id
    * @param resource The new value for resource
-   * @param resource_id The new value for resource_id
    * @param content_type The new value for content_type
    * @param document_type The new value for document_type
    * @param user_id The new value for user_id
    */
-  public DeserialisedKafkaMessage(java.lang.String id, java.lang.String resource, java.lang.String resource_id, java.lang.String content_type, java.lang.String document_type, java.lang.String user_id) {
+  public DeserialisedKafkaMessage(java.lang.String id, java.lang.String resource, java.lang.String content_type, java.lang.String document_type, java.lang.String user_id) {
     this.id = id;
     this.resource = resource;
-    this.resource_id = resource_id;
     this.content_type = content_type;
     this.document_type = document_type;
     this.user_id = user_id;
@@ -51,10 +48,9 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
     switch (field$) {
     case 0: return id;
     case 1: return resource;
-    case 2: return resource_id;
-    case 3: return content_type;
-    case 4: return document_type;
-    case 5: return user_id;
+    case 2: return content_type;
+    case 3: return document_type;
+    case 4: return user_id;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -65,10 +61,9 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
     switch (field$) {
     case 0: id = (java.lang.String)value$; break;
     case 1: resource = (java.lang.String)value$; break;
-    case 2: resource_id = (java.lang.String)value$; break;
-    case 3: content_type = (java.lang.String)value$; break;
-    case 4: document_type = (java.lang.String)value$; break;
-    case 5: user_id = (java.lang.String)value$; break;
+    case 2: content_type = (java.lang.String)value$; break;
+    case 3: document_type = (java.lang.String)value$; break;
+    case 4: user_id = (java.lang.String)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -103,22 +98,6 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
    */
   public void setResource(java.lang.String value) {
     this.resource = value;
-  }
-
-  /**
-   * Gets the value of the 'resource_id' field.
-   * @return The value of the 'resource_id' field.
-   */
-  public java.lang.String getResourceId() {
-    return resource_id;
-  }
-
-  /**
-   * Sets the value of the 'resource_id' field.
-   * @param value the value to set.
-   */
-  public void setResourceId(java.lang.String value) {
-    this.resource_id = value;
   }
 
   /**
@@ -203,7 +182,6 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
 
     private java.lang.String id;
     private java.lang.String resource;
-    private java.lang.String resource_id;
     private java.lang.String content_type;
     private java.lang.String document_type;
     private java.lang.String user_id;
@@ -227,21 +205,17 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
         this.resource = data().deepCopy(fields()[1].schema(), other.resource);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.resource_id)) {
-        this.resource_id = data().deepCopy(fields()[2].schema(), other.resource_id);
+      if (isValidValue(fields()[2], other.content_type)) {
+        this.content_type = data().deepCopy(fields()[2].schema(), other.content_type);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.content_type)) {
-        this.content_type = data().deepCopy(fields()[3].schema(), other.content_type);
+      if (isValidValue(fields()[3], other.document_type)) {
+        this.document_type = data().deepCopy(fields()[3].schema(), other.document_type);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.document_type)) {
-        this.document_type = data().deepCopy(fields()[4].schema(), other.document_type);
+      if (isValidValue(fields()[4], other.user_id)) {
+        this.user_id = data().deepCopy(fields()[4].schema(), other.user_id);
         fieldSetFlags()[4] = true;
-      }
-      if (isValidValue(fields()[5], other.user_id)) {
-        this.user_id = data().deepCopy(fields()[5].schema(), other.user_id);
-        fieldSetFlags()[5] = true;
       }
     }
 
@@ -259,21 +233,17 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
         this.resource = data().deepCopy(fields()[1].schema(), other.resource);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.resource_id)) {
-        this.resource_id = data().deepCopy(fields()[2].schema(), other.resource_id);
+      if (isValidValue(fields()[2], other.content_type)) {
+        this.content_type = data().deepCopy(fields()[2].schema(), other.content_type);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.content_type)) {
-        this.content_type = data().deepCopy(fields()[3].schema(), other.content_type);
+      if (isValidValue(fields()[3], other.document_type)) {
+        this.document_type = data().deepCopy(fields()[3].schema(), other.document_type);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.document_type)) {
-        this.document_type = data().deepCopy(fields()[4].schema(), other.document_type);
+      if (isValidValue(fields()[4], other.user_id)) {
+        this.user_id = data().deepCopy(fields()[4].schema(), other.user_id);
         fieldSetFlags()[4] = true;
-      }
-      if (isValidValue(fields()[5], other.user_id)) {
-        this.user_id = data().deepCopy(fields()[5].schema(), other.user_id);
-        fieldSetFlags()[5] = true;
       }
     }
 
@@ -356,45 +326,6 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
     }
 
     /**
-      * Gets the value of the 'resource_id' field.
-      * @return The value.
-      */
-    public java.lang.String getResourceId() {
-      return resource_id;
-    }
-
-    /**
-      * Sets the value of the 'resource_id' field.
-      * @param value The value of 'resource_id'.
-      * @return This builder.
-      */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setResourceId(java.lang.String value) {
-      validate(fields()[2], value);
-      this.resource_id = value;
-      fieldSetFlags()[2] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'resource_id' field has been set.
-      * @return True if the 'resource_id' field has been set, false otherwise.
-      */
-    public boolean hasResourceId() {
-      return fieldSetFlags()[2];
-    }
-
-
-    /**
-      * Clears the value of the 'resource_id' field.
-      * @return This builder.
-      */
-    public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearResourceId() {
-      resource_id = null;
-      fieldSetFlags()[2] = false;
-      return this;
-    }
-
-    /**
       * Gets the value of the 'content_type' field.
       * @return The value.
       */
@@ -408,9 +339,9 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setContentType(java.lang.String value) {
-      validate(fields()[3], value);
+      validate(fields()[2], value);
       this.content_type = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -419,7 +350,7 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       * @return True if the 'content_type' field has been set, false otherwise.
       */
     public boolean hasContentType() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[2];
     }
 
 
@@ -429,7 +360,7 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       */
     public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearContentType() {
       content_type = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -447,9 +378,9 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setDocumentType(java.lang.String value) {
-      validate(fields()[4], value);
+      validate(fields()[3], value);
       this.document_type = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -458,7 +389,7 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       * @return True if the 'document_type' field has been set, false otherwise.
       */
     public boolean hasDocumentType() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[3];
     }
 
 
@@ -468,7 +399,7 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       */
     public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearDocumentType() {
       document_type = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -486,9 +417,9 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       * @return This builder.
       */
     public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder setUserId(java.lang.String value) {
-      validate(fields()[5], value);
+      validate(fields()[4], value);
       this.user_id = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -497,7 +428,7 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       * @return True if the 'user_id' field has been set, false otherwise.
       */
     public boolean hasUserId() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[4];
     }
 
 
@@ -507,7 +438,7 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
       */
     public uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage.Builder clearUserId() {
       user_id = null;
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -517,10 +448,9 @@ public class DeserialisedKafkaMessage extends org.apache.avro.specific.SpecificR
         DeserialisedKafkaMessage record = new DeserialisedKafkaMessage();
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.String) defaultValue(fields()[0]);
         record.resource = fieldSetFlags()[1] ? this.resource : (java.lang.String) defaultValue(fields()[1]);
-        record.resource_id = fieldSetFlags()[2] ? this.resource_id : (java.lang.String) defaultValue(fields()[2]);
-        record.content_type = fieldSetFlags()[3] ? this.content_type : (java.lang.String) defaultValue(fields()[3]);
-        record.document_type = fieldSetFlags()[4] ? this.document_type : (java.lang.String) defaultValue(fields()[4]);
-        record.user_id = fieldSetFlags()[5] ? this.user_id : (java.lang.String) defaultValue(fields()[5]);
+        record.content_type = fieldSetFlags()[2] ? this.content_type : (java.lang.String) defaultValue(fields()[2]);
+        record.document_type = fieldSetFlags()[3] ? this.document_type : (java.lang.String) defaultValue(fields()[3]);
+        record.user_id = fieldSetFlags()[4] ? this.user_id : (java.lang.String) defaultValue(fields()[4]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

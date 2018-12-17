@@ -105,7 +105,6 @@ public class GenerateDocumentTest {
         DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
 
         deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setResourceId("testResourceId");
         deserialisedKafkaMessage.setContentType("testContentType");
         deserialisedKafkaMessage.setDocumentType("testDocumentType");
         deserialisedKafkaMessage.setUserId("testUserId");
