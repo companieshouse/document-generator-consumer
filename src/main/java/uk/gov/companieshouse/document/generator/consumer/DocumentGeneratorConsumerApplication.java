@@ -27,9 +27,9 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
 
     public static final String RESOURCE_URI = "resource_uri";
 
-    public static final String RESOURCE_ID = "resource_id";
-
     public static final String CONSUMER_TOPIC = "CONSUMER_TOPIC";
+
+    public static final String API_KEY = "CHS_API_KEY";
 
     public static final String GROUP_NAME = "GROUP_NAME";
 
@@ -73,6 +73,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
 
         environmentParams.add(CONSUMER_TOPIC);
         environmentParams.add(GROUP_NAME);
+        environmentParams.add(API_KEY);
         checkParam(environmentParams);
     }
 

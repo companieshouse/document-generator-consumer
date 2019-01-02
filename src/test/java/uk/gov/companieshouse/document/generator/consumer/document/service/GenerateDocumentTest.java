@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
@@ -18,6 +19,7 @@ import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.document.generator.consumer.document.service.impl.GenerateDocumentImpl;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
+import uk.gov.companieshouse.environment.EnvironmentReader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,13 +46,17 @@ public class GenerateDocumentTest {
     @Mock
     private RestTemplate mockRestTemplate;
 
+    @Mock
+    private EnvironmentReader mockReader;
+
     @Test
     @DisplayName("Test that document generated when valid call made")
     void testDocumentGeneratedWhenValidCallMade() throws GenerateDocumentException {
 
         when(mockDocumentGeneratorConsumerProperties.getBaseUrl()).thenReturn("base_url");
         when(mockDocumentGeneratorConsumerProperties.getRootUri()).thenReturn("root_url");
-        when(mockRestTemplate.postForEntity(anyString(), any(GenerateDocumentRequest.class),
+        when(mockReader.getMandatoryString(anyString())).thenReturn("api_url");
+        when(mockRestTemplate.postForEntity(anyString(), any(HttpEntity.class),
                 eq(GenerateDocumentResponse.class))).thenReturn(createResponse());
 
         ResponseEntity<GenerateDocumentResponse> response =
@@ -99,7 +105,6 @@ public class GenerateDocumentTest {
         DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
 
         deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setResourceId("testResourceId");
         deserialisedKafkaMessage.setContentType("testContentType");
         deserialisedKafkaMessage.setDocumentType("testDocumentType");
         deserialisedKafkaMessage.setUserId("testUserId");

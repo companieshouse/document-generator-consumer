@@ -12,10 +12,6 @@
       "type": "string"
     },
     {
-      "name": "resource_id",
-      "type": "string"
-    },
-    {
       "name": "content_type",
       "type": "string"
     },
