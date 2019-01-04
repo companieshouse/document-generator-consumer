@@ -12,7 +12,7 @@ In order to build document-generator locally you will need the following:
 - [Git](https://git-scm.com/downloads)
 - Kafka
 - [document-render-service](https://github.com/companieshouse/document-render-service)
-- {document-generator](https://github.com/companieshouse/document-generator)
+- [document-generator](https://github.com/companieshouse/document-generator)
 
 Getting started
 -----------------
