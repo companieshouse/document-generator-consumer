@@ -10,6 +10,9 @@ In order to build document-generator locally you will need the following:
 - [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Maven](https://maven.apache.org/download.cgi)
 - [Git](https://git-scm.com/downloads)
+- Kafka
+- [document-render-service](https://github.com/companieshouse/document-render-service)
+- [document-generator](https://github.com/companieshouse/document-generator)
 
 Getting started
 -----------------
@@ -29,4 +32,16 @@ CONSUMER_TOPIC                            | Topic for the consumer to pick up   
 GROUP_NAME                                | Group name for the consumer                                                                                                                                               | ✓         |         | document-generator
 CHS_API_KEY                               | Chs api key encoded and used to make APi calls                                                                                                                            | ✓         |         | valid Api key
 
+Kafka
+--------------
+#### Consumer
+A consumer group will poll the render-submitted-data-document topic for requests to generate a document.
 
+#### Producer
+The following topics are produced to during the generation process:
+
+| Name                          | Description                                                  |
+| ----------------------------- | ------------------------------------------------------------ |
+| document-generation-started   | Notification that the generation of the document has started |
+| document-generation-completed | Details of the generated document                            |
+| document-generation-failed    | Notification that the generation of the document has failed  |
