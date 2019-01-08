@@ -82,7 +82,7 @@ public class DocumentGeneratorConsumer implements Runnable {
     }
 
     /**
-     * Poll kafka messages to request document generation from document-generator-api
+     * Poll kafka messages to request document generation from document-generator-api.
      *
      * @throws MessageCreationException
      * @throws ExecutionException
@@ -114,7 +114,7 @@ public class DocumentGeneratorConsumer implements Runnable {
     }
 
     /**
-     * Request generation of document from document-generator-api
+     * Request generation of document from document-generator-api.
      *
      * @param deserialisedKafkaMessage
      * @throws MessageCreationException
@@ -144,7 +144,7 @@ public class DocumentGeneratorConsumer implements Runnable {
     }
 
     /**
-     * Populate GenerateDocumentRequest with DeserialisedKafkaMessage content
+     * Populate GenerateDocumentRequest with DeserialisedKafkaMessage content.
      *
      * @param deserialisedKafkaMessage
      * @return message
@@ -155,6 +155,8 @@ public class DocumentGeneratorConsumer implements Runnable {
         request.setResourceID(deserialisedKafkaMessage.getResourceId());
         request.setMimeType(deserialisedKafkaMessage.getContentType());
         request.setDocumentType(deserialisedKafkaMessage.getDocumentType());
+        request.setPublicLocationRequired(true);
+
         return request;
     }
 

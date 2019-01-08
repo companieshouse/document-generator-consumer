@@ -1,5 +1,19 @@
 package uk.gov.companieshouse.document.generator.consumer.document;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.avro.Schema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
@@ -22,21 +37,6 @@ import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.kafka.producer.CHKafkaProducer;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -118,6 +118,23 @@ public class DocumentGeneratorConsumerTests {
         documentGeneratorConsumer.requestGenerateDocument(deserialisedKafkaMessage);
 
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, any(GenerateDocumentResponse.class)));
+    }
+
+    @Test
+    @DisplayName("Test message for create document generation fail as exception is thrown")
+    void shouldFailToGenerateDocumentAsExceptionIsThrown() throws Exception {
+
+        DeserialisedKafkaMessage deserialisedKafkaMessage = createDeserialisedKafkaMessage();
+
+        when(mockRestTemplate.postForObject(anyString(), any(GenerateDocumentRequest.class),
+            eq(GenerateDocumentResponse.class)))
+            .thenThrow(RestClientException.class);
+
+        documentGeneratorConsumer.requestGenerateDocument(deserialisedKafkaMessage);
+
+        assertEquals(any(Message.class),
+            mockMessageService.createDocumentGenerationFailed(deserialisedKafkaMessage,
+                any(GenerateDocumentResponse.class)));
     }
 
     /**

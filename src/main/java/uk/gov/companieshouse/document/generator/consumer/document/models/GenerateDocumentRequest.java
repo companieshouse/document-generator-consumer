@@ -17,6 +17,9 @@ public class GenerateDocumentRequest {
     @JsonProperty("document_type")
     private String documentType;
 
+    @JsonProperty("is_public_location_required")
+    private boolean isPublicLocationRequired;
+
     public String getResourceUri() {
         return resourceUri;
     }
@@ -49,7 +52,14 @@ public class GenerateDocumentRequest {
         this.documentType = documentType;
     }
 
-    @Override
+    public boolean isPublicLocationRequired() {
+        return isPublicLocationRequired;
+    }
+
+    public void setPublicLocationRequired(boolean publicLocationRequired) {
+        isPublicLocationRequired = publicLocationRequired;
+    }
+
     public String toString() {
         return new Gson().toJson(this);
     }
