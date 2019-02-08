@@ -80,6 +80,8 @@ public class GenerateDocumentImpl implements GenerateDocument {
         request.setResourceUri(deserialisedKafkaMessage.getResource());
         request.setMimeType(deserialisedKafkaMessage.getContentType());
         request.setDocumentType(deserialisedKafkaMessage.getDocumentType());
+        request.setPublicLocationRequired(true);
+
         return request;
     }
 
