@@ -89,7 +89,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
                 String paramValue = reader.getMandatoryString(param);
                 LOGGER.info("Environment variable " + param + " has value " + paramValue);
             } catch (EnvironmentVariableException e) {
-                LOGGER.error("Environment variable " + param + " is not set");
+                LOGGER.error("Environment variable " + param + " is not set", e);
                 environmentParamMissing.set(true);
             }
         });
