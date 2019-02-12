@@ -10,6 +10,7 @@ import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerServ
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.MessageProcessorRunner;
 import uk.gov.companieshouse.environment.EnvironmentReader;
+import uk.gov.companieshouse.environment.exception.EnvironmentVariableException;
 import uk.gov.companieshouse.environment.impl.EnvironmentReaderImpl;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @SpringBootApplication
 public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
@@ -74,29 +76,30 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
         environmentParams.add(CONSUMER_TOPIC);
         environmentParams.add(GROUP_NAME);
         environmentParams.add(API_KEY);
-        checkParam(environmentParams);
+        checkParams(environmentParams);
     }
 
-    public static void checkParam(List<String> enviromentParams) {
+    private static void checkParams(List<String> environmentParams) {
 
-        boolean environmentParamMissing = false;
+        AtomicBoolean environmentParamMissing = new AtomicBoolean(false);
 
-        for (String param : enviromentParams) {
+        environmentParams.stream().forEach(param -> {
 
-            String paramValue = reader.getMandatoryString(param);
-
-            if (paramValue != null && !paramValue.isEmpty()) {
+            try {
+                String paramValue = reader.getMandatoryString(param);
                 LOGGER.info("Environment variable " + param + " has value " + paramValue);
-            } else {
+            } catch (EnvironmentVariableException e) {
                 LOGGER.error("Environment variable " + param + " is not set");
-                environmentParamMissing = true;
+                environmentParamMissing.set(true);
             }
-        }
+        });
 
-        if (environmentParamMissing) {
-            throw new RuntimeException("There are environment variables are not set, see logs for details - application will exit");
+        if (environmentParamMissing.get() == true) {
+            throw new RuntimeException("There are environment variables that " +
+                "are not set, see logs for details - application will exit");
         }
     }
+
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
