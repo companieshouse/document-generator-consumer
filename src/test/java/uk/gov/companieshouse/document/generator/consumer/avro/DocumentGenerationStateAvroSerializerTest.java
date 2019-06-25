@@ -20,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DocumentGenerationStateAvroSerializerTest {
 
     private static final String STARTED_ENCODED_AVRO_STRING = "\f123456\u0012test guid";
-    private static final String COMPLETED_ENCODED_AVRO_STRING = "\f123456\u0012test guid test description,description " +
-            "identifier22017-05-22T00:00:00+01:00\u0002\bdate\u001401/01/1980\u0000\u001Atest-location\n1234L";
+    private static final String COMPLETED_ENCODED_AVRO_STRING = "\f123456\u0012test guid test description,description identifier22017-05-22T00:00:00+01:00\u0002\u0002\bdate\u0002\u001401/01/1980\u0000\u001Atest-location\n1234L";
     private static final String FAILED_ENCODED_AVRO_STRING = "\f123456\u0000 test description\u0000,description identifier\n" +
             "an-id\u0002\u0002\bdate\u0002\u001401/01/1980\u0000";
     private static final String FAILED_ENCODED_MANDATORY_AVRO_STRING = "\f123456\u0002\u0002\n" +
@@ -64,6 +63,7 @@ public class DocumentGenerationStateAvroSerializerTest {
         byte[] result = serializer.serialize(document);
         String tests = new String(result);
 
+        System.out.println(new String(result));
         assertEquals(COMPLETED_ENCODED_AVRO_STRING, new String(result));
     }
 
