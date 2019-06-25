@@ -63,7 +63,6 @@ public class DocumentGenerationStateAvroSerializerTest {
         byte[] result = serializer.serialize(document);
         String tests = new String(result);
 
-        System.out.println(new String(result));
         assertEquals(COMPLETED_ENCODED_AVRO_STRING, new String(result));
     }
 
