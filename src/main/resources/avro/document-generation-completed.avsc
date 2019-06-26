@@ -25,10 +25,10 @@
         },
         {
             "name":"description_values",
-            "type":{
+            "type":["null", {
                 "type":"map",
-                "values":"string"
-            }
+                "values":["null","string"]
+            }]
         },
         {
             "name":"location",
