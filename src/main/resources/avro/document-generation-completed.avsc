@@ -24,11 +24,16 @@
             "type":"string"
         },
         {
-            "name":"description_values",
-            "type":{
-                "type":"map",
-                "values":"string"
-            }
+          "name": "description_values",
+          "type": [
+            "null",
+            {
+                "type": "map",
+                "values": [
+                    "null",
+                    "string"
+                ]
+            }]
         },
         {
             "name":"location",
