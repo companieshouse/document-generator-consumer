@@ -4,9 +4,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.gov.companieshouse</groupId>
     <artifactId>document-generator-consumer</artifactId>
-    <version>unversioned</version>
+    <version>409e532</version>
     <packaging>jar</packaging>
     <name>document-generator-consumer</name>
     <description>Kafka consumer that hooks into the document-generator process asynchronously</description>
@@ -122,6 +121,11 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.gov.companieshouse</groupId>
+            <artifactId>kafka-models</artifactId>
+            <version>unversioned</version>
         </dependency>
     </dependencies>
 

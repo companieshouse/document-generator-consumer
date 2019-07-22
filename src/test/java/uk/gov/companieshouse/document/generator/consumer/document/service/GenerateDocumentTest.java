@@ -1,5 +1,16 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -12,25 +23,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentRequest;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.document.generator.consumer.document.service.impl.GenerateDocumentImpl;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
 import uk.gov.companieshouse.environment.EnvironmentReader;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -60,7 +61,7 @@ public class GenerateDocumentTest {
                 eq(GenerateDocumentResponse.class))).thenReturn(createResponse());
 
         ResponseEntity<GenerateDocumentResponse> response =
-                generateDocument.requestGenerateDocument(createDeserialisedKafkaMessage());
+                generateDocument.requestGenerateDocument(createRenderSubmittedDataDocument());
 
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -76,7 +77,7 @@ public class GenerateDocumentTest {
                 eq(GenerateDocumentResponse.class))).thenThrow(RestClientException.class);
 
         assertThrows(GenerateDocumentException.class, () ->
-                generateDocument.requestGenerateDocument(createDeserialisedKafkaMessage()));
+                generateDocument.requestGenerateDocument(createRenderSubmittedDataDocument()));
     }
 
     private ResponseEntity createResponse() {
@@ -100,16 +101,16 @@ public class GenerateDocumentTest {
         return responseEntity;
     }
 
-    private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
+    private RenderSubmittedDataDocument createRenderSubmittedDataDocument() {
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
+        RenderSubmittedDataDocument renderSubmittedDataDocument = new RenderSubmittedDataDocument();
 
-        deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setContentType("testContentType");
-        deserialisedKafkaMessage.setDocumentType("testDocumentType");
-        deserialisedKafkaMessage.setUserId("testUserId");
-        deserialisedKafkaMessage.setId("testId");
+        renderSubmittedDataDocument.setResource("testResource");
+        renderSubmittedDataDocument.setContentType("testContentType");
+        renderSubmittedDataDocument.setDocumentType("testDocumentType");
+        renderSubmittedDataDocument.setUserId("testUserId");
+        renderSubmittedDataDocument.setId("testId");
 
-        return deserialisedKafkaMessage;
+        return renderSubmittedDataDocument;
     }
 }

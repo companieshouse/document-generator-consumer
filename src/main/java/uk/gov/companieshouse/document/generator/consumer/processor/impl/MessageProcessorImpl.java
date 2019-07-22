@@ -1,12 +1,19 @@
 package uk.gov.companieshouse.document.generator.consumer.processor.impl;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
@@ -17,12 +24,6 @@ import uk.gov.companieshouse.document.generator.consumer.processor.MessageProces
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class MessageProcessorImpl implements MessageProcessor {
@@ -37,7 +38,7 @@ public class MessageProcessorImpl implements MessageProcessor {
 
     private KafkaProducerService kafkaProducerService;
 
-    private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
+    private AvroDeserializer<RenderSubmittedDataDocument> avroDeserializer;
 
     private static final String KAFKA_MSG = "kafka_message";
 
@@ -50,7 +51,7 @@ public class MessageProcessorImpl implements MessageProcessor {
     @Autowired
     public MessageProcessorImpl(MessageService messageService, GenerateDocument generateDocument,
                                 KafkaConsumerService kafkaConsumerService, KafkaProducerService kafkaProducerService,
-                                AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer) {
+                                AvroDeserializer<RenderSubmittedDataDocument> avroDeserializer) {
 
         this.messageService = messageService;
         this.generateDocument = generateDocument;
@@ -79,12 +80,12 @@ public class MessageProcessorImpl implements MessageProcessor {
             LOG.debug("Consumed messages " + kafkaMessages);
         }
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = null;
+        RenderSubmittedDataDocument deserialisedKafkaMessage = null;
 
         for (Message message : kafkaMessages) {
 
             try {
-                deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
+                deserialisedKafkaMessage = avroDeserializer.deserialize(message, RenderSubmittedDataDocument.getClassSchema());
 
                 LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Message received and deserialised from kafka",
                         setDebugMap(deserialisedKafkaMessage, message));
@@ -125,7 +126,7 @@ public class MessageProcessorImpl implements MessageProcessor {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage, Message message)
+    private void requestGenerateDocument(RenderSubmittedDataDocument deserialisedKafkaMessage, Message message)
             throws InterruptedException {
 
         try {
@@ -155,7 +156,7 @@ public class MessageProcessorImpl implements MessageProcessor {
         }
     }
 
-    private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage, Message message) {
+    private Map<String, Object> setDebugMap(RenderSubmittedDataDocument deserialisedKafkaMessage, Message message) {
 
         Map<String, Object> debugMap = new HashMap<>();
         debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, deserialisedKafkaMessage.getResource());
