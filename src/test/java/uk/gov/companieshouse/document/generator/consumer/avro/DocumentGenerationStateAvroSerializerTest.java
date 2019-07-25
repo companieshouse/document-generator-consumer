@@ -1,19 +1,20 @@
 package uk.gov.companieshouse.document.generator.consumer.avro;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import uk.gov.companieshouse.document.generation.status.DocumentGenerationCompleted;
+import uk.gov.companieshouse.document.generation.status.DocumentGenerationFailed;
+import uk.gov.companieshouse.document.generation.status.DocumentGenerationStarted;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

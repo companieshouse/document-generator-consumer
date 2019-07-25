@@ -1,6 +1,18 @@
 package uk.gov.companieshouse.document.generator.consumer.processor;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.avro.Schema;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,28 +23,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.impl.MessageProcessorImpl;
 import uk.gov.companieshouse.kafka.message.Message;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

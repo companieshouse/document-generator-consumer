@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service;
 
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.exception.MessageCreationException;
 import uk.gov.companieshouse.kafka.message.Message;
 

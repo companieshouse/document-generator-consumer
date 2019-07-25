@@ -1,12 +1,19 @@
 package uk.gov.companieshouse.document.generator.consumer.processor.impl;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
@@ -17,12 +24,6 @@ import uk.gov.companieshouse.document.generator.consumer.processor.MessageProces
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class MessageProcessorImpl implements MessageProcessor {

@@ -1,7 +1,8 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service;
 
 import org.springframework.http.ResponseEntity;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
 
 public interface GenerateDocument {

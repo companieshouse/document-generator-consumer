@@ -1,24 +1,25 @@
 package uk.gov.companieshouse.document.generator.consumer.document.service.impl;
 
-import org.springframework.stereotype.Service;
-import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
-import uk.gov.companieshouse.document.generator.consumer.avro.DocumentGenerationStateAvroSerializer;
-import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted;
-import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
-import uk.gov.companieshouse.document.generator.consumer.exception.MessageCreationException;
-import uk.gov.companieshouse.kafka.message.Message;
-import uk.gov.companieshouse.logging.Logger;
-import uk.gov.companieshouse.logging.LoggerFactory;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
+import uk.gov.companieshouse.document.generation.status.DocumentGenerationCompleted;
+import uk.gov.companieshouse.document.generation.status.DocumentGenerationFailed;
+import uk.gov.companieshouse.document.generation.status.DocumentGenerationStarted;
+import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
+import uk.gov.companieshouse.document.generator.consumer.avro.DocumentGenerationStateAvroSerializer;
+import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
+import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
+import uk.gov.companieshouse.document.generator.consumer.exception.MessageCreationException;
+import uk.gov.companieshouse.kafka.message.Message;
+import uk.gov.companieshouse.logging.Logger;
+import uk.gov.companieshouse.logging.LoggerFactory;
 
 @Service
 public class MessageServiceImpl implements MessageService {
