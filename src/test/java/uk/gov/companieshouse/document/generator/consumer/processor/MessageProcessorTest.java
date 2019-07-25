@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
@@ -48,7 +48,7 @@ public class MessageProcessorTest {
     private KafkaProducerService mockKafkaProducerService;
 
     @Mock
-    private AvroDeserializer<DeserialisedKafkaMessage> mockAvroDeserializer;
+    private AvroDeserializer<RenderSubmittedDataDocument> mockAvroDeserializer;
 
     @Mock
     private GenerateDocument mockGenerateDocument;
@@ -57,7 +57,7 @@ public class MessageProcessorTest {
     private MessageService mockMessageService;
 
     @Mock
-    private DeserialisedKafkaMessage mockDeserialisedKafkaMessage;
+    private RenderSubmittedDataDocument mockRenderSubmittedDataDocument;
 
     private List<Message> messages;
 
@@ -69,17 +69,17 @@ public class MessageProcessorTest {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class)))
-                .thenReturn(createDeserialisedKafkaMessage());
-        when(mockGenerateDocument.requestGenerateDocument(any(DeserialisedKafkaMessage.class)))
+                .thenReturn(createRenderSubmittedDataDocument());
+        when(mockGenerateDocument.requestGenerateDocument(any(RenderSubmittedDataDocument.class)))
                 .thenReturn(createResponse());
 
         messageProcessor.processKafkaMessage();
 
-        assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockDeserialisedKafkaMessage));
+        assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockRenderSubmittedDataDocument));
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationCompleted(
-                createDeserialisedKafkaMessage(), any(GenerateDocumentResponse.class)));
+                createRenderSubmittedDataDocument(), any(GenerateDocumentResponse.class)));
 
-        verify(mockGenerateDocument).requestGenerateDocument(createDeserialisedKafkaMessage());
+        verify(mockGenerateDocument).requestGenerateDocument(createRenderSubmittedDataDocument());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class MessageProcessorTest {
         messageProcessor.processKafkaMessage();
 
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationFailed(
-                createDeserialisedKafkaMessage(), any(GenerateDocumentResponse.class)));
+                createRenderSubmittedDataDocument(), any(GenerateDocumentResponse.class)));
     }
 
     private List<Message> createTestMessageList() {
@@ -113,15 +113,15 @@ public class MessageProcessorTest {
         return messages;
     }
 
-    private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
+    private RenderSubmittedDataDocument createRenderSubmittedDataDocument() {
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
+        RenderSubmittedDataDocument renderSubmittedDataDocument = new RenderSubmittedDataDocument();
 
-        deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setContentType("testContentType");
-        deserialisedKafkaMessage.setDocumentType("testDocumentType");
+        renderSubmittedDataDocument.setResource("testResource");
+        renderSubmittedDataDocument.setContentType("testContentType");
+        renderSubmittedDataDocument.setDocumentType("testDocumentType");
 
-        return deserialisedKafkaMessage;
+        return renderSubmittedDataDocument;
     }
 
     private ResponseEntity createResponse() {

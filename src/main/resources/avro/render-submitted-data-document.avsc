@@ -1,7 +1,7 @@
 {
   "type": "record",
   "namespace": "uk.gov.companieshouse.document.generator.consumer.document.models.avro",
-  "name": "DeserialisedKafkaMessage",
+  "name": "RenderSubmittedDataDocument",
   "fields": [
     {
       "name": "id",
