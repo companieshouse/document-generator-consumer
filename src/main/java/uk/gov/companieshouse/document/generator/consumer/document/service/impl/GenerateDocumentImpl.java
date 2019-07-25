@@ -11,7 +11,7 @@ import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsum
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentRequest;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
 import uk.gov.companieshouse.environment.EnvironmentReader;
@@ -42,53 +42,53 @@ public class GenerateDocumentImpl implements GenerateDocument {
     }
 
     @Override
-    public ResponseEntity<GenerateDocumentResponse> requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage) throws GenerateDocumentException {
+    public ResponseEntity<GenerateDocumentResponse> requestGenerateDocument(RenderSubmittedDataDocument renderSubmittedDataDocument) throws GenerateDocumentException {
 
         String url = configuration.getRootUri() + configuration.getBaseUrl();
 
-        LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Sending request to generate document to document" +
-                " generator api", setDebugMap(deserialisedKafkaMessage));
+        LOG.infoContext(renderSubmittedDataDocument.getUserId(), "Sending request to generate document to document" +
+                " generator api", setDebugMap(renderSubmittedDataDocument));
 
         try {
             ResponseEntity<GenerateDocumentResponse> response = restTemplate.postForEntity(url,
-                    setRequest(deserialisedKafkaMessage), GenerateDocumentResponse.class);
+                    setRequest(renderSubmittedDataDocument), GenerateDocumentResponse.class);
 
             return response;
 
         } catch (Exception e) {
             LOG.errorContext("Error occurred during api call to document-generator",
-                    e, setDebugMap(deserialisedKafkaMessage));
+                    e, setDebugMap(renderSubmittedDataDocument));
             throw new GenerateDocumentException("An error occurred when requesting the generation" +
                    " of a document from the document generator api", e);
         }
     }
 
-    private HttpEntity<GenerateDocumentRequest> setRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
+    private HttpEntity<GenerateDocumentRequest> setRequest(RenderSubmittedDataDocument renderSubmittedDataDocument) {
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization", reader.getMandatoryString(DocumentGeneratorConsumerApplication.API_KEY));
 
-        GenerateDocumentRequest generateDocumentRequest = populateDocumentRequest(deserialisedKafkaMessage);
+        GenerateDocumentRequest generateDocumentRequest = populateDocumentRequest(renderSubmittedDataDocument);
 
         HttpEntity<GenerateDocumentRequest> request = new HttpEntity<>(generateDocumentRequest, headers);
 
         return request;
     }
 
-    private GenerateDocumentRequest populateDocumentRequest(DeserialisedKafkaMessage deserialisedKafkaMessage) {
+    private GenerateDocumentRequest populateDocumentRequest(RenderSubmittedDataDocument renderSubmittedDataDocument) {
         GenerateDocumentRequest request = new GenerateDocumentRequest();
-        request.setResourceUri(deserialisedKafkaMessage.getResource());
-        request.setMimeType(deserialisedKafkaMessage.getContentType());
-        request.setDocumentType(deserialisedKafkaMessage.getDocumentType());
+        request.setResourceUri(renderSubmittedDataDocument.getResource());
+        request.setMimeType(renderSubmittedDataDocument.getContentType());
+        request.setDocumentType(renderSubmittedDataDocument.getDocumentType());
         request.setPublicLocationRequired(true);
 
         return request;
     }
 
-    private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage) {
+    private Map<String, Object> setDebugMap(RenderSubmittedDataDocument renderSubmittedDataDocument) {
 
         Map<String, Object> debugMap = new HashMap<>();
-        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, deserialisedKafkaMessage.getResource());
+        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, renderSubmittedDataDocument.getResource());
 
         return debugMap;
     }

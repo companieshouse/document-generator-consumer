@@ -16,7 +16,7 @@ import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsum
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentRequest;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.impl.GenerateDocumentImpl;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
 import uk.gov.companieshouse.environment.EnvironmentReader;
@@ -60,7 +60,7 @@ public class GenerateDocumentTest {
                 eq(GenerateDocumentResponse.class))).thenReturn(createResponse());
 
         ResponseEntity<GenerateDocumentResponse> response =
-                generateDocument.requestGenerateDocument(createDeserialisedKafkaMessage());
+                generateDocument.requestGenerateDocument(createRenderSubmittedDataDocument());
 
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -76,7 +76,7 @@ public class GenerateDocumentTest {
                 eq(GenerateDocumentResponse.class))).thenThrow(RestClientException.class);
 
         assertThrows(GenerateDocumentException.class, () ->
-                generateDocument.requestGenerateDocument(createDeserialisedKafkaMessage()));
+                generateDocument.requestGenerateDocument(createRenderSubmittedDataDocument()));
     }
 
     private ResponseEntity createResponse() {
@@ -100,16 +100,16 @@ public class GenerateDocumentTest {
         return responseEntity;
     }
 
-    private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
+    private RenderSubmittedDataDocument createRenderSubmittedDataDocument() {
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
+        RenderSubmittedDataDocument renderSubmittedDataDocument = new RenderSubmittedDataDocument();
 
-        deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setContentType("testContentType");
-        deserialisedKafkaMessage.setDocumentType("testDocumentType");
-        deserialisedKafkaMessage.setUserId("testUserId");
-        deserialisedKafkaMessage.setId("testId");
+        renderSubmittedDataDocument.setResource("testResource");
+        renderSubmittedDataDocument.setContentType("testContentType");
+        renderSubmittedDataDocument.setDocumentType("testDocumentType");
+        renderSubmittedDataDocument.setUserId("testUserId");
+        renderSubmittedDataDocument.setId("testId");
 
-        return deserialisedKafkaMessage;
+        return renderSubmittedDataDocument;
     }
 }

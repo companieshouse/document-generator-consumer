@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.avro.DocumentGenerationStateAvroSerializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
+import uk.gov.companieshouse.document.generator.consumer.document.models.avro.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationCompleted;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationFailed;
 import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DocumentGenerationStarted;
@@ -40,12 +40,12 @@ public class MessageServiceImpl implements MessageService {
     private DocumentGenerationStateAvroSerializer documentGenerationStateAvroSerializer = new DocumentGenerationStateAvroSerializer();
 
     @Override
-    public Message createDocumentGenerationStarted(DeserialisedKafkaMessage deserialisedKafkaMessage) throws MessageCreationException {
+    public Message createDocumentGenerationStarted(RenderSubmittedDataDocument renderSubmittedDataDocument) throws MessageCreationException {
 
         DocumentGenerationStarted started = new DocumentGenerationStarted();
 
-        started.setId(deserialisedKafkaMessage.getId());
-        started.setRequesterId(deserialisedKafkaMessage.getUserId());
+        started.setId(renderSubmittedDataDocument.getId());
+        started.setRequesterId(renderSubmittedDataDocument.getUserId());
 
         try {
             LOG.infoContext(started.getRequesterId(),"Serialize document generation started and create message",
@@ -60,12 +60,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message createDocumentGenerationFailed(DeserialisedKafkaMessage deserialisedKafkaMessage,
+    public Message createDocumentGenerationFailed(RenderSubmittedDataDocument renderSubmittedDataDocument,
                                                GenerateDocumentResponse response) throws MessageCreationException {
 
         DocumentGenerationFailed failed = new DocumentGenerationFailed();
-        failed.setId(deserialisedKafkaMessage != null ? deserialisedKafkaMessage.getId() : "");
-        failed.setRequesterId(deserialisedKafkaMessage != null ? deserialisedKafkaMessage.getUserId() : "");
+        failed.setId(renderSubmittedDataDocument != null ? renderSubmittedDataDocument.getId() : "");
+        failed.setRequesterId(renderSubmittedDataDocument != null ? renderSubmittedDataDocument.getUserId() : "");
         failed.setDescription(response != null ? response.getDescription() : "");
         failed.setDescriptionIdentifier(response != null ? response.getDescriptionIdentifier() : "");
 
@@ -86,13 +86,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message createDocumentGenerationCompleted(DeserialisedKafkaMessage deserialisedKafkaMessage,
+    public Message createDocumentGenerationCompleted(RenderSubmittedDataDocument renderSubmittedDataDocument,
                                                   GenerateDocumentResponse response) throws MessageCreationException {
 
         DocumentGenerationCompleted completed = new DocumentGenerationCompleted();
 
-        completed.setId(deserialisedKafkaMessage.getId());
-        completed.setRequesterId(deserialisedKafkaMessage.getUserId());
+        completed.setId(renderSubmittedDataDocument.getId());
+        completed.setRequesterId(renderSubmittedDataDocument.getUserId());
         completed.setDescription(response.getDescription());
         completed.setDescriptionIdentifier(response.getDescriptionIdentifier());
         completed.setLocation(response.getLinks().getLocation());
