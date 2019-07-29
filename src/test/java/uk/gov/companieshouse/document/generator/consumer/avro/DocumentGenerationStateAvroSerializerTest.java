@@ -38,7 +38,6 @@ public class DocumentGenerationStateAvroSerializerTest {
 
         DocumentGenerationStateAvroSerializer serializer = new DocumentGenerationStateAvroSerializer();
         byte[] result = serializer.serialize(document);
-        String tests = new String(result);
 
         assertEquals(STARTED_ENCODED_AVRO_STRING, new String(result));
     }
@@ -63,7 +62,6 @@ public class DocumentGenerationStateAvroSerializerTest {
 
         DocumentGenerationStateAvroSerializer serializer = new DocumentGenerationStateAvroSerializer();
         byte[] result = serializer.serialize(document);
-        String tests = new String(result);
 
         assertEquals(COMPLETED_ENCODED_AVRO_STRING, new String(result));
     }
