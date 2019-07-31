@@ -56,7 +56,7 @@
 
         <!-- Kafka -->
         <ch-kafka.version>1.3.0-rc2</ch-kafka.version>
-        <kafka-models.version>1.0.4</kafka-models.version>
+        <kafka-models.version>1.0.6</kafka-models.version>
 
         <!-- Sonar -->
         <sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
