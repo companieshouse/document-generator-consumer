@@ -3,17 +3,16 @@ package uk.gov.companieshouse.document.generator.consumer.processor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avro.Schema;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -25,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
-import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
@@ -33,6 +31,8 @@ import uk.gov.companieshouse.document.generator.consumer.document.service.Messag
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.impl.MessageProcessorImpl;
+import uk.gov.companieshouse.kafka.deserialization.AvroDeserializer;
+import uk.gov.companieshouse.kafka.exceptions.DeserializationException;
 import uk.gov.companieshouse.kafka.message.Message;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,8 +69,7 @@ public class MessageProcessorTest {
     public void testsMessageProcessedCreatesStartedAndCompletedMessage() throws Exception {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
-        when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class)))
-                .thenReturn(createRenderSubmittedDataDocument());
+        when(mockAvroDeserializer.fromBinary(any(Message.class), eq(RenderSubmittedDataDocument.getClassSchema()))).thenReturn(createRenderSubmittedDataDocument());
         when(mockGenerateDocument.requestGenerateDocument(any(RenderSubmittedDataDocument.class)))
                 .thenReturn(createResponse());
 
@@ -88,8 +87,7 @@ public class MessageProcessorTest {
     public void testsMessageProcessedCreatesFailedMessageOnError() throws Exception {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
-        when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class)))
-                .thenThrow(new IOException());
+        when(mockAvroDeserializer.fromBinary(any(Message.class), eq(RenderSubmittedDataDocument.getClassSchema()))).thenThrow(new DeserializationException("error", new Exception()));
 
         messageProcessor.processKafkaMessage();
 
