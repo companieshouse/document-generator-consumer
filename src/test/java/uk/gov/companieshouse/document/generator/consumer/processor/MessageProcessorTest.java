@@ -1,6 +1,18 @@
 package uk.gov.companieshouse.document.generator.consumer.processor;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.avro.Schema;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,28 +23,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.impl.MessageProcessorImpl;
 import uk.gov.companieshouse.kafka.message.Message;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -48,7 +49,7 @@ public class MessageProcessorTest {
     private KafkaProducerService mockKafkaProducerService;
 
     @Mock
-    private AvroDeserializer<DeserialisedKafkaMessage> mockAvroDeserializer;
+    private AvroDeserializer<RenderSubmittedDataDocument> mockAvroDeserializer;
 
     @Mock
     private GenerateDocument mockGenerateDocument;
@@ -57,7 +58,7 @@ public class MessageProcessorTest {
     private MessageService mockMessageService;
 
     @Mock
-    private DeserialisedKafkaMessage mockDeserialisedKafkaMessage;
+    private RenderSubmittedDataDocument mockRenderSubmittedDataDocument;
 
     private List<Message> messages;
 
@@ -69,17 +70,17 @@ public class MessageProcessorTest {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
         when(mockAvroDeserializer.deserialize(any(Message.class), any(Schema.class)))
-                .thenReturn(createDeserialisedKafkaMessage());
-        when(mockGenerateDocument.requestGenerateDocument(any(DeserialisedKafkaMessage.class)))
+                .thenReturn(createRenderSubmittedDataDocument());
+        when(mockGenerateDocument.requestGenerateDocument(any(RenderSubmittedDataDocument.class)))
                 .thenReturn(createResponse());
 
         messageProcessor.processKafkaMessage();
 
-        assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockDeserialisedKafkaMessage));
+        assertEquals(any(Message.class), mockMessageService.createDocumentGenerationStarted(mockRenderSubmittedDataDocument));
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationCompleted(
-                createDeserialisedKafkaMessage(), any(GenerateDocumentResponse.class)));
+                createRenderSubmittedDataDocument(), any(GenerateDocumentResponse.class)));
 
-        verify(mockGenerateDocument).requestGenerateDocument(createDeserialisedKafkaMessage());
+        verify(mockGenerateDocument).requestGenerateDocument(createRenderSubmittedDataDocument());
     }
 
     @Test
@@ -93,7 +94,7 @@ public class MessageProcessorTest {
         messageProcessor.processKafkaMessage();
 
         assertEquals(any(Message.class), mockMessageService.createDocumentGenerationFailed(
-                createDeserialisedKafkaMessage(), any(GenerateDocumentResponse.class)));
+                createRenderSubmittedDataDocument(), any(GenerateDocumentResponse.class)));
     }
 
     private List<Message> createTestMessageList() {
@@ -113,15 +114,15 @@ public class MessageProcessorTest {
         return messages;
     }
 
-    private DeserialisedKafkaMessage createDeserialisedKafkaMessage() {
+    private RenderSubmittedDataDocument createRenderSubmittedDataDocument() {
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = new DeserialisedKafkaMessage();
+        RenderSubmittedDataDocument renderSubmittedDataDocument = new RenderSubmittedDataDocument();
 
-        deserialisedKafkaMessage.setResource("testResource");
-        deserialisedKafkaMessage.setContentType("testContentType");
-        deserialisedKafkaMessage.setDocumentType("testDocumentType");
+        renderSubmittedDataDocument.setResource("testResource");
+        renderSubmittedDataDocument.setContentType("testContentType");
+        renderSubmittedDataDocument.setDocumentType("testDocumentType");
 
-        return deserialisedKafkaMessage;
+        return renderSubmittedDataDocument;
     }
 
     private ResponseEntity createResponse() {

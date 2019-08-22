@@ -1,12 +1,19 @@
 package uk.gov.companieshouse.document.generator.consumer.processor.impl;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
-import uk.gov.companieshouse.document.generator.consumer.document.models.avro.DeserialisedKafkaMessage;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
@@ -17,12 +24,6 @@ import uk.gov.companieshouse.document.generator.consumer.processor.MessageProces
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class MessageProcessorImpl implements MessageProcessor {
@@ -37,7 +38,7 @@ public class MessageProcessorImpl implements MessageProcessor {
 
     private KafkaProducerService kafkaProducerService;
 
-    private AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer;
+    private AvroDeserializer<RenderSubmittedDataDocument> avroDeserializer;
 
     private static final String KAFKA_MSG = "kafka_message";
 
@@ -50,7 +51,7 @@ public class MessageProcessorImpl implements MessageProcessor {
     @Autowired
     public MessageProcessorImpl(MessageService messageService, GenerateDocument generateDocument,
                                 KafkaConsumerService kafkaConsumerService, KafkaProducerService kafkaProducerService,
-                                AvroDeserializer<DeserialisedKafkaMessage> avroDeserializer) {
+                                AvroDeserializer<RenderSubmittedDataDocument> avroDeserializer) {
 
         this.messageService = messageService;
         this.generateDocument = generateDocument;
@@ -79,32 +80,32 @@ public class MessageProcessorImpl implements MessageProcessor {
             LOG.debug("Consumed messages " + kafkaMessages);
         }
 
-        DeserialisedKafkaMessage deserialisedKafkaMessage = null;
+        RenderSubmittedDataDocument renderSubmittedDataDocument = null;
 
         for (Message message : kafkaMessages) {
 
             try {
-                deserialisedKafkaMessage = avroDeserializer.deserialize(message, DeserialisedKafkaMessage.getClassSchema());
+                renderSubmittedDataDocument = avroDeserializer.deserialize(message, RenderSubmittedDataDocument.getClassSchema());
 
-                LOG.infoContext(deserialisedKafkaMessage.getUserId(), "Message received and deserialised from kafka",
-                        setDebugMap(deserialisedKafkaMessage, message));
+                LOG.infoContext(renderSubmittedDataDocument.getUserId(), "Message received and deserialised from kafka",
+                        setDebugMap(renderSubmittedDataDocument, message));
 
                 try {
-                    kafkaProducerService.send(messageService.createDocumentGenerationStarted(deserialisedKafkaMessage));
+                    kafkaProducerService.send(messageService.createDocumentGenerationStarted(renderSubmittedDataDocument));
                 } catch (MessageCreationException | ExecutionException mce) {
                     LOG.errorContext("Error occurred while attempt to create and send a started message to producer",
-                            mce, setDebugMap(deserialisedKafkaMessage, message));
+                            mce, setDebugMap(renderSubmittedDataDocument, message));
                     kafkaConsumerService.commit(message);
                     continue;
                 }
 
-                requestGenerateDocument(deserialisedKafkaMessage, message);
+                requestGenerateDocument(renderSubmittedDataDocument, message);
 
             } catch (IOException ioe) {
                 LOG.errorContext("An error occurred when trying to generate a document from a kafka message", ioe,
                         setDebugMapKafkaFail(message));
                 try {
-                    kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
+                    kafkaProducerService.send(messageService.createDocumentGenerationFailed(renderSubmittedDataDocument, null));
                     LOG.info("Document failed to generate", setDebugMapKafkaFail(message));
                 } catch (MessageCreationException |ExecutionException mce) {
                     LOG.errorContext("Error occurred while attempt to create and send a failed message to producer",
@@ -120,45 +121,45 @@ public class MessageProcessorImpl implements MessageProcessor {
      * Populates GenerateDocumentRequest object with info from the deserialised Kafka message to be sent to the document
      * generator api to generate a document.
      *
-     * @param deserialisedKafkaMessage The message deserialised from Kafka
+     * @param renderSubmittedDataDocument The message deserialised from Kafka
      * @throws MessageCreationException
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private void requestGenerateDocument(DeserialisedKafkaMessage deserialisedKafkaMessage, Message message)
+    private void requestGenerateDocument(RenderSubmittedDataDocument renderSubmittedDataDocument, Message message)
             throws InterruptedException {
 
         try {
-            ResponseEntity<GenerateDocumentResponse> response = generateDocument.requestGenerateDocument(deserialisedKafkaMessage);
+            ResponseEntity<GenerateDocumentResponse> response = generateDocument.requestGenerateDocument(renderSubmittedDataDocument);
 
             try {
-                kafkaProducerService.send(messageService.createDocumentGenerationCompleted(deserialisedKafkaMessage, response.getBody()));
-                LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Document has been generated for resource: "
-                    + deserialisedKafkaMessage.getResource(), setDebugMap(deserialisedKafkaMessage, message));
+                kafkaProducerService.send(messageService.createDocumentGenerationCompleted(renderSubmittedDataDocument, response.getBody()));
+                LOG.infoContext(renderSubmittedDataDocument.getUserId(),"Document has been generated for resource: "
+                    + renderSubmittedDataDocument.getResource(), setDebugMap(renderSubmittedDataDocument, message));
             } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while attempt to create and send a completed message to producer",
-                        mce, setDebugMap(deserialisedKafkaMessage, message));
+                        mce, setDebugMap(renderSubmittedDataDocument, message));
             }
 
         } catch (GenerateDocumentException gde) {
-            LOG.errorContext(deserialisedKafkaMessage.getUserId(),"An error occurred when requesting the generation" +
-                    " of a document from the document generator api", gde, setDebugMap(deserialisedKafkaMessage, message));
+            LOG.errorContext(renderSubmittedDataDocument.getUserId(),"An error occurred when requesting the generation" +
+                    " of a document from the document generator api", gde, setDebugMap(renderSubmittedDataDocument, message));
             try {
-                kafkaProducerService.send(messageService.createDocumentGenerationFailed(deserialisedKafkaMessage, null));
-                LOG.infoContext(deserialisedKafkaMessage.getUserId(),"Document failed to generate during the " +
-                    "document generator api call for resource: " + deserialisedKafkaMessage.getResource(),
-                    setDebugMap(deserialisedKafkaMessage, message));
+                kafkaProducerService.send(messageService.createDocumentGenerationFailed(renderSubmittedDataDocument, null));
+                LOG.infoContext(renderSubmittedDataDocument.getUserId(),"Document failed to generate during the " +
+                    "document generator api call for resource: " + renderSubmittedDataDocument.getResource(),
+                    setDebugMap(renderSubmittedDataDocument, message));
             } catch (MessageCreationException | ExecutionException mce) {
                 LOG.errorContext("Error occurred while attempt to create and send a failed message message to producer",
-                        mce, setDebugMap(deserialisedKafkaMessage, message));
+                        mce, setDebugMap(renderSubmittedDataDocument, message));
             }
         }
     }
 
-    private Map<String, Object> setDebugMap(DeserialisedKafkaMessage deserialisedKafkaMessage, Message message) {
+    private Map<String, Object> setDebugMap(RenderSubmittedDataDocument renderSubmittedDataDocument, Message message) {
 
         Map<String, Object> debugMap = new HashMap<>();
-        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, deserialisedKafkaMessage.getResource());
+        debugMap.put(DocumentGeneratorConsumerApplication.RESOURCE_URI, renderSubmittedDataDocument.getResource());
         debugMap.put(KAFKA_TOPIC, message.getTopic());
         debugMap.put(KAFKA_OFFSET, message.getOffset());
         debugMap.put(KAFKA_TIME, message.getTimestamp());
