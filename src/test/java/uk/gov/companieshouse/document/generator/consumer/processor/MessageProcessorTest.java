@@ -32,6 +32,7 @@ import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerServ
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.impl.MessageProcessorImpl;
 import uk.gov.companieshouse.kafka.deserialization.AvroDeserializer;
+import uk.gov.companieshouse.kafka.deserialization.DeserializerFactory;
 import uk.gov.companieshouse.kafka.exceptions.DeserializationException;
 import uk.gov.companieshouse.kafka.message.Message;
 
@@ -60,6 +61,9 @@ public class MessageProcessorTest {
     @Mock
     private RenderSubmittedDataDocument mockRenderSubmittedDataDocument;
 
+    @Mock
+    private DeserializerFactory deserializerFactory;
+
     private List<Message> messages;
 
     private Message message;
@@ -69,6 +73,7 @@ public class MessageProcessorTest {
     public void testsMessageProcessedCreatesStartedAndCompletedMessage() throws Exception {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
+        when(deserializerFactory.getSpecificRecordDeserializer(RenderSubmittedDataDocument.class)).thenReturn(mockAvroDeserializer);
         when(mockAvroDeserializer.fromBinary(any(Message.class), eq(RenderSubmittedDataDocument.getClassSchema()))).thenReturn(createRenderSubmittedDataDocument());
         when(mockGenerateDocument.requestGenerateDocument(any(RenderSubmittedDataDocument.class)))
                 .thenReturn(createResponse());
@@ -87,6 +92,7 @@ public class MessageProcessorTest {
     public void testsMessageProcessedCreatesFailedMessageOnError() throws Exception {
 
         when(mockKafkaConsumerService.consume()).thenReturn(createTestMessageList());
+        when(deserializerFactory.getSpecificRecordDeserializer(RenderSubmittedDataDocument.class)).thenReturn(mockAvroDeserializer);
         when(mockAvroDeserializer.fromBinary(any(Message.class), eq(RenderSubmittedDataDocument.getClassSchema()))).thenThrow(new DeserializationException("error", new Exception()));
 
         messageProcessor.processKafkaMessage();
