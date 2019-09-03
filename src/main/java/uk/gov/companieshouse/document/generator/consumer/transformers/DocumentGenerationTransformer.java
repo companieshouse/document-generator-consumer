@@ -31,7 +31,7 @@ public class DocumentGenerationTransformer {
     }
 
     /**
-     * Transform the document generation request into a document generation started message
+     * Transform the document generation request into a document generation completed message
      * 
      * @return completed
      */
@@ -50,7 +50,7 @@ public class DocumentGenerationTransformer {
     }
 
     /**
-     * Transform the document generation request into a document generation started message
+     * Transform the document generation request into a document generation failed message
      * 
      * @return failed
      */
