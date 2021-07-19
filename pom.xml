@@ -67,7 +67,7 @@
         <!-- Jacoco -->
         <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
 
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
 
     </properties>
 
