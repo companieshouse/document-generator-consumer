@@ -37,6 +37,17 @@ Kafka
 #### Consumer
 A consumer group will poll the render-submitted-data-document topic for requests to generate a document.
 
+#### Docker
+To build a Docker image run the following command:
+
+```
+mvn compile jib:dockerBuild
+```
+
+This will output a Docker imaged named: `169942020521.dkr.ecr.eu-west-1.amazonaws.com/local/document-generator-consumer`
+
+You can specify a different image name run `mvn compile jib:dockerBuild -Dimage=<YOUR NAME HERE>`
+
 #### Producer
 The following topics are produced to during the generation process:
 
