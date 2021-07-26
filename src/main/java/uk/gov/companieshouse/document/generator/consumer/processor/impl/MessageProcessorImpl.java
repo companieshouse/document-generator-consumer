@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.document.generator.consumer.processor.impl;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
-import uk.gov.companieshouse.document.generator.consumer.avro.AvroDeserializer;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.service.GenerateDocument;
 import uk.gov.companieshouse.document.generator.consumer.document.service.MessageService;
@@ -21,6 +19,9 @@ import uk.gov.companieshouse.document.generator.consumer.exception.MessageCreati
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.MessageProcessor;
+import uk.gov.companieshouse.kafka.deserialization.AvroDeserializer;
+import uk.gov.companieshouse.kafka.deserialization.DeserializerFactory;
+import uk.gov.companieshouse.kafka.exceptions.DeserializationException;
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
@@ -30,15 +31,20 @@ public class MessageProcessorImpl implements MessageProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
+    @Autowired
     private MessageService messageService;
 
+    @Autowired
     private GenerateDocument generateDocument;
 
+    @Autowired
     private KafkaConsumerService kafkaConsumerService;
 
+    @Autowired
     private KafkaProducerService kafkaProducerService;
 
-    private AvroDeserializer<RenderSubmittedDataDocument> avroDeserializer;
+    @Autowired
+    private DeserializerFactory deserializerFactory;
 
     private static final String KAFKA_MSG = "kafka_message";
 
@@ -47,18 +53,6 @@ public class MessageProcessorImpl implements MessageProcessor {
     private static final String KAFKA_OFFSET = "kafka_offset";
 
     private static final String KAFKA_TIME = "kafka_time";
-
-    @Autowired
-    public MessageProcessorImpl(MessageService messageService, GenerateDocument generateDocument,
-                                KafkaConsumerService kafkaConsumerService, KafkaProducerService kafkaProducerService,
-                                AvroDeserializer<RenderSubmittedDataDocument> avroDeserializer) {
-
-        this.messageService = messageService;
-        this.generateDocument = generateDocument;
-        this.kafkaConsumerService = kafkaConsumerService;
-        this.kafkaProducerService = kafkaProducerService;
-        this.avroDeserializer = avroDeserializer;
-    }
 
     /**
      * {inheritDocs}
@@ -85,7 +79,7 @@ public class MessageProcessorImpl implements MessageProcessor {
         for (Message message : kafkaMessages) {
 
             try {
-                renderSubmittedDataDocument = avroDeserializer.deserialize(message, RenderSubmittedDataDocument.getClassSchema());
+                renderSubmittedDataDocument = deserializerFactory.getSpecificRecordDeserializer(RenderSubmittedDataDocument.class).fromBinary(message, RenderSubmittedDataDocument.getClassSchema());
 
                 LOG.infoContext(renderSubmittedDataDocument.getUserId(), "Message received and deserialised from kafka",
                         setDebugMap(renderSubmittedDataDocument, message));
@@ -101,15 +95,14 @@ public class MessageProcessorImpl implements MessageProcessor {
 
                 requestGenerateDocument(renderSubmittedDataDocument, message);
 
-            } catch (IOException ioe) {
-                LOG.errorContext("An error occurred when trying to generate a document from a kafka message", ioe,
-                        setDebugMapKafkaFail(message));
+            } catch (DeserializationException e) {
+                LOG.errorContext("An error occurred when trying to generate a document from a kafka message", e, setDebugMapKafkaFail(message));
+
                 try {
                     kafkaProducerService.send(messageService.createDocumentGenerationFailed(renderSubmittedDataDocument, null));
                     LOG.info("Document failed to generate", setDebugMapKafkaFail(message));
-                } catch (MessageCreationException |ExecutionException mce) {
-                    LOG.errorContext("Error occurred while attempt to create and send a failed message to producer",
-                            mce, setDebugMapKafkaFail(message));
+                } catch (MessageCreationException | ExecutionException mce) {
+                    LOG.errorContext("Error occurred while attempt to create and send a failed message to producer", mce, setDebugMapKafkaFail(message));
                 }
             }
 
