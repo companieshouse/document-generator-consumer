@@ -38,7 +38,7 @@
         <mockito-junit-jupiter.version>5.12.0</mockito-junit-jupiter.version>
 
         <!-- Structured logging -->
-        <structured-logging.version>3.0.12</structured-logging.version>
+        <structured-logging.version>3.0.20</structured-logging.version>
 
         <!-- Maven and Surefire plugins -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -77,6 +77,7 @@
         <eclipse.jetty.version>12.0.14</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <api-sdk-java.version>6.0.19</api-sdk-java.version>
+        <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -305,7 +306,7 @@
                                 <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-corretto-build-21:latest</image>
                             </from>
                             <to>
-                                <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/local/document-generator-consumer:latest</image>
+                                <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/document-generator-consumer:latest</image>
                             </to>
                             <container>
                                 <expandClasspathDependencies>true</expandClasspathDependencies>
@@ -316,6 +317,11 @@
                         <groupId>org.sonarsource.scanner.maven</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
                         <version>${sonar-maven-plugin.version}</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
                     </plugin>
                 </plugins>
             </build>
