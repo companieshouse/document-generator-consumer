@@ -14,7 +14,7 @@ import uk.gov.companieshouse.environment.impl.EnvironmentReaderImpl;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +101,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
 
-        registry.addInterceptor(loggingInterceptor);
+        registry.addInterceptor(loggingInterceptor).excludePathPatterns("/healthcheck");;
     }
 
     /**
