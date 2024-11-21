@@ -68,7 +68,7 @@ This is done by calling a [module](https://github.com/companieshouse/terraform-m
 Application specific attributes | Value                                | Description
 :---------|:-----------------------------------------------------------------------------|:-----------
 **ECS Cluster**        |document-generation                                      | ECS cluster (stack) the service belongs to
-**Load balancer**      |N/A consumer serivce                                           | The load balancer that sits in front of the service
+**Load balancer**      |N/A consumer service                                           | The load balancer that sits in front of the service
 **Concourse pipeline**     |[Pipeline link](https://ci-platform.companieshouse.gov.uk/teams/team-development/pipelines/document-generator-consumer) <br> [Pipeline code](https://github.com/companieshouse/ci-pipelines/blob/master/pipelines/ssplatform/team-development/document-generator-consumer)                                  | Concourse pipeline link in shared services
 
 
