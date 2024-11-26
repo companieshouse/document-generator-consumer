@@ -74,10 +74,11 @@
         <spring-webmvc.version>6.1.14</spring-webmvc.version>
         <json.version>20240303</json.version>
         <commons-compress.version>1.27.1</commons-compress.version>
-        <eclipse.jetty.version>12.0.14</eclipse.jetty.version>
+        <eclipse.jetty.version>12.0.15</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <api-sdk-java.version>6.0.19</api-sdk-java.version>
         <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
+        <kafka-clients.version>3.9.0</kafka-clients.version>
     </properties>
     <dependencies>
         <dependency>
@@ -105,6 +106,20 @@
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>kafka-models</artifactId>
             <version>${kafka-models.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-webapp</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.http2</groupId>
+                    <artifactId>http2-server</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.http2</groupId>
+                    <artifactId>http2-common</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>uk.gov.companieshouse</groupId>
@@ -178,11 +193,26 @@
             <artifactId>jetty-http</artifactId>
             <version>${eclipse.jetty.version}</version>
         </dependency>
-     <dependency>
+        <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-server</artifactId>
         <version>${eclipse.jetty.version}</version>
-    </dependency>
+       </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${kafka-clients.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-xml</artifactId>
+            <version>${eclipse.jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-client</artifactId>
+            <version>${eclipse.jetty.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
