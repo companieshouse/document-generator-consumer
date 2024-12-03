@@ -76,7 +76,6 @@
         <eclipse.jetty.version>12.0.15</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <api-sdk-java.version>6.0.19</api-sdk-java.version>
-        <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
         <kafka-clients.version>3.9.0</kafka-clients.version>
     </properties>
     <dependencies>
