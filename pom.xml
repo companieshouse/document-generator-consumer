@@ -40,9 +40,9 @@
         <structured-logging.version>3.0.20</structured-logging.version>
 
         <!-- Maven and Surefire plugins -->
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
-        <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
         <junit-platform-surefire-provider.version>1.3.2</junit-platform-surefire-provider.version>
 
         <!-- Repositories -->
@@ -67,7 +67,6 @@
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 
         <commons-io.version>2.17.0</commons-io.version>
-        <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
         <spring-boot-dependencies.version>3.3.5</spring-boot-dependencies.version>
         <spring-boot-maven-plugin.version>3.3.5</spring-boot-maven-plugin.version>
         <spring-webmvc.version>6.1.14</spring-webmvc.version>
@@ -334,7 +333,7 @@
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
-                        <version>${jib-maven-plugin.version}</version>
+                        <version>${maven-jar-plugin.version}</version>
                         <configuration>
                             <from>
                                 <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-corretto-build-21:latest</image>
