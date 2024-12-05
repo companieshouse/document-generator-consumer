@@ -7,7 +7,7 @@ locals {
   container_port             = "8080"
   docker_repo                = "document-generator-consumer"
   kms_alias                  = "alias/${var.aws_profile}/environment-services-kms"
-  healthcheck_path           = "/document-generator-consumer/healthcheck" # healthcheck path for ddocument-generator-consumer
+  healthcheck_path           = "/document-generator-consumer/healthcheck" # healthcheck path for document-generator-consumer
   healthcheck_matcher        = "200"
   vpc_name                   = local.stack_secrets["vpc_name"]
   s3_config_bucket           = data.vault_generic_secret.shared_s3.data["config_bucket_name"]
