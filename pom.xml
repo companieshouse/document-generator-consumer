@@ -122,6 +122,12 @@
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>environment-reader-library</artifactId>
             <version>${environment-reader-library.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -139,6 +145,12 @@
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>structured-logging</artifactId>
             <version>${structured-logging.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.avro</groupId>
@@ -224,46 +236,6 @@
     </dependencies>
 
     <profiles>
-        <!-- release-publish is the profile that is activated when the build server builds and
-             publishes a release project to the cloud artifactory -->
-        <profile>
-            <id>release-publish</id>
-            <activation>
-                <property>
-                    <name>publishRepo</name>
-                    <value>release</value>
-                </property>
-            </activation>
-            <properties>
-                <artifactoryReleasePublishRepo>libs-release-local</artifactoryReleasePublishRepo>
-            </properties>
-            <distributionManagement>
-                <repository>
-                    <id>ch-artifactory</id>
-                    <url>${MAVEN_REPOSITORY_URL}/${artifactoryReleasePublishRepo}</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <!-- dev-publish is the profile that is activated when the build server builds and publishes
-             a dev snapshot project to the cloud artifactory -->
-        <profile>
-            <id>dev-publish</id>
-            <activation>
-                <property>
-                    <name>publishRepo</name>
-                    <value>dev</value>
-                </property>
-            </activation>
-            <properties>
-                <artifactoryDevPublishRepo>libs-snapshot-local</artifactoryDevPublishRepo>
-            </properties>
-            <distributionManagement>
-                <repository>
-                    <id>ch-artifactory</id>
-                    <url>${MAVEN_REPOSITORY_URL}/${artifactoryDevPublishRepo}</url>
-                </repository>
-            </distributionManagement>
-        </profile>
         <!-- dev is the profile that is activated by default. This is only for developers as it does
              not publish to any repository. It just downloads dependencies, compiles code and builds jar
              for running the application and then runs the tests. -->
