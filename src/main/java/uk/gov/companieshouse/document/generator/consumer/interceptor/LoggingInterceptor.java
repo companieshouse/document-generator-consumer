@@ -1,20 +1,19 @@
 package uk.gov.companieshouse.document.generator.consumer.interceptor;
 
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 import uk.gov.companieshouse.logging.util.RequestLogger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE;
 
 @Component
-public class LoggingInterceptor extends HandlerInterceptorAdapter implements
-        RequestLogger {
+public class LoggingInterceptor implements AsyncHandlerInterceptor, RequestLogger {
 
     private static final Logger LOG = LoggerFactory.getLogger(APPLICATION_NAME_SPACE);
 
@@ -29,5 +28,6 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter implements
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) {
         logEndRequestProcessing(request, response, LOG);
+        LOG.trace(" Log End Request Processing  completed.");
     }
 }
