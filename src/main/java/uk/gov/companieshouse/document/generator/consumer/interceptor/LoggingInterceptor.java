@@ -28,5 +28,6 @@ public class LoggingInterceptor implements AsyncHandlerInterceptor, RequestLogge
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) {
         logEndRequestProcessing(request, response, LOG);
+        LOG.trace(" Log End Request Processing  completed.");
     }
 }
