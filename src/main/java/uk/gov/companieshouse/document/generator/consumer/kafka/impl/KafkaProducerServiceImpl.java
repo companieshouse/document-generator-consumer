@@ -19,6 +19,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     private CHKafkaProducer producer;
+    private ProducerConfig config;
 
     public KafkaProducerServiceImpl() {
 
@@ -32,6 +33,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
         ProducerConfigHelper.assignBrokerAddresses(producerConfig);
         producer = new CHKafkaProducer(producerConfig);
+        config.setEnableIdempotence(false);
     }
 
     @Override
