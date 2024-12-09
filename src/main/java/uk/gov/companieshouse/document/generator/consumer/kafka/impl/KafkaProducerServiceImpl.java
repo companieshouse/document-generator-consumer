@@ -33,6 +33,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
         ProducerConfigHelper.assignBrokerAddresses(producerConfig);
         producer = new CHKafkaProducer(producerConfig);
+
         config = new ProducerConfig();
         config.setEnableIdempotence(false);
     }
