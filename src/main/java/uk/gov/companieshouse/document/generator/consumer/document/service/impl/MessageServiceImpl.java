@@ -126,7 +126,7 @@ public class MessageServiceImpl implements MessageService {
         Map<String, Object> completedParams = new HashMap<>();
         completedParams.put(DESCRIPTION_IDENTIFIER, completed.getDescriptionIdentifier());
         completedParams.put(DESCRIPTION, completed.getDescription());
-        completedParams.put(COMPLETED_DOCUMENT, getObjectMapper(String.valueOf(completed)));
+        completedParams.put(COMPLETED_DOCUMENT, getLogStatusTree(String.valueOf(completed)));
 
         return completedParams;
     }
@@ -134,26 +134,25 @@ public class MessageServiceImpl implements MessageService {
     private Map<String, Object> setFailedDebugMap(DocumentGenerationFailed failed) {
 
         Map<String, Object> failedParams = new HashMap<>();
-        failedParams.put(FAILED_DOCUMENT, getObjectMapper(String.valueOf(failed)));
+        failedParams.put(FAILED_DOCUMENT, getLogStatusTree(String.valueOf(failed)));
 
         return failedParams;
     }
 
     private Map<String, Object> setStartedDebugMap(DocumentGenerationStarted started)  {
         Map<String, Object> startedParams = new HashMap<>();
-        startedParams.put(STARTED_DOCUMENT, getObjectMapper(String.valueOf(started)));
+        startedParams.put(STARTED_DOCUMENT, getLogStatusTree(String.valueOf(started)));
 
         return startedParams;
     }
 
-    private JsonNode getObjectMapper(String logStatus){
-        JsonNode node = null;
-       try {
-           ObjectMapper mapper = new ObjectMapper();
-           node= mapper.readTree(logStatus);
-       }catch (JsonProcessingException ignored){
-
-       }
-       return node;
+    private JsonNode getLogStatusTree(String logStatus) {
+        try {
+            var mapper = new ObjectMapper();
+            return mapper.readTree(logStatus);
+        } catch (JsonProcessingException jsonProcessingException) {
+            LOG.error(" Found issue while converting into json String " + jsonProcessingException.getMessage());
+        }
+        return null;
     }
 }
