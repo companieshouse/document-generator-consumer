@@ -152,7 +152,7 @@ public class MessageServiceImpl implements MessageService {
             return mapper.readTree(logStatus);
         } catch (JsonProcessingException jsonProcessingException) {
             LOG.error(" Found issue while converting into json String " + jsonProcessingException.getMessage());
+            return null;
         }
-        return null;
     }
 }
