@@ -67,8 +67,8 @@
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 
         <commons-io.version>2.17.0</commons-io.version>
-        <spring-boot-dependencies.version>3.3.5</spring-boot-dependencies.version>
-        <spring-boot-maven-plugin.version>3.3.5</spring-boot-maven-plugin.version>
+        <spring-boot-dependencies.version>3.3.7</spring-boot-dependencies.version>
+        <spring-boot-maven-plugin.version>3.3.7</spring-boot-maven-plugin.version>
         <spring-webmvc.version>6.1.14</spring-webmvc.version>
         <json.version>20240303</json.version>
         <commons-compress.version>1.27.1</commons-compress.version>
@@ -98,12 +98,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
             <version>${spring-boot-dependencies.version} </version>
-            <exclusions>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>uk.gov.companieshouse</groupId>
