@@ -19,7 +19,7 @@ terraform {
 }
 
 module "secrets" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.293"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.294"
 
   name_prefix = "${local.service_name}-${var.environment}"
   environment = var.environment
@@ -28,7 +28,7 @@ module "secrets" {
 }
 
 module "ecs-service" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.293"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.294"
 
   # Environmental configuration
   environment             = var.environment
@@ -67,7 +67,6 @@ module "ecs-service" {
   use_capacity_provider                = var.use_capacity_provider
   use_fargate                          = var.use_fargate
   fargate_subnets                      = local.application_subnet_ids
-  read_only_root_filesystem            = false
 
 
   # Service environment variable and secret configs
