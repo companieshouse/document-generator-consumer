@@ -55,7 +55,7 @@
 
         <!-- Kafka -->
         <ch-kafka.version>3.0.3</ch-kafka.version>
-        <kafka-models.version>3.0.8</kafka-models.version>
+        <kafka-models.version>3.0.18</kafka-models.version>
 
         <!-- Sonar -->
         <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
@@ -75,7 +75,8 @@
         <eclipse.jetty.version>12.0.15</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <api-sdk-java.version>6.3.1</api-sdk-java.version>
-        <kafka-clients.version>3.9.0</kafka-clients.version>
+        <kafka-clients.version>4.0.0</kafka-clients.version>
+        <commons-beanutils.version>1.11.0</commons-beanutils.version>
     </properties>
     <dependencies>
         <dependency>
@@ -232,6 +233,11 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>${plexus-utils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
     </dependencies>
 
