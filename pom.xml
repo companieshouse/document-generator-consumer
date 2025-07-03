@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>document-generator-consumer</artifactId>
-    <version>unversioned</version>
+    <version>fa86685</version>
     <packaging>jar</packaging>
     <name>document-generator-consumer</name>
     <description>Kafka consumer that hooks into the document-generator process asynchronously</description>
