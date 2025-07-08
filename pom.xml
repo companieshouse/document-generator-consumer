@@ -69,7 +69,7 @@
         <commons-io.version>2.17.0</commons-io.version>
         <spring-boot-dependencies.version>3.5.3</spring-boot-dependencies.version>
         <spring-boot-maven-plugin.version>3.5.3</spring-boot-maven-plugin.version>
-        <spring-webmvc.version>6.2.8</spring-webmvc.version>
+        <spring-framework-bom.version>6.2.8</spring-framework-bom.version>
         <json.version>20240303</json.version>
         <commons-compress.version>1.27.1</commons-compress.version>
         <eclipse.jetty.version>12.0.15</eclipse.jetty.version>
@@ -88,6 +88,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -99,23 +113,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
-            <version>${spring-boot-dependencies.version} </version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>${spring-boot-dependencies.version} </version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>${spring-boot-dependencies.version} </version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
-            <version>${spring-boot-dependencies.version} </version>
         </dependency>
         <dependency>
             <groupId>uk.gov.companieshouse</groupId>
@@ -198,12 +208,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring-webmvc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>${spring-webmvc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
