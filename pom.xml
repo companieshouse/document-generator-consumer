@@ -30,14 +30,14 @@
         <environment-reader-library.version>3.0.1</environment-reader-library.version>
 
         <!-- GSON Version -->
-        <gson.version>2.11.0</gson.version>
+        <gson.version>2.13.1</gson.version>
 
         <!-- JUnit Testing -->
         <junit-jupiter-engine.version>5.11.0</junit-jupiter-engine.version>
         <mockito-junit-jupiter.version>5.12.0</mockito-junit-jupiter.version>
 
         <!-- Structured logging -->
-        <structured-logging.version>3.0.32</structured-logging.version>
+        <structured-logging.version>3.0.40</structured-logging.version>
 
         <!-- Maven and Surefire plugins -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -67,17 +67,18 @@
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 
         <commons-io.version>2.17.0</commons-io.version>
-        <spring-boot-dependencies.version>3.5.3</spring-boot-dependencies.version>
-        <spring-boot-maven-plugin.version>3.5.3</spring-boot-maven-plugin.version>
-        <spring-framework-bom.version>6.2.8</spring-framework-bom.version>
+        <spring-boot-dependencies.version>3.5.5</spring-boot-dependencies.version>
+        <spring-boot-maven-plugin.version>3.5.5</spring-boot-maven-plugin.version>
+        <spring-framework-bom.version>6.2.10</spring-framework-bom.version>
         <json.version>20240303</json.version>
         <commons-compress.version>1.27.1</commons-compress.version>
-        <eclipse.jetty.version>12.0.15</eclipse.jetty.version>
+        <eclipse.jetty.version>12.1.1</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <api-sdk-java.version>6.3.1</api-sdk-java.version>
         <kafka-clients.version>3.9.1</kafka-clients.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
         <opentelemetry-instrumentation.version>2.14.0</opentelemetry-instrumentation.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -101,6 +102,13 @@
                 <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- CVE-2025-48924 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version> <!-- Use the latest available version -->
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -189,6 +197,13 @@
             <groupId>uk.gov.companieshouse</groupId>
             <artifactId>ch-kafka</artifactId>
             <version>${ch-kafka.version}</version>
+                <exclusions>
+                    <!-- CVE-2025-48924 -->
+                    <exclusion>
+                     <groupId>commons-lang</groupId>
+                     <artifactId>commons-lang</artifactId>
+                    </exclusion>
+                </exclusions>
         </dependency>
         <dependency>
             <groupId>org.sonarsource.scanner.maven</groupId>
