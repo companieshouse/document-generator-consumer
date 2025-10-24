@@ -290,6 +290,7 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot-maven-plugin.version}</version>
                         <configuration>
                             <mainClass>uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication
                             </mainClass>
