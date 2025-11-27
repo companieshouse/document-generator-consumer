@@ -32,9 +32,9 @@
 
         <!-- Maven and Surefire plugins -->
         <maven-surefire.version>3.5.2</maven-surefire.version>
-        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
-        <maven-jib-plugin.version>3.5.1</maven-jib-plugin.version>
+        <maven-surefire-plugin.version>${maven-surefire.version}</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>${maven-surefire.version}</maven-failsafe-plugin.version>
+        <maven-jib-plugin.version>3.4.2</maven-jib-plugin.version>
 
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>false</skip.integration.tests>
@@ -51,7 +51,7 @@
         <gson.version>2.13.2</gson.version>
 
         <!-- JUnit Testing -->
-        <junit-jupiter-engine.version>5.11.0</junit-jupiter-engine.version>
+        <junit-jupiter-engine.version>6.1.0-M1</junit-jupiter-engine.version>
         <mockito-junit-jupiter.version>5.20.0</mockito-junit-jupiter.version>
 
         <!-- Structured logging -->
@@ -70,25 +70,25 @@
         <!-- Kafka -->
         <ch-kafka.version>3.0.6</ch-kafka.version>
         <kafka-models.version>3.0.25</kafka-models.version>
-        <kafka-clients.version>8.1.0-ce</kafka-clients.version>
+        <kafka-clients.version>3.9.1</kafka-clients.version>
 
         <!-- SDK -->
         <api-sdk-java.version>6.3.1</api-sdk-java.version>
 
         <!-- Jacoco -->
-        <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 
         <!-- Commons -->
         <commons-io.version>2.21.0</commons-io.version>
         <commons-compress.version>1.28.0</commons-compress.version>
         <commons-beanutils.version>1.11.0</commons-beanutils.version>
-        <commons-lang3.version>3.20.0</commons-lang3.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
 
         <!-- Miscellaneous -->
-        <json.version>20250517</json.version>
-        <eclipse.jetty.version>12.1.4</eclipse.jetty.version>
+        <json.version>20240303</json.version>
+        <eclipse.jetty.version>12.1.1</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
-        <opentelemetry-instrumentation.version>2.22.0</opentelemetry-instrumentation.version>
+        <opentelemetry-instrumentation.version>2.14.0</opentelemetry-instrumentation.version>
 
         <!-- Sonar -->
         <sonar.coverage.jacoco.xmlReportPaths>
