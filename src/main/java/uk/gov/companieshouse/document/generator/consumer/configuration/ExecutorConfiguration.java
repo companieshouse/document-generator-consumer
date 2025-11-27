@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.document.generator.consumer.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,22 +16,20 @@ import uk.gov.companieshouse.document.generator.consumer.processor.MessageProces
 @Configuration
 public class ExecutorConfiguration {
 
-    @Autowired
-    MessageProcessorRunner messageProcessorRunner;
+    private final MessageProcessorRunner messageProcessorRunner;
 
-    @Bean
+    public ExecutorConfiguration(final MessageProcessorRunner newRunner) {
+        this.messageProcessorRunner = newRunner;
+    }
+
+    @Bean(name = "taskExecutor")
     public TaskExecutor taskExecutor() {
         return new SimpleAsyncTaskExecutor();
     }
 
     @Bean
-    public CommandLineRunner schedulingRunner(TaskExecutor executor) {
-        CommandLineRunner commandLineRunner =  new CommandLineRunner() {
-            public void run(String... args) throws Exception {
-                executor.execute(messageProcessorRunner);
-            }
-        };
-        return commandLineRunner;
+    public CommandLineRunner schedulingRunner(@Qualifier("taskExecutor") TaskExecutor executor) {
+        return args -> executor.execute(messageProcessorRunner);
     }
 
 }
