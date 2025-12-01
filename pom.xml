@@ -22,6 +22,7 @@
     <properties>
         <!-- Encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- JDK Version -->
         <jdk.version>21</jdk.version>
@@ -104,7 +105,7 @@
         <sonar.token>${CODE_ANALYSIS_TOKEN}</sonar.token>
         <sonar.login></sonar.login>
         <sonar.password></sonar.password>
-        
+
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -237,11 +238,26 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--dependency>
+
+        <!-- Security Vulnerability: -->
+        <dependency>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
             <version>${sonar-maven-plugin.version}</version>
-        </dependency-->
+            <exclusions>
+                <!-- CVE-2023-3635(7.5) -->
+                <exclusion>
+                    <groupId>com.squareup.okio</groupId>
+                    <artifactId>okio</artifactId>
+                </exclusion>
+                <!-- CVE-2023-0833(5.5) -->
+                <exclusion>
+                    <groupId>com.squareup.okhttp3</groupId>
+                    <artifactId>okhttp</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
