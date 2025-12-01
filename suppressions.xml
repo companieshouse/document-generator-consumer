@@ -3,7 +3,7 @@
 
   <suppress>
     <cve>CVE-2023-3635</cve>
-    <cve>CVE-2023-36821</cve>
+    <cve>CVE-2023-0833</cve>
   </suppress>
 
 </suppressions>
