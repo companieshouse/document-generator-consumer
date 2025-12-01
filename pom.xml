@@ -102,6 +102,9 @@
         <sonar.projectName>document-generator-consumer</sonar.projectName>
         <sonar.projectKey>uk.gov.companieshouse:document-generator-consumer</sonar.projectKey>
         <sonar.token>${CODE_ANALYSIS_TOKEN}</sonar.token>
+        <sonar.host.url>${CODE_ANALYSIS_HOST_URL}</sonar.host.url>
+        <sonar.login>${CODE_ANALYSIS_LOGIN}</sonar.login>
+        <sonar.password>${CODE_ANALYSIS_PASSWORD}</sonar.password>
 
     </properties>
     <dependencyManagement>
