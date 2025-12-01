@@ -41,6 +41,8 @@
 
         <!-- Sonar Maven Plugin: Transitive {CVE-2023-0833, CVE-2023-3635}  -->
         <sonar-maven-plugin.version>3.11.0.3922</sonar-maven-plugin.version>
+        <okio.version>3.16.4</okio.version>
+        <okhttp3.version>3.14.9</okhttp3.version>
 
         <!-- Spring Boot -->
         <spring-boot-dependencies.version>3.5.7</spring-boot-dependencies.version>
@@ -132,6 +134,18 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version> <!-- Use the latest available version -->
+            </dependency>
+            <!-- CVE-2023-3635 -->
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio</artifactId>
+                <version>${okio.version}</version>
+            </dependency>
+            <!-- CVE-2023-0833 -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
