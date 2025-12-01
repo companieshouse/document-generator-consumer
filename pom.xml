@@ -235,11 +235,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
             <version>${sonar-maven-plugin.version}</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
