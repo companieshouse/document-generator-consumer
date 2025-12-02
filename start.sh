@@ -23,3 +23,4 @@ source "${APP_DIR}/global_env"
 source "${APP_DIR}/app_env"
 
 exec java ${JAVA_MEM_ARGS} -jar -Dserver.port="${PORT}" "${APP_DIR}/document-generator-consumer.jar"
+
