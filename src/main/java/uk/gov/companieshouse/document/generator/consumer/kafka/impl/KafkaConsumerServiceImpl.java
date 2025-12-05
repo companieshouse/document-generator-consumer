@@ -24,10 +24,9 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     public KafkaConsumerServiceImpl(EnvironmentReader reader) {
+        LOG.debug("KafkaConsumerServiceImpl() constructor called.");
 
         this.reader = reader;
-
-        LOG.debug("Creating kafka consumer service " + this.toString());
 
         ConsumerConfig consumerConfig = new ConsumerConfig();
         consumerConfig.setTopics(Arrays.asList(reader.getMandatoryString(DocumentGeneratorConsumerApplication.CONSUMER_TOPIC)));
@@ -35,30 +34,37 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
         consumerConfig.setResetOffset(false);
 
         ConsumerConfigHelper.assignBrokerAddresses(consumerConfig);
+
         consumer = new CHKafkaConsumerGroup(consumerConfig);
     }
 
     @Override
     public void connect() {
-        LOG.debug("Connecting to kafka consumer service " + this.toString());
+        LOG.debug("connect() method called.");
 
         consumer.connect();
-        LOG.debug("Success - Connected to kafka consumer service");
+
+        LOG.debug("Connected successfully.");
     }
 
     @Override
     public List<Message> consume() {
+        LOG.debug("consume() method called.");
+
         return consumer.consume();
     }
 
     @Override
     public void commit(Message message) {
+        LOG.debug("commit() method called.");
+
         consumer.commit(message);
     }
 
     @Override
     public void closeConsumer() {
-        LOG.debug("Closing kafka consumer service " + this.toString());
+        LOG.debug("closeConsumer() method called.");
+
         consumer.close();
     }
 }

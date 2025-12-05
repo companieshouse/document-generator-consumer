@@ -1,22 +1,19 @@
 document-generator-consumer
 ============================
-
 Kafka consumer that hooks into the document-generator process asynchronously
 
 Requirements
 --------------
-
 In order to build document-generator locally you will need the following:
 - [Java 21](https://www.oracle.com/java/technologies/downloads/#java21)
 - [Maven](https://maven.apache.org/download.cgi)
 - [Git](https://git-scm.com/downloads)
-- Kafka
+- [Kafka](https://github.com/companieshouse/chs-kafka-schemas/blob/master/schemas/render-submitted-data-document.avsc)
 - [document-render-service](https://github.com/companieshouse/document-render-service)
 - [document-generator](https://github.com/companieshouse/document-generator)
 
 Getting started
 -----------------
-
 1. Run make
 2. Run ./start.sh
 
