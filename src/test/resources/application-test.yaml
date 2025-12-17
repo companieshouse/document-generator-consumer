@@ -1,9 +1,9 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:29093
+    bootstrap-servers: ${KAFKA_BROKER_ADDR:localhost:29093}
     consumer:
-      topic: render-submitted-data-document
-      groupId: document-generator
+      topic: ${CONSUMER_TOPIC:render-submitted-data-document}
+      groupId: ${GROUP_NAME:document-generator}
 
 documentgeneration:
   rootUri: ${DOCUMENT_GENERATION_SERVICE_URL}

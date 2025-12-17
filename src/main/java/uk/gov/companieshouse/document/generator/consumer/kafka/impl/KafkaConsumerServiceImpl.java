@@ -38,8 +38,6 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
     @Override
     public List<Message> consume() {
-        LOG.debug("consume() method called.");
-
         // Find list of messages that have been consumed from kafka topic.
         List<Message> messages = consumer.consume();
 
@@ -49,9 +47,6 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
         messages.forEach(message -> {
             LOG.debug("> Consumed Message -> %d: (%d bytes received...)".formatted(count.incrementAndGet(), message.getValue().length));
         });
-
-        // Log how many messages were processed from kafka topic.
-        LOG.debug("> Processed " + count.get() + " message(s) from kafka topic...");
 
         return messages;
     }
