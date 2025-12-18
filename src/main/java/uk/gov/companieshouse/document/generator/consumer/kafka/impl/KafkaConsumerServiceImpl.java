@@ -3,6 +3,7 @@ package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import org.springframework.stereotype.Service;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
@@ -19,14 +20,12 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
     private final CHKafkaConsumerGroup consumer;
 
-    private Optional<Message> lastMessage;
+    private Consumer<Message> callback;;
 
     public KafkaConsumerServiceImpl(final ConsumerConfig consumerConfig) {
         LOG.debug("KafkaConsumerServiceImpl() constructor called.");
 
         consumer = new CHKafkaConsumerGroup(consumerConfig);;
-
-        lastMessage = Optional.empty();
     }
 
     @Override
@@ -57,7 +56,11 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
         consumer.commit(message);
 
-        lastMessage = Optional.of(message);
+        if (callback != null) {
+            callback.accept(message);
+        }
+
+        //lastMessage = Optional.of(message);
     }
 
     @Override
@@ -67,9 +70,17 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
         consumer.close();
     }
 
+    public void setCallback(final Consumer<Message> callback) {
+        LOG.debug("setCallback() method called.");
+
+        this.callback = callback;
+    }
+
+    /*
     public Optional<Message> getLastMessage() {
         LOG.debug("getLastMessage(message=%s) method called.".formatted(lastMessage));
 
         return lastMessage;
     }
+    */
 }
