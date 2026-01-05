@@ -77,9 +77,11 @@ public class MessageProcessorImpl implements MessageProcessor {
         RenderSubmittedDataDocument renderSubmittedDataDocument = null;
 
         for (Message message : kafkaMessages) {
-
             try {
-                renderSubmittedDataDocument = deserializerFactory.getSpecificRecordDeserializer(RenderSubmittedDataDocument.class).fromBinary(message, RenderSubmittedDataDocument.getClassSchema());
+                AvroDeserializer<RenderSubmittedDataDocument> specificRecordDeserializer = deserializerFactory.getSpecificRecordDeserializer(
+                        RenderSubmittedDataDocument.class);
+
+                renderSubmittedDataDocument = specificRecordDeserializer.fromBinary(message, RenderSubmittedDataDocument.getClassSchema());
 
                 LOG.infoContext(renderSubmittedDataDocument.getUserId(), "Message received and deserialised from kafka",
                         setDebugMap(renderSubmittedDataDocument, message));

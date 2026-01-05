@@ -1,8 +1,9 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka;
 
-import uk.gov.companieshouse.kafka.message.Message;
-
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import uk.gov.companieshouse.kafka.message.Message;
 
 public interface KafkaConsumerService {
 
@@ -13,4 +14,9 @@ public interface KafkaConsumerService {
     void commit(Message message);
 
     void closeConsumer();
+
+    // Required for testing purposes
+    void setCallback(final Consumer<Message> callback);
+    //Optional<Message> getLastMessage();
+
 }

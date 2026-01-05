@@ -1,0 +1,30 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER_ADDR:kafka3:9092}
+    consumer:
+      topic: ${CONSUMER_TOPIC:render-submitted-data-document}
+      groupId: ${GROUP_NAME:document-generator}
+
+documentgeneration:
+  rootUri: ${DOCUMENT_GENERATION_SERVICE_URL}
+  baseUrl: /private/documents/generate
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        health: document-generator-consumer/healthcheck
+      exposure:
+        include: health
+    access:
+      default: none
+  endpoint:
+    health:
+      show-details: never
+      enabled: true
+  health:
+    db:
+      enabled: false
+    mongo:
+      enabled: false

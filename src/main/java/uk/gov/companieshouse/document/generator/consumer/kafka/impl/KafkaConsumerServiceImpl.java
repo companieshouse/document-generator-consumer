@@ -1,64 +1,86 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import org.springframework.stereotype.Service;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
-import uk.gov.companieshouse.environment.EnvironmentReader;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
 import uk.gov.companieshouse.kafka.consumer.ConsumerConfig;
-import uk.gov.companieshouse.kafka.consumer.ConsumerConfigHelper;
 import uk.gov.companieshouse.kafka.message.Message;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Service
 public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
-    private EnvironmentReader reader;
-
-    private CHKafkaConsumerGroup consumer;
-
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
-    public KafkaConsumerServiceImpl(EnvironmentReader reader) {
+    private final CHKafkaConsumerGroup consumer;
 
-        this.reader = reader;
+    private Consumer<Message> callback;;
 
-        LOG.debug("Creating kafka consumer service " + this.toString());
+    public KafkaConsumerServiceImpl(final ConsumerConfig consumerConfig) {
+        LOG.debug("KafkaConsumerServiceImpl() constructor called.");
 
-        ConsumerConfig consumerConfig = new ConsumerConfig();
-        consumerConfig.setTopics(Arrays.asList(reader.getMandatoryString(DocumentGeneratorConsumerApplication.CONSUMER_TOPIC)));
-        consumerConfig.setGroupName(reader.getMandatoryString(DocumentGeneratorConsumerApplication.GROUP_NAME));
-        consumerConfig.setResetOffset(false);
-
-        ConsumerConfigHelper.assignBrokerAddresses(consumerConfig);
-        consumer = new CHKafkaConsumerGroup(consumerConfig);
+        consumer = new CHKafkaConsumerGroup(consumerConfig);;
     }
 
     @Override
     public void connect() {
-        LOG.debug("Connecting to kafka consumer service " + this.toString());
+        LOG.debug("connect() method called.");
 
         consumer.connect();
-        LOG.debug("Success - Connected to kafka consumer service");
     }
 
     @Override
     public List<Message> consume() {
-        return consumer.consume();
+        // Find list of messages that have been consumed from kafka topic.
+        List<Message> messages = consumer.consume();
+
+        // Process each message and log output details for debugging.
+        AtomicInteger count = new AtomicInteger();
+
+        messages.forEach(message -> {
+            LOG.debug("> Consumed Message -> %d: (%d bytes received...)".formatted(count.incrementAndGet(), message.getValue().length));
+        });
+
+        return messages;
     }
 
     @Override
-    public void commit(Message message) {
+    public void commit(final Message message) {
+        LOG.debug("commit(key=%s) method called.".formatted(message.getKey()));
+
         consumer.commit(message);
+
+        if (callback != null) {
+            callback.accept(message);
+        }
+
+        //lastMessage = Optional.of(message);
     }
 
     @Override
     public void closeConsumer() {
-        LOG.debug("Closing kafka consumer service " + this.toString());
+        LOG.debug("closeConsumer() method called.");
+
         consumer.close();
     }
+
+    public void setCallback(final Consumer<Message> callback) {
+        LOG.debug("setCallback() method called.");
+
+        this.callback = callback;
+    }
+
+    /*
+    public Optional<Message> getLastMessage() {
+        LOG.debug("getLastMessage(message=%s) method called.".formatted(lastMessage));
+
+        return lastMessage;
+    }
+    */
 }
