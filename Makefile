@@ -50,11 +50,6 @@ endif
 .PHONY: dist
 dist: clean build package
 
-.PHONY: dependency-check
-dependency-check: build package
-	mvn install -DskipTests
-	/opt/scripts/depcheck --repo-name=document-generator-consumer
-
 .PHONY: sonar
 sonar:
 	mvn sonar:sonar
