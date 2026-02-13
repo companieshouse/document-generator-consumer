@@ -516,16 +516,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>12.1.9</version>
-                <configuration>
-                    <suppressionFile>${project.basedir}/suppressions.xml</suppressionFile>
-                    <!--failBuildOnCVSS>7</failBuildOnCVSS-->
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
