@@ -20,7 +20,7 @@ locals {
   service_secrets = jsondecode(data.vault_generic_secret.service_secrets.data_json)
 
   # create a map of secret name => secret arn to pass into ecs service module
-  # using the trimprefix function to remove the prefixed path from the secret name
+  # using the trimprefix function to remove the prefixed path from the secret names
   secrets_arn_map = {
     for sec in data.aws_ssm_parameter.secret :
     trimprefix(sec.name, "/${local.name_prefix}/") => sec.arn
