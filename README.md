@@ -57,7 +57,7 @@ The following topics are produced to during the generation process:
 | document-generation-completed | Details of the generated document                            |
 | document-generation-failed    | Notification that the generation of the document has failed  |
 
-## Terraform ECS
+### Terraform ECS
 
 ### What does this code do?
 

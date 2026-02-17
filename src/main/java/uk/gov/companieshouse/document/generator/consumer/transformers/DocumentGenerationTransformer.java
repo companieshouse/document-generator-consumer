@@ -18,7 +18,7 @@ public class DocumentGenerationTransformer {
     private DateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
-     * Transform the document generation request into a document generation started message 
+     * Transform the document generation request into a document generation started message.
      * 
      * @return started
      */
