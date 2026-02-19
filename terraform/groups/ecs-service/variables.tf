@@ -139,7 +139,7 @@ variable "document_generator_consumer_version" {
 variable "create_comparison_service" {
   type        = bool
   description = "Whether to create the comparison ECS service (used for side-by-side testing)."
-  default     = true
+  default     = false
 }
 # ------------------------------------------------------------------------------
 # Kafka Consumer Configurations
