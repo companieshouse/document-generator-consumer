@@ -68,7 +68,7 @@ module "ecs-service" {
 }
 
 module "ecs-service-comparison" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.334"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.333"
   count  = var.create_comparison_service ? 1 : 0
 
   # Environmental configuration
@@ -116,7 +116,7 @@ module "ecs-service-comparison" {
   fargate_subnets                    = local.application_subnet_ids
 
   # Cloudwatch
-  cloudwatch_alarms_enabled = var.cloudwatch_alarms_enabled
+  cloudwatch_alarms_enabled = false
 
   # Service environment variable and secret configs
   task_environment            = local.task_environment
