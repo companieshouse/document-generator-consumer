@@ -47,7 +47,13 @@ variable "required_memory" {
 variable "max_task_count" {
   type        = number
   description = "The maximum number of tasks for this service."
-  default     = 3
+  default     = 10
+}
+
+variable "min_task_count" {
+  type        = number
+  description = "The minimum number of tasks for this service."
+  default     = 1
 }
 
 variable "use_fargate" {
@@ -120,8 +126,26 @@ variable "use_set_environment_files" {
   default     = false
   description = "Toggle default global and shared environment files"
 }
-
+variable "log_level" {
+  default     = "info"
+  type        = string
+  description = "The logging level used by the service (e.g. info, debug, trace)."
+}
 variable "document_generator_consumer_version" {
   type        = string
   description = "The version of the document_generator_consumer container to run."
+}
+
+variable "create_comparison_service" {
+  type        = bool
+  description = "Whether to create the comparison ECS service (used for side-by-side testing)."
+  default     = true
+}
+# ------------------------------------------------------------------------------
+# Kafka Consumer Configurations
+# ------------------------------------------------------------------------------
+variable "backoff_delay" {
+  default   = 32000
+  type      = number
+  description = "The delay in milliseconds between message republish attempts."
 }
