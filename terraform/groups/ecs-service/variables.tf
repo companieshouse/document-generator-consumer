@@ -136,11 +136,16 @@ variable "document_generator_consumer_version" {
   description = "The version of the document_generator_consumer container to run."
 }
 
-variable "create_comparison_service" {
+variable "create_old_kafka_service" {
   type        = bool
-  description = "Whether to create the comparison ECS service (used for side-by-side testing)."
+  description = "Whether to create the old Kafka 0.10 ECS service alongside the upgraded one."
   default     = false
 }
+variable "document_generator_consumer_old_kafka_version" {
+  type        = string
+  description = "The specific release tag for the old Kafka 0.1.0 version of the container."
+}
+
 # ------------------------------------------------------------------------------
 # Kafka Consumer Configurations
 # ------------------------------------------------------------------------------

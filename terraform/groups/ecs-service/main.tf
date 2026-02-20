@@ -39,7 +39,7 @@ module "ecs-service" {
   # Docker container details
   docker_registry   = var.docker_registry
   docker_repo       = local.docker_repo
-  container_version = var.document_generator_consumer_version
+  container_version = var.document_generator_consumer_old_kafka_version
   container_port    = local.container_port
 
   # Service configuration
@@ -67,9 +67,9 @@ module "ecs-service" {
   use_set_environment_files = local.use_set_environment_files
 }
 
-module "ecs-service-comparison" {
+module "ecs-service-old-kafka" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-service?ref=1.0.333"
-  count  = var.create_comparison_service ? 1 : 0
+  count  = var.create_old_kafka_service? 1 : 0
 
   # Environmental configuration
   environment             = var.environment
@@ -97,7 +97,7 @@ module "ecs-service-comparison" {
   container_port    = local.container_port
 
   # Service configuration
-  service_name = local.service_name_comparison
+  service_name = local.service_name_old_kafka
   name_prefix  = local.name_prefix
 
   # Service performance and scaling configs
@@ -121,7 +121,7 @@ module "ecs-service-comparison" {
   # Service environment variable and secret configs
   task_environment            = local.task_environment
   task_secrets                = local.task_secrets
-  app_environment_filename    = local.app_environment_filename_comparison
+  app_environment_filename    = local.app_environment_filename_old_kafka
   use_set_environment_files   = local.use_set_environment_files
 }
 module "secrets" {
