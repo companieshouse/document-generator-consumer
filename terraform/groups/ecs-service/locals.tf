@@ -4,6 +4,7 @@ locals {
   name_prefix                = "${local.stack_name}-${var.environment}"
   global_prefix              = "global-${var.environment}"
   service_name               = "document-generator-consumer"
+  service_name_old_kafka     = "document-generator-consumer-old-kafka"
   container_port             = "8080"
   docker_repo                = "document-generator-consumer"
   kms_alias                  = "alias/${var.aws_profile}/environment-services-kms"
@@ -12,6 +13,7 @@ locals {
   vpc_name                   = local.stack_secrets["vpc_name"]
   s3_config_bucket           = data.vault_generic_secret.shared_s3.data["config_bucket_name"]
   app_environment_filename   = "document-generator-consumer.env"
+  app_environment_filename_old_kafka    = "document-generator-consumer-old-kafka.env"
   use_set_environment_files  = var.use_set_environment_files
   application_subnet_ids     = data.aws_subnets.application.ids
   application_subnet_pattern = local.stack_secrets["application_subnet_pattern"]
