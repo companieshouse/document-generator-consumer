@@ -39,7 +39,7 @@ module "ecs-service" {
   # Docker container details
   docker_registry   = var.docker_registry
   docker_repo       = local.docker_repo
-  container_version = var.document_generator_consumer_old_kafka_version
+  container_version = var.document_generator_consumer_version
   container_port    = local.container_port
 
   # Service configuration
@@ -93,7 +93,7 @@ module "ecs-service-old-kafka" {
   # Docker container details
   docker_registry   = var.docker_registry
   docker_repo       = local.docker_repo
-  container_version = var.document_generator_consumer_version
+  container_version = var.document_generator_consumer_old_kafka_version
   container_port    = local.container_port
 
   # Service configuration
