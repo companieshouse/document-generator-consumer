@@ -1,0 +1,283 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for uk.gov.companieshouse:document-generator-consumer:jar:latest
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.eclipse.jetty:jetty-client:jar -> duplicate declaration of version ${eclipse.jetty.version} @ line 358, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ---------< uk.gov.companieshouse:document-generator-consumer >----------
+[INFO] Building document-generator-consumer latest
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ document-generator-consumer ---
+[INFO] uk.gov.companieshouse:document-generator-consumer:jar:latest
+[INFO] +- io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter:jar:2.22.0:compile
+[INFO] |  +- io.opentelemetry.instrumentation:opentelemetry-spring-boot-autoconfigure:jar:2.22.0:compile
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:jar:2.22.0:compile
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-incubator:jar:2.22.0-alpha:compile
+[INFO] |  |  +- javax.validation:validation-api:jar:2.0.1.Final:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations-support:jar:2.22.0-alpha:runtime
+[INFO] |  |  |  \- io.opentelemetry.semconv:opentelemetry-semconv-incubating:jar:1.37.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-kafka-clients-2.6:jar:2.22.0-alpha:runtime
+[INFO] |  |  |  \- io.opentelemetry.instrumentation:opentelemetry-kafka-clients-common-0.11:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-mongo-3.1:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-spring-kafka-2.7:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-spring-web-3.1:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-spring-webmvc-5.3:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-spring-webflux-5.3:jar:2.22.0-alpha:runtime
+[INFO] |  |  |  \- io.opentelemetry.instrumentation:opentelemetry-reactor-3.1:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-micrometer-1.5:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17:jar:2.22.0-alpha:runtime
+[INFO] |  |  |  \- io.opentelemetry.instrumentation:opentelemetry-log4j-context-data-2.17-autoconfigure:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-jdbc:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-runtime-telemetry-java8:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-runtime-telemetry-java17:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:jar:1.56.0:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-sdk-autoconfigure-support:jar:2.22.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry.instrumentation:opentelemetry-declarative-config-bridge:jar:2.22.0-alpha:runtime
+[INFO] |  |  \- io.opentelemetry.instrumentation:opentelemetry-spring-webmvc-6.0:jar:2.22.0-alpha:runtime
+[INFO] |  +- io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:jar:2.22.0:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:jar:1.56.0:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-api:jar:1.56.0:compile
+[INFO] |  |  \- io.opentelemetry:opentelemetry-context:jar:1.56.0:compile
+[INFO] |  |     \- io.opentelemetry:opentelemetry-common:jar:1.56.0:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-exporter-logging:jar:1.56.0:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-exporter-otlp:jar:1.56.0:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-sdk-trace:jar:1.56.0:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-sdk-metrics:jar:1.56.0:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-sdk-logs:jar:1.56.0:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-exporter-otlp-common:jar:1.56.0:runtime
+[INFO] |  |  |  \- io.opentelemetry:opentelemetry-exporter-common:jar:1.56.0:runtime
+[INFO] |  |  \- io.opentelemetry:opentelemetry-exporter-sender-okhttp:jar:1.56.0:runtime
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk:jar:1.56.0:compile
+[INFO] |  |  \- io.opentelemetry:opentelemetry-sdk-common:jar:1.56.0:compile
+[INFO] |  +- io.opentelemetry.instrumentation:opentelemetry-resources:jar:2.22.0-alpha:runtime
+[INFO] |  |  \- io.opentelemetry.semconv:opentelemetry-semconv:jar:1.37.0:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk-extension-incubator:jar:1.56.0-alpha:runtime
+[INFO] |  |  +- io.opentelemetry:opentelemetry-api-incubator:jar:1.56.0-alpha:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.19.2:compile
+[INFO] |  |  +- org.snakeyaml:snakeyaml-engine:jar:2.10:runtime
+[INFO] |  |  \- com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.19.2:runtime
+[INFO] |  +- io.opentelemetry.contrib:opentelemetry-azure-resources:jar:1.51.0-alpha:runtime
+[INFO] |  |  \- com.squareup.okhttp3:okhttp-jvm:jar:5.3.2:runtime
+[INFO] |  +- io.opentelemetry.contrib:opentelemetry-aws-resources:jar:1.51.0-alpha:runtime
+[INFO] |  +- io.opentelemetry.contrib:opentelemetry-gcp-resources:jar:1.51.0-alpha:runtime
+[INFO] |  |  \- com.google.cloud.opentelemetry:detector-resources-support:jar:0.36.0:runtime
+[INFO] |  +- io.opentelemetry.contrib:opentelemetry-cloudfoundry-resources:jar:1.51.0-alpha:runtime
+[INFO] |  +- io.opentelemetry.contrib:opentelemetry-baggage-processor:jar:1.51.0-alpha:runtime
+[INFO] |  \- io.opentelemetry.contrib:opentelemetry-samplers:jar:1.51.0-alpha:runtime
+[INFO] +- org.springframework.boot:spring-boot-starter-hateoas:jar:3.5.7:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-web:jar:3.5.7:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-json:jar:3.5.7:compile
+[INFO] |  |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.19.2:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:3.5.7:compile
+[INFO] |  |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:10.1.48:compile
+[INFO] |  |  |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:10.1.48:compile
+[INFO] |  |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:10.1.48:compile
+[INFO] |  |  +- org.springframework:spring-web:jar:6.2.10:compile
+[INFO] |  |  \- org.springframework:spring-webmvc:jar:6.2.10:compile
+[INFO] |  \- org.springframework.hateoas:spring-hateoas:jar:2.5.1:compile
+[INFO] |     +- org.springframework:spring-aop:jar:6.2.10:compile
+[INFO] |     +- org.springframework:spring-beans:jar:6.2.10:compile
+[INFO] |     \- org.springframework.plugin:spring-plugin-core:jar:3.0.0:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-actuator:jar:3.5.7:compile
+[INFO] |  +- org.springframework.boot:spring-boot-actuator-autoconfigure:jar:3.5.7:compile
+[INFO] |  |  \- org.springframework.boot:spring-boot-actuator:jar:3.5.7:compile
+[INFO] |  +- io.micrometer:micrometer-observation:jar:1.15.5:compile
+[INFO] |  |  \- io.micrometer:micrometer-commons:jar:1.15.5:compile
+[INFO] |  \- io.micrometer:micrometer-jakarta9:jar:1.15.5:compile
+[INFO] |     \- io.micrometer:micrometer-core:jar:1.15.5:compile
+[INFO] |        +- org.hdrhistogram:HdrHistogram:jar:2.2.2:runtime
+[INFO] |        \- org.latencyutils:LatencyUtils:jar:2.0.3:runtime
+[INFO] +- org.springframework.boot:spring-boot-starter:jar:3.5.7:compile
+[INFO] |  +- org.springframework.boot:spring-boot:jar:3.5.7:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:3.5.7:compile
+[INFO] |  +- jakarta.annotation:jakarta.annotation-api:jar:2.1.1:compile
+[INFO] |  +- org.springframework:spring-core:jar:6.2.10:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:6.2.10:compile
+[INFO] |  \- org.yaml:snakeyaml:jar:2.4:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-logging:jar:3.5.7:compile
+[INFO] |  +- ch.qos.logback:logback-classic:jar:1.5.20:compile
+[INFO] |  |  \- ch.qos.logback:logback-core:jar:1.5.20:compile
+[INFO] |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.24.3:compile
+[INFO] |  |  \- org.apache.logging.log4j:log4j-api:jar:2.25.3:compile
+[INFO] |  \- org.slf4j:jul-to-slf4j:jar:2.0.17:compile
+[INFO] +- org.springframework.kafka:spring-kafka:jar:3.3.11:compile
+[INFO] |  +- org.springframework:spring-context:jar:6.2.10:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:6.2.10:compile
+[INFO] |  +- org.springframework:spring-messaging:jar:6.2.10:compile
+[INFO] |  +- org.springframework:spring-tx:jar:6.2.10:compile
+[INFO] |  +- org.springframework.retry:spring-retry:jar:2.0.12:compile
+[INFO] |  \- org.apache.kafka:kafka-clients:jar:3.9.1:compile
+[INFO] |     +- com.github.luben:zstd-jni:jar:1.5.6-4:runtime
+[INFO] |     \- org.lz4:lz4-java:jar:1.8.0:runtime
+[INFO] +- uk.gov.companieshouse:kafka-models:jar:3.0.25:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.19.2:compile
+[INFO] |  +- org.apache.commons:commons-lang3:jar:3.20.0:compile
+[INFO] |  +- org.xerial.snappy:snappy-java:jar:1.1.10.8:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-core:jar:2.19.2:compile
+[INFO] |  +- commons-fileupload:commons-fileupload:jar:1.6.0:compile
+[INFO] |  +- com.google.guava:guava:jar:32.1.2-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  +- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- org.checkerframework:checker-qual:jar:3.33.0:compile
+[INFO] |  |  \- com.google.j2objc:j2objc-annotations:jar:2.8:compile
+[INFO] |  +- net.minidev:json-smart:jar:2.5.2:compile
+[INFO] |  |  \- net.minidev:accessors-smart:jar:2.5.2:compile
+[INFO] |  |     \- org.ow2.asm:asm:jar:9.7.1:compile
+[INFO] |  +- org.eclipse.jetty.ee10:jetty-ee10-webapp:jar:12.0.29:compile
+[INFO] |  |  +- org.eclipse.jetty:jetty-ee:jar:12.0.29:compile
+[INFO] |  |  +- org.eclipse.jetty:jetty-session:jar:12.0.29:compile
+[INFO] |  |  \- org.eclipse.jetty.ee10:jetty-ee10-servlet:jar:12.0.29:compile
+[INFO] |  |     +- jakarta.servlet:jakarta.servlet-api:jar:6.0.0:compile
+[INFO] |  |     \- org.eclipse.jetty:jetty-security:jar:12.0.29:compile
+[INFO] |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:compile
+[INFO] +- uk.gov.companieshouse:environment-reader-library:jar:3.0.5:compile
+[INFO] |  \- commons-validator:commons-validator:jar:1.10.0:compile
+[INFO] |     \- commons-digester:commons-digester:jar:2.1:compile
+[INFO] +- uk.gov.companieshouse:structured-logging:jar:3.0.43:compile
+[INFO] |  +- uk.gov.companieshouse:java-session-handler:jar:4.1.10:compile
+[INFO] |  |  +- redis.clients:jedis:jar:6.0.0:compile
+[INFO] |  |  |  +- org.apache.commons:commons-pool2:jar:2.12.1:compile
+[INFO] |  |  |  \- redis.clients.authentication:redis-authx-core:jar:0.1.1-beta2:compile
+[INFO] |  |  +- org.msgpack:jackson-dataformat-msgpack:jar:0.9.3:compile
+[INFO] |  |  |  \- org.msgpack:msgpack-core:jar:0.9.3:compile
+[INFO] |  |  \- com.nimbusds:nimbus-jose-jwt:jar:10.4:compile
+[INFO] |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.19.2:compile
+[INFO] |  +- org.codehaus.janino:janino:jar:3.1.12:compile
+[INFO] |  |  \- org.codehaus.janino:commons-compiler:jar:3.1.12:compile
+[INFO] |  \- io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:jar:2.14.0-alpha:runtime
+[INFO] +- org.apache.avro:avro:jar:1.12.1:compile
+[INFO] |  \- org.slf4j:slf4j-api:jar:2.0.17:compile
+[INFO] +- uk.gov.companieshouse:ch-kafka:jar:3.0.6:compile
+[INFO] +- org.sonarsource.scanner.maven:sonar-maven-plugin:jar:5.1.0.4751:compile
+[INFO] |  +- org.codehaus.plexus:plexus-sec-dispatcher:jar:2.0:compile
+[INFO] |  |  +- org.codehaus.plexus:plexus-cipher:jar:2.0:compile
+[INFO] |  |  \- javax.inject:javax.inject:jar:1:compile
+[INFO] |  \- org.sonarsource.scanner.lib:sonar-scanner-java-library:jar:3.3.1.450:compile
+[INFO] |     +- com.squareup.okhttp3:okhttp-urlconnection:jar:4.12.0:compile
+[INFO] |     |  \- org.jetbrains.kotlin:kotlin-stdlib-jdk8:jar:1.9.25:compile
+[INFO] |     |     \- org.jetbrains.kotlin:kotlin-stdlib-jdk7:jar:1.9.25:compile
+[INFO] |     +- com.squareup.okhttp3:logging-interceptor:jar:4.12.0:compile
+[INFO] |     +- org.sonarsource.scanner.lib:sonar-scanner-java-library-batch-interface:jar:3.3.1.450:compile
+[INFO] |     +- io.github.hakky54:sslcontext-kickstart:jar:8.3.6:compile
+[INFO] |     \- org.bouncycastle:bcprov-jdk18on:jar:1.78.1:compile
+[INFO] +- com.squareup.okio:okio:jar:3.16.4:compile
+[INFO] |  \- com.squareup.okio:okio-jvm:jar:3.16.4:compile
+[INFO] +- com.squareup.okhttp3:okhttp:jar:5.3.2:compile
+[INFO] |  \- org.jetbrains.kotlin:kotlin-stdlib:jar:1.9.25:compile
+[INFO] |     \- org.jetbrains:annotations:jar:13.0:compile
+[INFO] +- com.google.code.gson:gson:jar:2.13.2:compile
+[INFO] |  \- com.google.errorprone:error_prone_annotations:jar:2.41.0:compile
+[INFO] +- org.json:json:jar:20250517:compile
+[INFO] +- org.apache.commons:commons-compress:jar:1.28.0:compile
+[INFO] |  \- commons-codec:commons-codec:jar:1.18.0:compile
+[INFO] +- commons-io:commons-io:jar:2.21.0:compile
+[INFO] +- org.eclipse.jetty:jetty-http:jar:12.1.4:compile
+[INFO] |  +- org.eclipse.jetty:jetty-io:jar:12.0.29:compile
+[INFO] |  \- org.eclipse.jetty:jetty-util:jar:12.0.29:compile
+[INFO] +- org.eclipse.jetty:jetty-server:jar:12.1.4:compile
+[INFO] +- org.eclipse.jetty:jetty-xml:jar:12.1.4:compile
+[INFO] +- org.eclipse.jetty:jetty-client:jar:12.1.4:compile
+[INFO] |  +- org.eclipse.jetty:jetty-alpn-client:jar:12.0.29:compile
+[INFO] |  \- org.eclipse.jetty.compression:jetty-compression-gzip:jar:12.1.4:compile
+[INFO] |     \- org.eclipse.jetty.compression:jetty-compression-common:jar:12.1.4:compile
+[INFO] +- org.codehaus.plexus:plexus-utils:jar:4.0.2:compile
+[INFO] +- commons-beanutils:commons-beanutils:jar:1.11.0:compile
+[INFO] |  +- commons-logging:commons-logging:jar:1.3.5:compile
+[INFO] |  \- commons-collections:commons-collections:jar:3.2.2:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:3.5.7:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:3.5.7:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:3.5.7:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.9.0:compile
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:4.0.4:test
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:2.1.4:test
+[INFO] |  +- org.assertj:assertj-core:jar:3.27.6:test
+[INFO] |  |  \- net.bytebuddy:byte-buddy:jar:1.17.8:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:3.0:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.12.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.12.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.12.2:test
+[INFO] |  +- org.mockito:mockito-core:jar:5.17.0:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.17.8:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:3.3:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:5.17.0:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.3:test
+[INFO] |  +- org.springframework:spring-test:jar:6.2.10:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.10.4:test
+[INFO] +- org.springframework.kafka:spring-kafka-test:jar:3.3.10:test
+[INFO] |  +- org.apache.zookeeper:zookeeper:jar:3.8.4:test
+[INFO] |  |  +- org.apache.zookeeper:zookeeper-jute:jar:3.8.4:test
+[INFO] |  |  +- org.apache.yetus:audience-annotations:jar:0.12.0:test
+[INFO] |  |  +- io.netty:netty-handler:jar:4.1.128.Final:test
+[INFO] |  |  |  +- io.netty:netty-common:jar:4.1.128.Final:test
+[INFO] |  |  |  +- io.netty:netty-resolver:jar:4.1.128.Final:test
+[INFO] |  |  |  +- io.netty:netty-buffer:jar:4.1.128.Final:test
+[INFO] |  |  |  +- io.netty:netty-transport:jar:4.1.128.Final:test
+[INFO] |  |  |  +- io.netty:netty-transport-native-unix-common:jar:4.1.128.Final:test
+[INFO] |  |  |  \- io.netty:netty-codec:jar:4.1.128.Final:test
+[INFO] |  |  \- io.netty:netty-transport-native-epoll:jar:4.1.128.Final:test
+[INFO] |  |     \- io.netty:netty-transport-classes-epoll:jar:4.1.128.Final:test
+[INFO] |  +- org.apache.kafka:kafka-clients:jar:test:3.9.1:test
+[INFO] |  +- org.apache.kafka:kafka-server:jar:3.9.1:test
+[INFO] |  |  +- org.apache.kafka:kafka-storage:jar:3.9.1:test
+[INFO] |  |  |  \- com.github.ben-manes.caffeine:caffeine:jar:3.2.2:test
+[INFO] |  |  |     \- org.jspecify:jspecify:jar:1.0.0:test
+[INFO] |  |  +- org.apache.kafka:kafka-group-coordinator:jar:3.9.1:test
+[INFO] |  |  +- org.apache.kafka:kafka-transaction-coordinator:jar:3.9.1:test
+[INFO] |  |  +- org.apache.kafka:kafka-raft:jar:3.9.1:test
+[INFO] |  |  \- com.yammer.metrics:metrics-core:jar:2.2.0:test
+[INFO] |  +- org.apache.kafka:kafka-metadata:jar:3.9.1:test
+[INFO] |  |  \- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.19.2:compile
+[INFO] |  +- org.apache.kafka:kafka-server-common:jar:3.9.1:test
+[INFO] |  |  +- net.sf.jopt-simple:jopt-simple:jar:5.0.4:test
+[INFO] |  |  \- org.pcollections:pcollections:jar:4.0.1:test
+[INFO] |  +- org.apache.kafka:kafka-server-common:jar:test:3.9.1:test
+[INFO] |  +- org.apache.kafka:kafka-streams-test-utils:jar:3.9.1:test
+[INFO] |  |  \- org.apache.kafka:kafka-streams:jar:3.9.1:test
+[INFO] |  |     \- org.rocksdb:rocksdbjni:jar:7.9.2:test
+[INFO] |  +- org.apache.kafka:kafka_2.13:jar:3.9.1:test
+[INFO] |  |  +- org.scala-lang:scala-library:jar:2.13.15:test
+[INFO] |  |  +- org.apache.kafka:kafka-group-coordinator-api:jar:3.9.1:test
+[INFO] |  |  +- org.apache.kafka:kafka-storage-api:jar:3.9.1:test
+[INFO] |  |  +- org.apache.kafka:kafka-tools-api:jar:3.9.1:test
+[INFO] |  |  +- net.sourceforge.argparse4j:argparse4j:jar:0.7.0:test
+[INFO] |  |  +- com.fasterxml.jackson.module:jackson-module-scala_2.13:jar:2.19.2:test
+[INFO] |  |  |  \- com.thoughtworks.paranamer:paranamer:jar:2.8.3:test
+[INFO] |  |  +- com.fasterxml.jackson.dataformat:jackson-dataformat-csv:jar:2.19.2:test
+[INFO] |  |  +- org.bitbucket.b_c:jose4j:jar:0.9.4:test
+[INFO] |  |  +- org.scala-lang.modules:scala-collection-compat_2.13:jar:2.10.0:test
+[INFO] |  |  +- org.scala-lang.modules:scala-java8-compat_2.13:jar:1.0.2:test
+[INFO] |  |  +- org.scala-lang:scala-reflect:jar:2.13.15:test
+[INFO] |  |  +- com.typesafe.scala-logging:scala-logging_2.13:jar:3.9.5:test
+[INFO] |  |  +- io.dropwizard.metrics:metrics-core:jar:4.1.12.1:test
+[INFO] |  |  \- commons-cli:commons-cli:jar:1.4:test
+[INFO] |  +- org.apache.kafka:kafka_2.13:jar:test:3.9.1:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter-api:jar:5.12.2:test
+[INFO] |  |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO] |  |  +- org.junit.platform:junit-platform-commons:jar:1.12.2:test
+[INFO] |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  \- org.junit.platform:junit-platform-launcher:jar:1.12.2:test
+[INFO] |     \- org.junit.platform:junit-platform-engine:jar:1.12.2:test
+[INFO] +- org.testcontainers:testcontainers:jar:1.21.3:test
+[INFO] |  +- junit:junit:jar:4.13.2:test
+[INFO] |  |  \- org.hamcrest:hamcrest-core:jar:3.0:test
+[INFO] |  +- org.rnorth.duct-tape:duct-tape:jar:1.0.8:test
+[INFO] |  +- com.github.docker-java:docker-java-api:jar:3.4.2:test
+[INFO] |  \- com.github.docker-java:docker-java-transport-zerodep:jar:3.4.2:test
+[INFO] |     +- com.github.docker-java:docker-java-transport:jar:3.4.2:test
+[INFO] |     \- net.java.dev.jna:jna:jar:5.13.0:test
+[INFO] +- org.testcontainers:kafka:jar:1.21.3:test
+[INFO] +- org.testcontainers:junit-jupiter:jar:1.21.3:test
+[INFO] \- org.awaitility:awaitility:jar:4.2.2:test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.015 s
+[INFO] Finished at: 2026-03-10T14:05:05Z
+[INFO] ------------------------------------------------------------------------

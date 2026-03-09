@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.kafka.consumer.CHKafkaConsumerGroup;
@@ -19,6 +23,7 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
     private final CHKafkaConsumerGroup consumer;
+     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private Consumer<Message> callback;;
 
@@ -52,15 +57,20 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
     @Override
     public void commit(final Message message) {
-        LOG.debug("commit(key=%s) method called.".formatted(message.getKey()));
+        try {
+            LOG.debug("commit(key=%s) method called.".formatted(message.getKey()));
+            LOG.debug("commit message: %s".formatted(objectMapper.writeValueAsString(message)));
 
-        consumer.commit(message);
+            consumer.commit(message);
 
-        if (callback != null) {
-            callback.accept(message);
+            if (callback != null) {
+                callback.accept(message);
+            }
+
+            //lastMessage = Optional.of(message);
+        } catch (JsonProcessingException e) {
+            LOG.debug("commit error: error thrown %s".formatted(e.getMessage()));
         }
-
-        //lastMessage = Optional.of(message);
     }
 
     @Override

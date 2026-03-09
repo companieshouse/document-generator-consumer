@@ -74,7 +74,7 @@
 
         <!-- Kafka -->
         <ch-kafka.version>3.0.6</ch-kafka.version>
-        <kafka-models.version>3.0.25</kafka-models.version>
+        <kafka-models.version>3.0.29</kafka-models.version>
         <kafka-clients.version>3.8.1</kafka-clients.version>
 
         <kafka.version>3.8.1</kafka.version>
@@ -93,9 +93,10 @@
 
         <!-- Miscellaneous -->
         <json.version>20250517</json.version>
-        <eclipse.jetty.version>12.1.4</eclipse.jetty.version>
+        <eclipse.jetty.version>12.1.7</eclipse.jetty.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <opentelemetry-instrumentation.version>2.22.0</opentelemetry-instrumentation.version>
+        <kotlin-stdlib.version>2.2.21</kotlin-stdlib.version>
 
         <!-- Sonar -->
         <sonar.coverage.jacoco.xmlReportPaths>
@@ -337,6 +338,22 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-client</artifactId>
             <version>${eclipse.jetty.version}</version>
+        </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-ee -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-ee</artifactId>
+            <version>12.1.0.beta0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk7 -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk7</artifactId>
+            <version>2.3.20-RC2</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
