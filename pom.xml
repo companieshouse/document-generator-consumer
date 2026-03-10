@@ -315,7 +315,7 @@
             <version>${commons-io.version}</version>
         </dependency>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-http</artifactId>
             <version>${eclipse.jetty.version}</version>
@@ -337,15 +337,7 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-client</artifactId>
             <version>${eclipse.jetty.version}</version>
-        </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-ee -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-ee</artifactId>
-            <version>12.1.0.beta0</version>
-            <scope>compile</scope>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
