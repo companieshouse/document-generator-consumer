@@ -93,7 +93,7 @@
 
         <!-- Miscellaneous -->
         <json.version>20250517</json.version>
-        <eclipse.jetty.version>12.1.4</eclipse.jetty.version>
+        <eclipse.jetty.version>12.1.7</eclipse.jetty.version>
         <jetty-ee.version>12.0.33</jetty-ee.version>
         <plexus-utils.version>4.0.2</plexus-utils.version>
         <kotlin-lib.version>2.2.21</kotlin-lib.version>
@@ -168,13 +168,13 @@
             </dependency>
 
             <!-- CVE-2026-1605(7.5) -->
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-ee</artifactId>
-                <version>${jetty-ee.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            
+<!--            <dependency>-->
+<!--                <groupId>org.eclipse.jetty</groupId>-->
+<!--                <artifactId>jetty-ee</artifactId>-->
+<!--                <version>${jetty-ee.version}</version>-->
+<!--                <scope>compile</scope>-->
+<!--            </dependency>-->
+
         </dependencies>
     </dependencyManagement>
 
@@ -229,6 +229,10 @@
                 <exclusion>
                     <groupId>org.eclipse.jetty.http2</groupId>
                     <artifactId>http2-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.ee10</groupId>
+                    <artifactId>jetty-ee10-webapp</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
