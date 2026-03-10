@@ -162,6 +162,13 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Source: https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>2.3.20-RC2</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
