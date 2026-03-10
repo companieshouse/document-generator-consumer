@@ -213,6 +213,14 @@
                     <groupId>org.eclipse.jetty.http2</groupId>
                     <artifactId>http2-common</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-server</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-ee</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
