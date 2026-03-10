@@ -183,6 +183,14 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- CVE-2026-1605(7.5) -->
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-io</artifactId>
+                <version>${eclipse.jetty.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
