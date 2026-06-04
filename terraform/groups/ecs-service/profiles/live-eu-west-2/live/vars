@@ -9,5 +9,5 @@ required_memory = 1024
 service_autoscale_scale_in_cooldown = 600
 
 # Enable Parallel Old Kafka Service
-create_old_kafka_service = true
+create_old_kafka_service = false
 document_generator_consumer_old_kafka_version = "1.3.28" 
