@@ -15,7 +15,7 @@
     <parent>
         <groupId>uk.gov.companieshouse</groupId>
         <artifactId>companies-house-parent</artifactId>
-        <version>2.1.12</version>
+        <version>2.1.14</version>
         <relativePath/>
     </parent>
 
@@ -45,9 +45,9 @@
         <okhttp.version>5.3.2</okhttp.version>
 
         <!-- Spring Boot -->
-        <spring-boot.version>3.5.7</spring-boot.version>
-        <spring-kafka.version>3.3.11</spring-kafka.version>
-        <spring-framework-bom.version>6.2.10</spring-framework-bom.version>
+        <spring-boot.version>3.5.15</spring-boot.version>
+        <spring-kafka.version>3.3.15</spring-kafka.version>
+        <spring-framework-bom.version>6.2.19</spring-framework-bom.version>
 
         <!-- Dependency Version -->
         <environment-reader-library.version>3.0.5</environment-reader-library.version>
@@ -93,9 +93,9 @@
 
         <!-- Miscellaneous -->
         <json.version>20250517</json.version>
-        <eclipse.jetty.version>12.1.7</eclipse.jetty.version>
-        <jetty-ee.version>12.0.33</jetty-ee.version>
-        <plexus-utils.version>4.0.2</plexus-utils.version>
+        <eclipse.jetty.version>12.1.10</eclipse.jetty.version>
+        <jetty-ee.version>12.0.36</jetty-ee.version>
+        <plexus-utils.version>4.0.3</plexus-utils.version>
         <kotlin-lib.version>2.2.21</kotlin-lib.version>
         <opentelemetry-instrumentation.version>2.25.0</opentelemetry-instrumentation.version>
 
@@ -110,9 +110,19 @@
         <sonar.login></sonar.login>
         <sonar.password></sonar.password>
 
+        <log4j-bom.version>2.26.0</log4j-bom.version>
+
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-bom -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>io.opentelemetry.instrumentation</groupId>
@@ -159,14 +169,6 @@
                 <version>${okhttp.version}</version>
             </dependency>
 
-            <!-- CVE-2025-68161(6.3) -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>2.25.3</version>
-                <scope>compile</scope>
-            </dependency>
-
             <!-- CVE-2020-29582(5.3) -->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -206,7 +208,7 @@
                 <version>${eclipse.jetty.version}</version>
                 <scope>compile</scope>
             </dependency>
-            
+
         </dependencies>
     </dependencyManagement>
 
