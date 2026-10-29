@@ -1,23 +1,26 @@
 package uk.gov.companieshouse.document.generator.consumer.processor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerApplication;
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerService;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
+@Component
 public class MessageProcessorRunner implements Runnable {
-
-    @Autowired
-    private MessageProcessor messageProcessor;
-
-    @Autowired
-    private KafkaConsumerService kafkaConsumerService;
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
+    private final MessageProcessor messageProcessor;
+    private final KafkaConsumerService kafkaConsumerService;
+
     private boolean active = true;
     private boolean processing = false;
+
+    public MessageProcessorRunner(MessageProcessor messageProcessor, KafkaConsumerService kafkaConsumerService) {
+        this.messageProcessor = messageProcessor;
+        this.kafkaConsumerService = kafkaConsumerService;
+    }
 
     @Override
     public void run() {

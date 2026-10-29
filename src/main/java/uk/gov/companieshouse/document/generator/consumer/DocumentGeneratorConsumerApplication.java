@@ -1,6 +1,10 @@
 package uk.gov.companieshouse.document.generator.consumer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.PreDestroy;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,44 +14,36 @@ import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaConsumerServ
 import uk.gov.companieshouse.document.generator.consumer.kafka.KafkaProducerService;
 import uk.gov.companieshouse.document.generator.consumer.processor.MessageProcessorRunner;
 import uk.gov.companieshouse.environment.EnvironmentReader;
+import uk.gov.companieshouse.environment.exception.EnvironmentVariableException;
 import uk.gov.companieshouse.environment.impl.EnvironmentReaderImpl;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
-
-import jakarta.annotation.PreDestroy;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @SpringBootApplication
 public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
 
     public static final String APPLICATION_NAME_SPACE = "document-generator-consumer";
-
     public static final String RESOURCE_URI = "resource_uri";
-
     public static final String CONSUMER_TOPIC = "CONSUMER_TOPIC";
-
     public static final String API_KEY = "CHS_API_KEY";
-
     public static final String GROUP_NAME = "GROUP_NAME";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(APPLICATION_NAME_SPACE);
 
-    @Autowired
-    private LoggingInterceptor loggingInterceptor;
-
-    @Autowired
-    private MessageProcessorRunner messageProcessorRunner;
-
-    @Autowired
-    private KafkaConsumerService kafkaConsumerService;
-
-    @Autowired
-    private KafkaProducerService kafkaProducerService;
-
     private static EnvironmentReader reader;
+
+    private final LoggingInterceptor loggingInterceptor;
+    private final MessageProcessorRunner messageProcessorRunner;
+    private final KafkaConsumerService kafkaConsumerService;
+    private final KafkaProducerService kafkaProducerService;
+
+    public DocumentGeneratorConsumerApplication(LoggingInterceptor loggingInterceptor,
+            MessageProcessorRunner messageProcessorRunner, KafkaConsumerService kafkaConsumerService,
+            KafkaProducerService kafkaProducerService) {
+        this.loggingInterceptor = loggingInterceptor;
+        this.messageProcessorRunner = messageProcessorRunner;
+        this.kafkaConsumerService = kafkaConsumerService;
+        this.kafkaProducerService = kafkaProducerService;
+    }
 
     public static void main(String[] args) {
 
@@ -86,7 +82,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
             String paramValue = reader.getMandatoryString(param);
 
             if (paramValue != null && !paramValue.isEmpty()) {
-                LOGGER.info("Environment variable " + param + " has value " + paramValue);
+                LOGGER.info("Environment variable " + param + " is set");
             } else {
                 LOGGER.error("Environment variable " + param + " is not set");
                 environmentParamMissing = true;
@@ -94,7 +90,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
         }
 
         if (environmentParamMissing) {
-            throw new RuntimeException("There are environment variables are not set, see logs for details - application will exit");
+            throw new EnvironmentVariableException("Mandatory environment variables not set - application will exit");
         }
     }
 
@@ -113,7 +109,7 @@ public class DocumentGeneratorConsumerApplication implements WebMvcConfigurer {
         LOGGER.info("Setting active flag in " + messageProcessorRunner.getClass() + " to trigger a graceful shutdown");
         messageProcessorRunner.setActive(false);
 
-        while(messageProcessorRunner.isProcessing()) {
+        while (messageProcessorRunner.isProcessing()) {
             LOGGER.info("Waiting for current processing to complete before shutting down...");
             try {
                 Thread.sleep(1000);

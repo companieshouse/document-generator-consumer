@@ -17,7 +17,7 @@ import uk.gov.companieshouse.document.generation.status.DocumentGenerationStarte
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
 
-public class DocumentGenerationTransformerTest {
+class DocumentGenerationTransformerTest {
 
     private static final String ID = "123456";
     private static final String DESCRIPTION = "test description";
@@ -31,13 +31,13 @@ public class DocumentGenerationTransformerTest {
     private DocumentGenerationTransformer transformer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         transformer = new DocumentGenerationTransformer();
     }
 
     @Test
     @DisplayName("Test transformation of document generation started message")
-    public void testTransformStarted() {
+    void testTransformStarted() {
         DocumentGenerationStarted started = transformer.transformGenerationStarted(createRenderDocument());
         assertEquals(ID, started.getId());
         assertEquals(REQUESTER_ID, started.getRequesterId());
@@ -45,7 +45,7 @@ public class DocumentGenerationTransformerTest {
 
     @Test
     @DisplayName("Test transformation of document generation completed message")
-    public void testTransformCompleted() {
+    void testTransformCompleted() {
         DocumentGenerationCompleted completed = transformer.transformGenerationCompleted(createRenderDocument(), createResponse());
         assertEquals(ID, completed.getId());
         assertEquals(REQUESTER_ID, completed.getRequesterId());
@@ -63,7 +63,7 @@ public class DocumentGenerationTransformerTest {
 
     @Test
     @DisplayName("Test transformation of document generation failed message")
-    public void testTransformFailed() {
+    void testTransformFailed() {
         DocumentGenerationFailed failed = transformer.transformGenerationFailed(createRenderDocument(), createResponse());
         assertEquals(ID, failed.getId());
         assertEquals(REQUESTER_ID, failed.getRequesterId());

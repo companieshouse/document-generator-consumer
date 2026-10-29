@@ -11,8 +11,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.opentest4j.TestAbortedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -30,9 +28,8 @@ import uk.gov.companieshouse.kafka.serialization.SerializerFactory;
 @SpringBootTest
 @EmbeddedKafka(
         partitions = 1,
-        brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092" }
+        topics = "render-submitted-data-document"
 )
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles("test")
 class KafkaIntegrationTest {
@@ -55,8 +52,10 @@ class KafkaIntegrationTest {
     @BeforeEach
     void setUp() {
         consumer.setCallback(message -> {
-            receivedMessage = message;
-            latch.countDown();
+            if (latch.getCount() > 0) {
+                receivedMessage = message;
+                latch.countDown();
+            }
         });
     }
 
@@ -75,24 +74,23 @@ class KafkaIntegrationTest {
         byte[] topicData = serializerFactory.getSpecificRecordSerializer(RenderSubmittedDataDocument.class).toBinary(document);
         String topicMessage = new String(topicData, StandardCharsets.UTF_8);
 
-        kafkaTemplate.send("render-submitted-data-document", topicMessage).join();
-
-        boolean messageConsumed = latch.await(10, TimeUnit.SECONDS);
-
-        if (!messageConsumed) {
-            // Skip the test (won't mark it as failed, only as skipped)
-            throw new TestAbortedException("Message not received within timeout – skipping test.");
+        // The consumer starts asynchronously with Kafka's default 'latest' offset policy, so
+        // messages published before it is positioned/ready are skipped. Republish until one is processed.
+        boolean messageConsumed = false;
+        for (int attempt = 0; attempt < 10 && !messageConsumed; attempt++) {
+            kafkaTemplate.send("render-submitted-data-document", topicMessage).join();
+            messageConsumed = latch.await(2, TimeUnit.SECONDS);
         }
 
         assertTrue(messageConsumed, "Message was not consumed in time");
-
         assertThat(receivedMessage, notNullValue());
         assertThat(receivedMessage.getKey(), is(nullValue()));
 
         byte[] consumedMessage = receivedMessage.getValue();
         assertThat(consumedMessage.length, is(71));
 
-        RenderSubmittedDataDocument expectedData = deserializerFactory.getSpecificRecordDeserializer(RenderSubmittedDataDocument.class)
+        RenderSubmittedDataDocument expectedData = deserializerFactory.getSpecificRecordDeserializer(
+                        RenderSubmittedDataDocument.class)
                 .fromBinary(receivedMessage, RenderSubmittedDataDocument.getClassSchema());
 
         assertThat(expectedData.getId(), is(document.getId()));

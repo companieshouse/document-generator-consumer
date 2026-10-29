@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -30,29 +29,26 @@ import uk.gov.companieshouse.logging.LoggerFactory;
 public class MessageProcessorImpl implements MessageProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
-
-    @Autowired
-    private MessageService messageService;
-
-    @Autowired
-    private GenerateDocument generateDocument;
-
-    @Autowired
-    private KafkaConsumerService kafkaConsumerService;
-
-    @Autowired
-    private KafkaProducerService kafkaProducerService;
-
-    @Autowired
-    private DeserializerFactory deserializerFactory;
-
     private static final String KAFKA_MSG = "kafka_message";
-
     private static final String KAFKA_TOPIC = "kafka_topic";
-
     private static final String KAFKA_OFFSET = "kafka_offset";
-
     private static final String KAFKA_TIME = "kafka_time";
+
+    private final MessageService messageService;
+    private final GenerateDocument generateDocument;
+    private final KafkaConsumerService kafkaConsumerService;
+    private final KafkaProducerService kafkaProducerService;
+    private final DeserializerFactory deserializerFactory;
+
+    public MessageProcessorImpl(MessageService messageService, GenerateDocument generateDocument,
+            KafkaConsumerService kafkaConsumerService, KafkaProducerService kafkaProducerService,
+            DeserializerFactory deserializerFactory) {
+        this.messageService = messageService;
+        this.generateDocument = generateDocument;
+        this.kafkaConsumerService = kafkaConsumerService;
+        this.kafkaProducerService = kafkaProducerService;
+        this.deserializerFactory = deserializerFactory;
+    }
 
     /**
      * {inheritDocs}
@@ -117,9 +113,6 @@ public class MessageProcessorImpl implements MessageProcessor {
      * generator api to generate a document.
      *
      * @param renderSubmittedDataDocument The message deserialised from Kafka
-     * @throws MessageCreationException
-     * @throws ExecutionException
-     * @throws InterruptedException
      */
     private void requestGenerateDocument(RenderSubmittedDataDocument renderSubmittedDataDocument, Message message)
             throws InterruptedException {
