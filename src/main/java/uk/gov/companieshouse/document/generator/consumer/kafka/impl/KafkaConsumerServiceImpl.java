@@ -1,7 +1,6 @@
 package uk.gov.companieshouse.document.generator.consumer.kafka.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import org.springframework.stereotype.Service;
@@ -25,12 +24,12 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
     private final CHKafkaConsumerGroup consumer;
      private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private Consumer<Message> callback;;
+    private Consumer<Message> callback;
 
     public KafkaConsumerServiceImpl(final ConsumerConfig consumerConfig) {
         LOG.debug("KafkaConsumerServiceImpl() constructor called.");
 
-        consumer = new CHKafkaConsumerGroup(consumerConfig);;
+        consumer = new CHKafkaConsumerGroup(consumerConfig);
     }
 
     @Override
@@ -67,7 +66,6 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
                 callback.accept(message);
             }
 
-            //lastMessage = Optional.of(message);
         } catch (JsonProcessingException e) {
             LOG.debug("commit error: error thrown %s".formatted(e.getMessage()));
         }
@@ -85,12 +83,4 @@ public class KafkaConsumerServiceImpl  implements KafkaConsumerService {
 
         this.callback = callback;
     }
-
-    /*
-    public Optional<Message> getLastMessage() {
-        LOG.debug("getLastMessage(message=%s) method called.".formatted(lastMessage));
-
-        return lastMessage;
-    }
-    */
 }

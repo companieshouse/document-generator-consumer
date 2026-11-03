@@ -10,10 +10,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,19 +21,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generator.consumer.DocumentGeneratorConsumerProperties;
-import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentRequest;
 import uk.gov.companieshouse.document.generator.consumer.document.models.GenerateDocumentResponse;
 import uk.gov.companieshouse.document.generator.consumer.document.models.Links;
 import uk.gov.companieshouse.document.generator.consumer.document.service.impl.GenerateDocumentImpl;
 import uk.gov.companieshouse.document.generator.consumer.exception.GenerateDocumentException;
 import uk.gov.companieshouse.environment.EnvironmentReader;
 
-
 @ExtendWith(MockitoExtension.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GenerateDocumentTest {
 
     @InjectMocks
@@ -73,14 +67,14 @@ public class GenerateDocumentTest {
 
         when(mockDocumentGeneratorConsumerProperties.getBaseUrl()).thenReturn("base_url");
         when(mockDocumentGeneratorConsumerProperties.getRootUri()).thenReturn("root_url");
-        when(mockRestTemplate.postForEntity(anyString(), any(GenerateDocumentRequest.class),
+        when(mockRestTemplate.postForEntity(anyString(), any(HttpEntity.class),
                 eq(GenerateDocumentResponse.class))).thenThrow(RestClientException.class);
 
         assertThrows(GenerateDocumentException.class, () ->
                 generateDocument.requestGenerateDocument(createRenderSubmittedDataDocument()));
     }
 
-    private ResponseEntity createResponse() {
+    private ResponseEntity<GenerateDocumentResponse> createResponse() {
 
         GenerateDocumentResponse response = new GenerateDocumentResponse();
 
@@ -96,9 +90,7 @@ public class GenerateDocumentTest {
         response.setLinks(links);
         response.setSize("size");
 
-        ResponseEntity responseEntity = new ResponseEntity<>(response, HttpStatus.CREATED);
-
-        return responseEntity;
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     private RenderSubmittedDataDocument createRenderSubmittedDataDocument() {

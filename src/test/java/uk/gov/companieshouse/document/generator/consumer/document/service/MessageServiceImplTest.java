@@ -7,15 +7,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
 import uk.gov.companieshouse.document.generation.status.DocumentGenerationCompleted;
 import uk.gov.companieshouse.document.generation.status.DocumentGenerationFailed;
@@ -31,7 +28,6 @@ import uk.gov.companieshouse.kafka.serialization.AvroSerializer;
 import uk.gov.companieshouse.kafka.serialization.SerializerFactory;
 
 @ExtendWith(MockitoExtension.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MessageServiceImplTest {
 
     @InjectMocks
@@ -42,10 +38,10 @@ public class MessageServiceImplTest {
 
     @Mock
     private AvroSerializer<DocumentGenerationStarted> startedSerializer;
-    
+
     @Mock
     private AvroSerializer<DocumentGenerationCompleted> completedSerializer;
-    
+
     @Mock
     private AvroSerializer<DocumentGenerationFailed> failedSerializer;
 
@@ -93,7 +89,8 @@ public class MessageServiceImplTest {
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationStarted.class)).thenReturn(startedSerializer);
         when(startedSerializer.toBinary(documentGenerationStarted)).thenThrow(new SerializationException("error"));
 
-        assertThrows(MessageCreationException.class, () -> messageService.createDocumentGenerationStarted(renderSubmittedDataDocument));
+        assertThrows(MessageCreationException.class,
+                () -> messageService.createDocumentGenerationStarted(renderSubmittedDataDocument));
     }
 
     @Test
@@ -102,7 +99,8 @@ public class MessageServiceImplTest {
         RenderSubmittedDataDocument renderSubmittedDataDocument = createRenderSubmittedDataDocument();
         GenerateDocumentResponse generateDocumentResponse = createResponse();
 
-        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(documentGenerationFailed);
+        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(
+                documentGenerationFailed);
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationFailed.class)).thenReturn(failedSerializer);
         when(failedSerializer.toBinary(documentGenerationFailed)).thenReturn(FAILED_BYTES);
 
@@ -117,7 +115,8 @@ public class MessageServiceImplTest {
         RenderSubmittedDataDocument renderSubmittedDataDocument = createRenderSubmittedDataDocument();
         GenerateDocumentResponse generateDocumentResponse = null;
 
-        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(documentGenerationFailed);
+        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(
+                documentGenerationFailed);
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationFailed.class)).thenReturn(failedSerializer);
         when(failedSerializer.toBinary(documentGenerationFailed)).thenReturn(FAILED_BYTES);
 
@@ -132,7 +131,8 @@ public class MessageServiceImplTest {
         RenderSubmittedDataDocument renderSubmittedDataDocument = null;
         GenerateDocumentResponse generateDocumentResponse = null;
 
-        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(documentGenerationFailed);
+        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(
+                documentGenerationFailed);
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationFailed.class)).thenReturn(failedSerializer);
         when(failedSerializer.toBinary(documentGenerationFailed)).thenReturn(FAILED_BYTES);
 
@@ -147,11 +147,13 @@ public class MessageServiceImplTest {
         RenderSubmittedDataDocument renderSubmittedDataDocument = createRenderSubmittedDataDocument();
         GenerateDocumentResponse generateDocumentResponse = createResponse();
 
-        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(documentGenerationFailed);
+        when(transformer.transformGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(
+                documentGenerationFailed);
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationFailed.class)).thenReturn(failedSerializer);
         when(failedSerializer.toBinary(documentGenerationFailed)).thenThrow(new SerializationException("error"));
 
-        assertThrows(MessageCreationException.class, () -> messageService.createDocumentGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse));
+        assertThrows(MessageCreationException.class,
+                () -> messageService.createDocumentGenerationFailed(renderSubmittedDataDocument, generateDocumentResponse));
     }
 
     @Test
@@ -160,7 +162,8 @@ public class MessageServiceImplTest {
         RenderSubmittedDataDocument renderSubmittedDataDocument = createRenderSubmittedDataDocument();
         GenerateDocumentResponse generateDocumentResponse = createResponse();
 
-        when(transformer.transformGenerationCompleted(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(documentGenerationCompleted);
+        when(transformer.transformGenerationCompleted(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(
+                documentGenerationCompleted);
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationCompleted.class)).thenReturn(completedSerializer);
         when(completedSerializer.toBinary(documentGenerationCompleted)).thenReturn(COMPLETED_BYTES);
 
@@ -175,17 +178,17 @@ public class MessageServiceImplTest {
         RenderSubmittedDataDocument renderSubmittedDataDocument = createRenderSubmittedDataDocument();
         GenerateDocumentResponse generateDocumentResponse = createResponse();
 
-        when(transformer.transformGenerationCompleted(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(documentGenerationCompleted);
+        when(transformer.transformGenerationCompleted(renderSubmittedDataDocument, generateDocumentResponse)).thenReturn(
+                documentGenerationCompleted);
         when(serializerFactory.getSpecificRecordSerializer(DocumentGenerationCompleted.class)).thenReturn(completedSerializer);
         when(completedSerializer.toBinary(documentGenerationCompleted)).thenThrow(new SerializationException("error"));
 
-        assertThrows(MessageCreationException.class, () -> messageService.createDocumentGenerationCompleted(renderSubmittedDataDocument, generateDocumentResponse));
+        assertThrows(MessageCreationException.class,
+                () -> messageService.createDocumentGenerationCompleted(renderSubmittedDataDocument, generateDocumentResponse));
     }
 
     /**
      * Populate GenerateDocumentResponse with content
-     *
-     * @return
      */
     private GenerateDocumentResponse createResponse() {
         GenerateDocumentResponse response = new GenerateDocumentResponse();

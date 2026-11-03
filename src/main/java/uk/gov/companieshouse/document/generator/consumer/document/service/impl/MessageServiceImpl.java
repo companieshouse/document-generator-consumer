@@ -7,7 +7,6 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
@@ -40,11 +39,13 @@ public class MessageServiceImpl implements MessageService {
     private static final String DESCRIPTION_IDENTIFIER = "description_identifier";
     private static final String DESCRIPTION = "description";
 
-    @Autowired
-    private SerializerFactory serializerFactory;
+    private final SerializerFactory serializerFactory;
+    private final DocumentGenerationTransformer transformer;
 
-    @Autowired
-    private DocumentGenerationTransformer transformer;
+    public MessageServiceImpl(SerializerFactory serializerFactory, DocumentGenerationTransformer transformer) {
+        this.serializerFactory = serializerFactory;
+        this.transformer = transformer;
+    }
 
     @Override
     public Message createDocumentGenerationStarted(RenderSubmittedDataDocument renderSubmittedDataDocument) throws MessageCreationException {

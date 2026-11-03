@@ -3,12 +3,10 @@ package uk.gov.companieshouse.document.generator.consumer.document.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import uk.gov.companieshouse.document.generation.request.RenderSubmittedDataDocument;
@@ -27,23 +25,22 @@ public class GenerateDocumentImpl implements GenerateDocument {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentGeneratorConsumerApplication.APPLICATION_NAME_SPACE);
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    private DocumentGeneratorConsumerProperties configuration;
+    private final DocumentGeneratorConsumerProperties configuration;
 
-    private EnvironmentReader reader;
+    private final EnvironmentReader reader;
 
-    @Autowired
     public GenerateDocumentImpl(RestTemplate restTemplate, DocumentGeneratorConsumerProperties configuration,
-                                EnvironmentReader reader) {
-
+            EnvironmentReader reader) {
         this.restTemplate = restTemplate;
         this.configuration = configuration;
         this.reader = reader;
     }
 
     @Override
-    public ResponseEntity<GenerateDocumentResponse> requestGenerateDocument(RenderSubmittedDataDocument renderSubmittedDataDocument) throws GenerateDocumentException {
+    public ResponseEntity<GenerateDocumentResponse> requestGenerateDocument(
+            RenderSubmittedDataDocument renderSubmittedDataDocument) throws GenerateDocumentException {
 
         String url = configuration.getRootUri() + configuration.getBaseUrl();
 
@@ -51,29 +48,23 @@ public class GenerateDocumentImpl implements GenerateDocument {
                 " generator api", setDebugMap(renderSubmittedDataDocument));
 
         try {
-            ResponseEntity<GenerateDocumentResponse> response = restTemplate.postForEntity(url,
-                    setRequest(renderSubmittedDataDocument), GenerateDocumentResponse.class);
-
-            return response;
-
+            return restTemplate.postForEntity(url, setRequest(renderSubmittedDataDocument), GenerateDocumentResponse.class);
         } catch (Exception e) {
             LOG.errorContext("Error occurred during api call to document-generator",
                     e, setDebugMap(renderSubmittedDataDocument));
             throw new GenerateDocumentException("An error occurred when requesting the generation" +
-                   " of a document from the document generator api", e);
+                    " of a document from the document generator api", e);
         }
     }
 
     private HttpEntity<GenerateDocumentRequest> setRequest(RenderSubmittedDataDocument renderSubmittedDataDocument) {
 
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", reader.getMandatoryString(DocumentGeneratorConsumerApplication.API_KEY));
 
         GenerateDocumentRequest generateDocumentRequest = populateDocumentRequest(renderSubmittedDataDocument);
 
-        HttpEntity<GenerateDocumentRequest> request = new HttpEntity<>(generateDocumentRequest, headers);
-
-        return request;
+        return new HttpEntity<>(generateDocumentRequest, headers);
     }
 
     private GenerateDocumentRequest populateDocumentRequest(RenderSubmittedDataDocument renderSubmittedDataDocument) {
